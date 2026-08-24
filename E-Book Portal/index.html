@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lumina Books | คลังหนังสือและเครื่องมืออ่านหนังสือออนไลน์ (อ่านฟรี แต่ต้องสร้างบัญชีใหม่)</title>
+    <meta name="description" content="Lumina Books คลังหนังสือออนไลน์อ่านฟรี 100% เพียงสร้างบัญชีใหม่ เพิ่มหมวดหมู่หนังสือได้เอง พร้อมระบบอ่านหนังสือ บุ๊กมาร์ก ปรับธีม และอ่านออกเสียง"/>
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div style="display: flex; align-items: center; gap: 24px;">
+                <a class="brand-logo" onclick="window.location.reload()">
+                    <span class="material-symbols-outlined brand-icon">auto_stories</span>
+                    <span>Lumina Books</span>
+                </a>
+                <span class="tag-badge" style="background: rgba(46, 125, 50, 0.1); color: #2e7d32; font-size: 0.75rem;">
+                    ✨ อ่านฟรี! เพียงสร้างบัญชีใหม่
+                </span>
+                <a id="btnAdminPortal" class="nav-link" href="admin.html" style="display: none; color: #c62828; font-weight: 700;">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">admin_panel_settings</span> แผงผู้ดูแลระบบ
+                </a>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <!-- Search Input Bar -->
+                <div class="search-bar">
+                    <span class="material-symbols-outlined" style="color: var(--color-outline);">search</span>
+                    <input type="text" id="searchInput" placeholder="ค้นหาชื่อหนังสือ ผู้แต่ง หรือหมวดหมู่..."/>
+                </div>
+
+                <!-- Add Book Button -->
+                <button class="btn-primary" id="btnUploadBook" style="padding: 8px 18px; font-size: 0.88rem;">
+                    <span class="material-symbols-outlined">add</span>
+                    เพิ่มหนังสือ
+                </button>
+
+                <!-- User Profile / Auth Button -->
+                <button class="user-profile-btn" id="userProfileBtn">
+                    <img id="navUserAvatar" src="" alt="Avatar" class="user-avatar" style="display: none;" />
+                    <div id="navGuestIcon" class="guest-avatar-icon" style="display: flex;">
+                        <span class="material-symbols-outlined">person</span>
+                    </div>
+                    <div class="user-info">
+                        <p id="navUserName" class="user-name">เข้าสู่ระบบ / สร้างบัญชีใหม่</p>
+                        <p id="navUserBadge" class="user-badge guest-badge">อ่านฟรี! เพียงสร้างบัญชีใหม่</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Canvas -->
+    <main class="main-content">
+        <!-- Welcome Header -->
+        <header class="welcome-header">
+            <h1 id="welcomeTitle" class="welcome-title">ยินดีต้อนรับสู่ Lumina Books</h1>
+            <p id="welcomeSubtitle" class="welcome-subtitle">อ่านหนังสือออนไลน์ฟรี 100%! เพียงสร้างบัญชีใหม่หรือเข้าสู่ระบบเพื่อเปิดอ่านทันที</p>
+        </header>
+
+        <!-- Guest Mode Alert Banner -->
+        <div id="guestBannerNotice" class="guest-notice-banner">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="material-symbols-outlined" style="color: #f57c00; font-size: 28px;">lock</span>
+                <div>
+                    <strong style="font-size: 0.95rem;">อ่านหนังสือทุกเล่มฟรี 100%! (กรุณาสร้างบัญชีใหม่ก่อนใช้งาน)</strong>
+                    <p style="font-size: 0.85rem; margin-top: 2px;">เพียงสร้างบัญชีใหม่หรือเข้าสู่ระบบ เพื่อเปิดอ่านหนังสือฟรี เพิ่มหมวดหมู่ส่วนตัว และบันทึกรายการโปรด</p>
+                </div>
+            </div>
+            <button class="btn-primary" style="padding: 8px 18px; font-size: 0.85rem; white-space: nowrap;" onclick="window.luminaApp.openAuthModal()">
+                สร้างบัญชีใหม่ / เข้าสู่ระบบ
+            </button>
+        </div>
+
+        <!-- Continue Reading Section (Dynamic Card) -->
+        <section style="margin-bottom: 48px;">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="material-symbols-outlined" style="color: var(--color-primary);">history</span>
+                    อ่านต่อล่าสุด
+                </h2>
+            </div>
+            <div id="continueReadingCard" class="continue-card">
+                <!-- Dynamically Rendered by app.js -->
+            </div>
+        </section>
+
+        <!-- My Library Section -->
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">ห้องสมุดหนังสือทั้งหมด</h2>
+                
+                <div class="view-controls">
+                    <button class="icon-btn active" id="btnViewGrid" title="มุมมองตาราง">
+                        <span class="material-symbols-outlined">grid_view</span>
+                    </button>
+                    <button class="icon-btn" id="btnViewList" title="มุมมองรายการ">
+                        <span class="material-symbols-outlined">view_list</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dynamic Category Filter Tabs (Includes Custom Categories) -->
+            <div id="categoryTabsContainer" class="category-tabs">
+                <!-- Rendered dynamically by app.js -->
+            </div>
+
+            <!-- Books Container (Grid or List) -->
+            <div id="myLibraryGrid" class="books-grid">
+                <!-- Rendered dynamically by app.js -->
+            </div>
+        </section>
+    </main>
+
+    <!-- ==========================================
+         FULLSCREEN E-BOOK READER OVERLAY
+         ========================================== -->
+    <div id="readerOverlay" class="reader-overlay">
+        <!-- Top Reader Toolbar -->
+        <header id="readerToolbar" class="reader-toolbar">
+            <div class="reader-toolbar-left">
+                <button class="icon-btn" id="btnToggleSidebar" title="สารบัญ (Table of Contents)">
+                    <span class="material-symbols-outlined">menu_open</span>
+                </button>
+                <button class="icon-btn" id="btnCloseReader" title="ปิดหน้าอ่านหนังสือ">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div class="reader-book-info" style="margin-left: 8px;">
+                    <span id="readerBookTitle" class="reader-book-title">ชื่อหนังสือ</span>
+                    <span id="readerChapterTitle" class="reader-chapter-name">ชื่อบท</span>
+                </div>
+            </div>
+
+            <div class="reader-toolbar-right">
+                <button class="icon-btn" id="btnTTS" onclick="window.luminaApp.reader.toggleTTS()" title="อ่านออกเสียงด้วยเสียงสังเคราะห์ (Text to Speech)">
+                    <span class="material-symbols-outlined">volume_up</span>
+                </button>
+                <button class="icon-btn" id="btnBookmark" onclick="window.luminaApp.reader.toggleBookmark()" title="บันทึกบุ๊กมาร์กหน้านี้">
+                    <span class="material-symbols-outlined">bookmark</span>
+                </button>
+                <button class="icon-btn" id="btnReaderSettings" title="ตั้งค่าฟอนต์และธีม">
+                    <span class="material-symbols-outlined">tune</span>
+                </button>
+                <button class="icon-btn" onclick="window.luminaApp.reader.toggleFullscreen()" title="โหมดอ่านเต็มจอ">
+                    <span class="material-symbols-outlined">fullscreen</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Reading Progress Header Bar -->
+        <div class="reader-progress-header">
+            <div id="readerProgressHeaderFill" class="reader-progress-header-fill"></div>
+        </div>
+
+        <!-- Reader Workspace Body -->
+        <div class="reader-body">
+            <!-- Sidebar Table of Contents -->
+            <aside id="readerSidebar" class="reader-sidebar">
+                <div class="sidebar-header">
+                    <span>สารบัญหนังสือ</span>
+                    <span class="material-symbols-outlined" style="cursor: pointer;" onclick="document.getElementById('readerSidebar').classList.add('collapsed')">close</span>
+                </div>
+                <div id="tocContent" class="sidebar-content">
+                    <!-- TOC Rendered Dynamically -->
+                </div>
+            </aside>
+
+            <!-- Reader Paper Canvas -->
+            <main id="readerCanvas" class="reader-canvas">
+                <article id="readerPaper" class="reader-paper">
+                    <!-- Chapter Text Rendered Dynamically -->
+                </article>
+            </main>
+        </div>
+
+        <!-- Reader Settings Popover Panel -->
+        <div id="settingsPopover" class="settings-popover">
+            <div class="settings-group">
+                <div class="settings-label">
+                    <span>ธีมการอ่าน</span>
+                </div>
+                <div class="setting-btn-group">
+                    <button class="setting-chip" onclick="window.luminaApp.reader.setTheme('light')">สว่าง</button>
+                    <button class="setting-chip" onclick="window.luminaApp.reader.setTheme('sepia')">ซีเปีย</button>
+                    <button class="setting-chip" onclick="window.luminaApp.reader.setTheme('dark')">มืด</button>
+                    <button class="setting-chip" onclick="window.luminaApp.reader.setTheme('midnight')">OLED</button>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <div class="settings-label">
+                    <span>ขนาดตัวหนังสือ (Font Size)</span>
+                </div>
+                <div class="setting-btn-group">
+                    <button class="setting-chip" onclick="window.luminaApp.reader.setFontSize(-2)">A-</button>
+                    <button class="setting-chip" onclick="window.luminaApp.reader.setFontSize(18)">ปกติ</button>
+                    <button class="setting-chip" onclick="window.luminaApp.reader.setFontSize(2)">A+</button>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <div class="settings-label">
+                    <span>รูปแบบฟอนต์ (Font Family)</span>
+                </div>
+                <div class="setting-btn-group">
+                    <button class="setting-chip active" onclick="window.luminaApp.reader.setFontFamily('var(--font-primary)')">Sans</button>
+                    <button class="setting-chip" onclick="window.luminaApp.reader.setFontFamily('var(--font-serif)')">Serif</button>
+                    <button class="setting-chip" onclick="window.luminaApp.reader.setFontFamily('var(--font-mono)')">Mono</button>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <div class="settings-label">
+                    <span>ระยะห่างบรรทัด (Line Height)</span>
+                </div>
+                <div class="setting-btn-group">
+                    <button class="setting-chip" onclick="window.luminaApp.reader.setLineHeight('1.5')">กระชับ</button>
+                    <button class="setting-chip active" onclick="window.luminaApp.reader.setLineHeight('1.8')">ปกติ</button>
+                    <button class="setting-chip" onclick="window.luminaApp.reader.setLineHeight('2.2')">สบายตา</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reader Footer -->
+        <footer class="reader-footer">
+            <button class="icon-btn" onclick="window.luminaApp.reader.prevChapter()" title="บทก่อนหน้า">
+                <span class="material-symbols-outlined">chevron_left</span>
+            </button>
+            <span id="readerProgressFooterText" style="font-size: 0.88rem; font-weight: 500;">บทที่ 1 จาก 4</span>
+            <button class="icon-btn" onclick="window.luminaApp.reader.nextChapter()" title="บทถัดไป">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+        </footer>
+    </div>
+
+    <!-- ==========================================
+         AUTH MODAL (LOGIN & CREATE NEW ACCOUNT)
+         ========================================== -->
+    <div id="authModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header" style="margin-bottom: 12px;">
+                <h3 class="modal-title">ยินดีต้อนรับสู่ Lumina Books</h3>
+                <button class="icon-btn" id="btnCloseAuthModal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <p style="font-size: 0.85rem; color: #2e7d32; font-weight: 600; text-align: center; margin-bottom: 16px; background: #e8f5e9; padding: 8px; border-radius: var(--radius-md);">
+                ✨ อ่านหนังสือฟรีทุกเล่ม 100%! เพียงสร้างบัญชีใหม่
+            </p>
+
+            <!-- Tab Picker -->
+            <div class="auth-tabs">
+                <button id="authTabLogin" class="auth-tab-btn active">เข้าสู่ระบบ</button>
+                <button id="authTabRegister" class="auth-tab-btn">สร้างบัญชีใหม่ (ฟรี)</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="loginIdentity">เบอร์โทรศัพท์, อีเมล หรือ ชื่อผู้ใช้</label>
+                    <input type="text" id="loginIdentity" class="form-input" placeholder="กรอกเบอร์โทรศัพท์ (เช่น 0898765432) หรืออีเมล" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="loginPassword">รหัสผ่าน</label>
+                    <input type="password" id="loginPassword" class="form-input" placeholder="กรอกรหัสผ่านของคุณ" required />
+                </div>
+                <button type="submit" class="auth-submit-btn">เข้าสู่ระบบเพื่อเริ่มอ่านฟรี</button>
+
+                <!-- Social Login Google Button -->
+                <button type="button" id="btnGoogleLogin" class="social-login-btn">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width: 18px; height: 18px;" />
+                    เข้าสู่ระบบด้วย Google
+                </button>
+            </form>
+
+            <!-- Register Form (สร้างบัญชีใหม่) -->
+            <form id="registerForm" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label" for="regName">ชื่อ-นามสกุล หรือ ชื่อแสดงผล</label>
+                    <input type="text" id="regName" class="form-input" placeholder="เช่น คุณอเล็กซ์" required />
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div class="form-group">
+                        <label class="form-label" for="regEmail">อีเมล</label>
+                        <input type="email" id="regEmail" class="form-input" placeholder="name@example.com" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="regPhone">เบอร์โทรศัพท์</label>
+                        <input type="tel" id="regPhone" class="form-input" placeholder="08XXXXXXXX" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="regUsername">ชื่อผู้ใช้ (Username)</label>
+                    <input type="text" id="regUsername" class="form-input" placeholder="ภาษาอังกฤษ ตัวเลข" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="regPassword">รหัสผ่าน</label>
+                    <input type="password" id="regPassword" class="form-input" placeholder="อย่างน้อย 6 ตัวอักษร" required />
+                </div>
+                <button type="submit" class="auth-submit-btn">ยืนยันสร้างบัญชีใหม่ฟรี</button>
+            </form>
+
+            <!-- Quick Demo Accounts -->
+            <div class="demo-login-box">
+                <p style="font-size: 0.8rem; color: var(--color-outline); margin-bottom: 8px;">ทดลองเข้าสู่ระบบด้วยบัญชีเดโม:</p>
+                <div style="display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;">
+                    <button type="button" id="btnDemoLogin" class="btn-demo-login">
+                        ⚡ คุณอเล็กซ์ (บัญชีพรีเมียม)
+                    </button>
+                    <button type="button" id="btnDemoAdminLogin" class="btn-demo-login" style="color: #c62828; border-color: rgba(198,40,40,0.3);">
+                        🔑 ผู้ดูแลระบบ (Admin)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD CUSTOM CATEGORY MODAL -->
+    <div id="categoryModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title">เพิ่มหมวดหมู่หนังสือใหม่</h3>
+                <button class="icon-btn" id="btnCloseCategoryModal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <form id="formAddCategory">
+                <div class="form-group">
+                    <label class="form-label" for="newCategoryNameInput">ชื่อหมวดหมู่ใหม่</label>
+                    <input type="text" id="newCategoryNameInput" class="form-input" placeholder="เช่น มังงะ, สยองขวัญ, แฟนตาซี, เรื่องสั้น ฯลฯ" required />
+                </div>
+                <button type="submit" class="auth-submit-btn">
+                    + ยืนยันเพิ่มหมวดหมู่
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Upload Book Modal -->
+    <div id="uploadModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title">เพิ่มหนังสือเข้าสู่คลัง</h3>
+                <button class="icon-btn" id="btnCloseUploadModal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label class="form-label">เลือกหมวดหมู่สำหรับหนังสือเล่มนี้</label>
+                <select id="uploadBookCategorySelect" class="form-input">
+                    <!-- Populated dynamically -->
+                </select>
+            </div>
+
+            <div id="uploadDropzone" class="dropzone">
+                <span class="material-symbols-outlined dropzone-icon">cloud_upload</span>
+                <p style="font-weight: 600; font-size: 1.05rem; margin-bottom: 4px;">ลากไฟล์หนังสือมาวางที่นี่</p>
+                <p style="font-size: 0.85rem; color: var(--color-outline); margin-bottom: 16px;">รองรับไฟล์ .txt, .html, .epub, .pdf</p>
+                <button class="btn-secondary" style="pointer-events: none;">เลือกไฟล์จากเครื่อง</button>
+                <input type="file" id="bookFileInput" accept=".txt,.html,.htm,.epub,.pdf" style="display: none;"/>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logged-in User Profile Modal -->
+    <div id="profileModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title">ข้อมูลส่วนตัวและสถิติ</h3>
+                <button class="icon-btn" id="btnCloseProfileModal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+                <img id="profileAvatar" src="" alt="Avatar" style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 3px solid var(--color-primary);" />
+                <div>
+                    <h4 id="profileName" style="font-size: 1.2rem; font-weight: 700;">ชื่อผู้ใช้</h4>
+                    <p id="profileEmail" style="font-size: 0.85rem; color: var(--color-outline);">email@domain.com</p>
+                    <span id="profileTier" style="font-size: 0.75rem; color: var(--color-primary); font-weight: 600; text-transform: uppercase;">บัญชีพรีเมียม (อ่านฟรี)</span>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center; margin-bottom: 24px;">
+                <div style="background: var(--color-surface-container); padding: 14px; border-radius: var(--radius-md);">
+                    <p id="statTotalBooks" style="font-size: 1.5rem; font-weight: 700; color: var(--color-primary);">0</p>
+                    <p style="font-size: 0.75rem; color: var(--color-outline);">หนังสือในคลัง</p>
+                </div>
+                <div style="background: var(--color-surface-container); padding: 14px; border-radius: var(--radius-md);">
+                    <p id="statCompletedBooks" style="font-size: 1.5rem; font-weight: 700; color: #2e7d32;">0</p>
+                    <p style="font-size: 0.75rem; color: var(--color-outline);">อ่านจบแล้ว</p>
+                </div>
+                <div style="background: var(--color-surface-container); padding: 14px; border-radius: var(--radius-md);">
+                    <p id="statFavorites" style="font-size: 1.5rem; font-weight: 700; color: var(--color-accent);">0</p>
+                    <p style="font-size: 0.75rem; color: var(--color-outline);">รายการโปรด</p>
+                </div>
+            </div>
+
+            <button type="button" id="btnLogout" class="btn-secondary" style="width: 100%; justify-content: center; color: var(--color-accent); border-color: rgba(229,57,53,0.3);">
+                <span class="material-symbols-outlined">logout</span>
+                ออกจากระบบ
+            </button>
+        </div>
+    </div>
+
+    <!-- Application Core Scripts -->
+    <script src="books/data.js"></script>
+    <script src="reader.js"></script>
+    <script src="js/api.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
