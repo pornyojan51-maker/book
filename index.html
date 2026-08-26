@@ -1,12 +1,14 @@
-&lt;!DOCTYPE html&gt;
-&lt;html lang="th"&gt;
-&lt;head&gt;
-    &lt;meta charset="utf-8" /&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
-    &lt;title&gt;Lumina Books | คลังหนังสือออนไลน์&lt;/title&gt;
-    &lt;meta name="description" content="Lumina Books — แพลตฟอร์มอ่านหนังสือออนไลน์ฟรี เพียงสร้างบัญชีใหม่" /&gt;
-    &lt;meta http-equiv="refresh" content="0; url=E-Book Portal/index.html" /&gt;
-    &lt;style&gt;
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lumina Books | คลังหนังสือออนไลน์</title>
+    <meta name="description" content="Lumina Books — แพลตฟอร์มอ่านหนังสือออนไลน์ฟรี เพียงสร้างบัญชีใหม่" />
+    <meta http-equiv="refresh" content="2; url=E-Book Portal/index.html" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&display=swap" rel="stylesheet" />
+    <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Kanit', 'Segoe UI', sans-serif;
@@ -21,23 +23,11 @@
             text-align: center;
             animation: fadeIn 0.5s ease;
         }
-        .logo {
-            font-size: 3rem;
-            margin-bottom: 16px;
-        }
-        h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        p {
-            font-size: 1rem;
-            opacity: 0.85;
-            margin-bottom: 24px;
-        }
+        .logo { font-size: 3rem; margin-bottom: 16px; }
+        h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+        p { font-size: 1rem; opacity: 0.85; margin-bottom: 24px; }
         .spinner {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             border: 4px solid rgba(255,255,255,0.3);
             border-top: 4px solid #fff;
             border-radius: 50%;
@@ -45,10 +35,8 @@
             margin: 0 auto 16px;
         }
         .fallback-link {
-            color: #fff;
-            text-decoration: underline;
-            opacity: 0.8;
-            font-size: 0.9rem;
+            color: #fff; text-decoration: underline;
+            opacity: 0.8; font-size: 0.9rem;
         }
         .fallback-link:hover { opacity: 1; }
         @keyframes spin {
@@ -59,15 +47,15 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-    &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;div class="loading-container"&gt;
-        &lt;div class="logo"&gt;📚&lt;/div&gt;
-        &lt;h1&gt;Lumina Books&lt;/h1&gt;
-        &lt;p&gt;กำลังเข้าสู่คลังหนังสือออนไลน์...&lt;/p&gt;
-        &lt;div class="spinner"&gt;&lt;/div&gt;
-        &lt;a href="E-Book Portal/index.html" class="fallback-link"&gt;คลิกที่นี่หากไม่ถูกนำไปยังหน้าหลักโดยอัตโนมัติ&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <div class="logo">📚</div>
+        <h1>Lumina Books</h1>
+        <p>กำลังเข้าสู่คลังหนังสือออนไลน์...</p>
+        <div class="spinner"></div>
+        <a href="E-Book Portal/index.html" class="fallback-link">คลิกที่นี่หากไม่ถูกนำไปยังหน้าหลักโดยอัตโนมัติ</a>
+    </div>
+</body>
+</html>
