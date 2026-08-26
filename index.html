@@ -1,23 +1,15 @@
+<!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lumina Books | คลังหนังสือออนไลน์</title>
     <meta name="description" content="Lumina Books — แพลตฟอร์มอ่านหนังสือออนไลน์ฟรี เพียงสร้างบัญชีใหม่" />
-    <meta http-equiv="refresh" content="2; url=E-Book Portal/index.html" />
+    <!-- แนะนำให้หลีกเลี่ยงการเว้นวรรคในชื่อโฟลเดอร์ แต่ถ้าจำเป็นให้ใช้ %20 แทนช่องว่าง -->
+    <meta http-equiv="refresh" content="2; url=E-Book%20Portal/index.html" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&display=swap" rel="stylesheet" />
     <style>
-                <div class="loading-container">
-            <div class="logo">📚</div>
-            <h1>Lumina Books</h1>
-            <p>กำลังพาท่านเข้าสู่คลังหนังสือออนไลน์...</p>
-            <div class="spinner"></div>
-            <a class="fallback-link" href="E-Book Portal/index.html">หากรอนานเกินไป คลิกที่นี่</a>
-        </div>
-    </body>
-</html>
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Kanit', 'Segoe UI', sans-serif;
@@ -59,3 +51,12 @@
     </style>
 </head>
 <body>
+    <div class="loading-container">
+        <div class="logo">📖</div>
+        <h1>Lumina Books</h1>
+        <p>กำลังเตรียมความพร้อมเข้าสู่คลังหนังสือ...</p>
+        <div class="spinner"></div>
+        <a href="E-Book%20Portal/index.html" class="fallback-link">คลิกที่นี่หากระบบไม่เปลี่ยนหน้าอัตโนมัติ</a>
+    </div>
+</body>
+</html>
