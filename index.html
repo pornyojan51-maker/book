@@ -2459,40 +2459,32 @@ function createBook(event){
         }
 
 
-        const reader =
-            new FileReader();
+        decodeBookFile(file)
+            .then(
+                function(content){
 
+                    finishCreateBook(
+                        title,
+                        category,
+                        cover,
+                        content,
+                        file.name
+                    );
 
-        reader.onload =
-            function(e){
+                }
+            )
+            .catch(
+                function(error){
 
-                const content =
-                    e.target.result;
+                    console.error("Book file decode error:", error);
 
+                    showToast(
+                        "ไม่สามารถอ่านไฟล์ได้ กรุณาตรวจสอบไฟล์อีกครั้ง",
+                        "error"
+                    );
 
-                finishCreateBook(
-                    title,
-                    category,
-                    cover,
-                    content,
-                    file.name
-                );
-
-            };
-
-
-        reader.onerror =
-            function(){
-
-                showToast(
-                    "ไม่สามารถอ่านไฟล์ได้",
-                    "error"
-                );
-
-            };
-
-
-        reader.readAsText(file);
+                }
+            );
 
     }else{
 
@@ -2505,6 +2497,148 @@ function createBook(event){
         );
 
     }
+
+}
+
+
+/* ==========================================================
+   BOOK FILE DECODER
+   รองรับ UTF-8, UTF-8 BOM, UTF-16 LE/BE,
+   Windows-874 / TIS-620 และ HTML ที่ประกาศ charset
+========================================================== */
+
+async function decodeBookFile(file){
+
+    const buffer =
+        await file.arrayBuffer();
+
+    const bytes =
+        new Uint8Array(buffer);
+
+
+    /* BOM: UTF-8 */
+    if(
+        bytes.length >= 3 &&
+        bytes[0] === 0xEF &&
+        bytes[1] === 0xBB &&
+        bytes[2] === 0xBF
+    ){
+
+        return new TextDecoder("utf-8").decode(bytes);
+
+    }
+
+
+    /* BOM: UTF-16 Little Endian */
+    if(
+        bytes.length >= 2 &&
+        bytes[0] === 0xFF &&
+        bytes[1] === 0xFE
+    ){
+
+        return new TextDecoder("utf-16le").decode(bytes);
+
+    }
+
+
+    /* BOM: UTF-16 Big Endian */
+    if(
+        bytes.length >= 2 &&
+        bytes[0] === 0xFE &&
+        bytes[1] === 0xFF
+    ){
+
+        return decodeUtf16BE(bytes);
+
+    }
+
+
+    /*
+       ตรวจ charset ที่ประกาศอยู่ใน HTML ก่อน
+       เช่น UTF-8, TIS-620, Windows-874
+    */
+    const preview =
+        new TextDecoder("windows-1252")
+        .decode(bytes.slice(0, 8192));
+
+    const charsetMatch =
+        preview.match(
+            /<meta[^>]+charset\s*=\s*[\"']?\s*([^\s\"'/>]+)/i
+        ) ||
+        preview.match(
+            /<meta[^>]+content\s*=\s*[\"'][^\"']*charset\s*=\s*([^\s;\"']+)/i
+        );
+
+    if(charsetMatch){
+
+        const charset =
+            charsetMatch[1]
+            .toLowerCase()
+            .replace("windows-874", "windows-874")
+            .replace("tis-620", "windows-874")
+            .replace("iso-8859-11", "windows-874");
+
+        try{
+            return new TextDecoder(charset).decode(bytes);
+        }catch(error){
+            console.warn("ไม่สามารถใช้ charset ที่ประกาศในไฟล์ได้:", charset);
+        }
+
+    }
+
+
+    /*
+       ถ้าไม่ระบุ charset ให้ลอง UTF-8 แบบ strict ก่อน
+       เพื่อป้องกันอักขระไทยกลายเป็น �
+    */
+    try{
+
+        return new TextDecoder("utf-8", {fatal:true})
+            .decode(bytes);
+
+    }catch(error){
+        // ไม่ใช่ UTF-8 -> ลอง Windows-874 / TIS-620
+    }
+
+
+    try{
+
+        return new TextDecoder("windows-874")
+            .decode(bytes);
+
+    }catch(error){
+
+        console.warn("Windows-874 decoder ใช้งานไม่ได้ จะใช้ UTF-8 แบบปกติแทน");
+
+        return new TextDecoder("utf-8")
+            .decode(bytes);
+
+    }
+
+}
+
+
+function decodeUtf16BE(bytes){
+
+    const evenLength =
+        bytes.length - (bytes.length % 2);
+
+    const swapped =
+        new Uint8Array(evenLength);
+
+    for(
+        let i = 0;
+        i < evenLength;
+        i += 2
+    ){
+
+        swapped[i] = bytes[i + 1];
+        swapped[i + 1] = bytes[i];
+
+    }
+
+    return new TextDecoder("utf-16le")
+        .decode(swapped);
 
 }
 
