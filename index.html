@@ -5,315 +5,370 @@ html = r'''<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lumina Books | คลังหนังสือออนไลน์</title>
-<meta name="description" content="Lumina Books - E-Book Portal">
+<title>Lumina Books | E-Book Portal</title>
 <style>
 *{box-sizing:border-box}
-:root{--primary:#17298f;--primary2:#3448c5;--bg:#f3f7fc;--card:#fff;--text:#15213b;--muted:#64748b;--line:#dbe3ef;--success:#18a66a;--danger:#ef4444;--warning:#f59e0b}
-body{margin:0;font-family:"Segoe UI","Noto Sans Thai",Tahoma,sans-serif;background:var(--bg);color:var(--text)}
+body{margin:0;font-family:"Segoe UI","Noto Sans Thai",Tahoma,sans-serif;background:#f3f7fc;color:#16213e}
 button,input,select,textarea{font:inherit}
-button{cursor:pointer;border:0}
-.header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 12px #17298f12}
-.nav{max-width:1200px;margin:auto;min-height:76px;padding:10px 22px;display:flex;align-items:center;gap:14px}
-.logo{display:flex;align-items:center;gap:10px;color:var(--primary);font-weight:800;font-size:23px;min-width:190px}
-.logo-icon{font-size:32px}
-.search{flex:1;max-width:430px;display:flex;background:#edf5ff;border:1px solid #c8d7ea;border-radius:28px;padding:4px}
-.search input{width:100%;border:0;background:transparent;outline:0;padding:10px 14px}
-.search button{background:transparent;padding:8px 12px}
-.nav-actions{margin-left:auto;display:flex;align-items:center;gap:10px}
-.btn{padding:11px 17px;border-radius:12px;font-weight:700}
-.btn-primary{background:var(--primary);color:#fff}
-.btn-secondary{background:#eaf0f8;color:#20304f}
-.btn-success{background:var(--success);color:#fff}
-.btn-danger{background:var(--danger);color:#fff}
-.btn-warning{background:#fff3d8;color:#8a5a00}
-.user-pill{width:43px;height:43px;border-radius:50%;background:#e7eef8;display:grid;place-items:center;font-size:21px}
-main{max-width:1200px;margin:auto;padding:28px 22px 70px}
-.hero{background:linear-gradient(135deg,#eaf5ff,#fff9ea);border:1px solid #d8e5f2;border-radius:22px;padding:38px;margin-bottom:25px}
-.hero h1{font-size:38px;margin:0 0 10px;color:#10205d}
-.hero p{font-size:18px;color:var(--muted);margin:0 0 22px}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
-.section{margin-top:28px}
-.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}
+button{cursor:pointer}
+.header{background:#fff;border-bottom:1px solid #dbe3ef;position:sticky;top:0;z-index:20}
+.nav{max-width:1200px;margin:auto;min-height:78px;padding:10px 20px;display:flex;align-items:center;gap:14px}
+.logo{font-size:23px;font-weight:800;color:#17298f;display:flex;align-items:center;gap:10px;min-width:185px}
+.logo span:first-child{font-size:34px}
+.search{flex:1;display:flex;max-width:440px;background:#eef5ff;border:1px solid #c9d8ec;border-radius:28px;padding:3px}
+.search input{width:100%;border:0;outline:0;background:transparent;padding:11px 15px}
+.search button{border:0;background:transparent;padding:0 13px}
+.nav-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
+.btn{border:0;border-radius:11px;padding:11px 16px;font-weight:700}
+.primary{background:#192b91;color:#fff}.secondary{background:#eaf0f8;color:#21304b}
+.success{background:#16a66a;color:#fff}.danger{background:#ef4444;color:#fff}
+.user{width:42px;height:42px;border-radius:50%;border:1px solid #cbd8e8;background:#eaf0f8}
+main{max-width:1200px;margin:auto;padding:28px 20px 60px}
+.hero{background:linear-gradient(135deg,#e9f5ff,#fff8e8);border:1px solid #d6e4f1;border-radius:22px;padding:38px;margin-bottom:28px}
+.hero h1{font-size:38px;margin:0 0 10px;color:#12215d}
+.hero p{font-size:18px;color:#64748b;margin:0 0 22px}
+.hero-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.section{margin-top:28px}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
 .section h2{margin:0;font-size:25px}
-.category-row{display:flex;gap:10px;overflow:auto;padding-bottom:5px}
-.chip{padding:10px 16px;border:1px solid #cdd8e8;background:#fff;border-radius:22px;white-space:nowrap}
-.chip.active{background:var(--primary);color:#fff}
-.books{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:18px}
-.book{background:#fff;border:1px solid var(--line);border-radius:17px;overflow:hidden;box-shadow:0 5px 18px #17298f0b}
-.cover{height:245px;background:linear-gradient(135deg,#dceaff,#eef2ff);display:grid;place-items:center;font-size:62px}
-.book-body{padding:15px}
-.book h3{font-size:17px;margin:0 0 6px}
-.book p{margin:4px 0;color:var(--muted);font-size:14px}
-.book .btn{width:100%;margin-top:10px}
-.empty{padding:38px;text-align:center;color:var(--muted);background:#fff;border:1px dashed #cbd5e1;border-radius:15px}
-.modal{position:fixed;inset:0;background:#0f172a88;z-index:50;display:none;align-items:center;justify-content:center;padding:18px}
-.modal.show{display:flex}
-.modal-card{background:#fff;width:min(560px,100%);max-height:90vh;overflow:auto;border-radius:20px;padding:25px;box-shadow:0 20px 60px #0004}
-.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.modal-head h2{margin:0}
-.close{background:#eef2f7;border-radius:10px;padding:7px 11px}
-.form-group{margin-bottom:14px}
-.form-group label{display:block;font-weight:700;margin-bottom:6px}
-.form-group input,.form-group select,.form-group textarea{width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:11px;outline:none}
-.form-group textarea{min-height:120px;resize:vertical}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary)}
-.form-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
-.notice{padding:13px 15px;border-radius:12px;background:#fff8e5;border:1px solid #f5d78b;color:#725100;margin-bottom:15px}
-.reader{display:none}
-.reader.show{display:block}
-.reader-top{display:flex;align-items:center;gap:10px;margin-bottom:15px}
-.reader-card{background:#fff;border-radius:18px;padding:30px;box-shadow:0 5px 20px #17298f0b;line-height:1.9}
-.reader-card h1{line-height:1.3}
-.chapter-list{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
-.chapter-btn{background:#edf2fa;border-radius:9px;padding:8px 13px}
-.chapter-btn.active{background:var(--primary);color:#fff}
-.admin{display:none}
-.admin.show{display:block}
+.chips{display:flex;gap:9px;overflow:auto;padding-bottom:4px}
+.chip{white-space:nowrap;border:1px solid #cbd7e7;background:#fff;border-radius:22px;padding:9px 15px}
+.chip.active{background:#192b91;color:#fff}
+.books{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+.book{background:#fff;border:1px solid #dbe3ef;border-radius:16px;overflow:hidden;box-shadow:0 5px 18px #182b8f0d}
+.cover{height:245px;display:grid;place-items:center;background:linear-gradient(135deg,#dceaff,#eef1ff);font-size:65px}
+.book-body{padding:15px}.book h3{margin:0 0 6px;font-size:18px}.book p{margin:5px 0;color:#64748b;font-size:14px}
+.book .btn{width:100%;margin-top:9px}
+.empty{grid-column:1/-1;background:#fff;border:1px dashed #bdc9da;border-radius:15px;padding:35px;text-align:center;color:#64748b}
+.page{display:none}.page.active{display:block}
+.reader-card,.admin-card{background:#fff;border:1px solid #dbe3ef;border-radius:18px;padding:25px}
+.reader-top{display:flex;align-items:center;gap:12px;margin-bottom:15px;flex-wrap:wrap}
+.chapter-list{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.chapter{border:0;background:#eaf0f8;border-radius:9px;padding:9px 13px}.chapter.active{background:#192b91;color:#fff}
+.reader-content{font-size:17px;line-height:2;color:#27344f}
+.reader-content h2{line-height:1.4}
+.modal{position:fixed;inset:0;background:#07112699;display:none;align-items:center;justify-content:center;padding:18px;z-index:100}
+.modal.show{display:flex}.modal-box{width:min(570px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;padding:25px}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modal-head h2{margin:0}
+.close{background:#edf1f6;border:0;border-radius:9px;padding:7px 11px}
+.form-row{margin-bottom:14px}.form-row label{display:block;font-weight:700;margin-bottom:6px}
+.form-row input,.form-row select,.form-row textarea{width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:11px;outline:none}
+.form-row textarea{min-height:100px;resize:vertical}
+.actions{display:flex;justify-content:flex-end;gap:9px;margin-top:17px}
+.notice{background:#fff8df;border:1px solid #f1d27a;color:#725500;padding:13px;border-radius:11px;margin-bottom:16px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}
-.stat{background:#fff;border:1px solid var(--line);border-radius:15px;padding:18px}
-.stat b{font-size:28px;display:block;color:var(--primary)}
-.table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:15px}
+.stat{background:#fff;border:1px solid #dbe3ef;border-radius:14px;padding:17px}
+.stat b{display:block;font-size:28px;color:#192b91;margin-top:4px}
+.table-wrap{background:#fff;border:1px solid #dbe3ef;border-radius:14px;overflow:auto}
 table{width:100%;border-collapse:collapse;min-width:650px}
-th,td{padding:13px;border-bottom:1px solid var(--line);text-align:left}
+th,td{padding:13px;border-bottom:1px solid #e4e9f0;text-align:left}
 th{background:#f5f8fc}
-.badge{padding:5px 9px;border-radius:99px;font-size:12px;font-weight:700}
-.badge-active{background:#dcfce7;color:#166534}
-.badge-banned{background:#fee2e2;color:#991b1b}
-.footer{text-align:center;color:var(--muted);padding:25px}
+.badge{display:inline-block;padding:5px 9px;border-radius:99px;font-size:12px;font-weight:700}
+.active-badge{background:#dcfce7;color:#166534}.banned-badge{background:#fee2e2;color:#991b1b}
+footer{text-align:center;padding:28px;color:#64748b}
 .hidden{display:none!important}
-@media(max-width:800px){
-.nav{flex-wrap:wrap}.logo{min-width:auto}.search{order:3;max-width:none;flex-basis:100%}
-.hero h1{font-size:30px}.stats{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:480px){.nav-actions .admin-link{display:none}.stats{grid-template-columns:1fr 1fr}.books{grid-template-columns:1fr 1fr}.cover{height:190px}}
+@media(max-width:800px){.nav{flex-wrap:wrap}.search{order:3;flex-basis:100%;max-width:none}.logo{min-width:auto}.stats{grid-template-columns:1fr 1fr}.hero h1{font-size:30px}}
+@media(max-width:500px){.nav-actions .admin-btn{display:none}.books{grid-template-columns:1fr 1fr}.cover{height:190px}}
 </style>
 </head>
 <body>
 
 <header class="header">
-  <nav class="nav">
-    <div class="logo"><span class="logo-icon">📖</span><span>Lumina<br>Books</span></div>
-    <div class="search">
-      <input id="searchInput" type="search" placeholder="ค้นหาชื่อหนังสือ ผู้แต่ง หรือหมวดหมู่">
-      <button onclick="renderBooks()">🔍</button>
-    </div>
-    <div class="nav-actions">
-      <button class="btn btn-success" onclick="openModal('uploadModal')">＋ เพิ่มหนังสือ</button>
-      <button class="btn btn-primary admin-link hidden" id="adminNav" onclick="showAdmin()">⚙️ ระบบหลังบ้าน</button>
-      <button class="user-pill" id="userButton" onclick="openAccount()">👤</button>
-      <button class="btn btn-secondary" id="loginNav" onclick="openModal('loginModal')">เข้าสู่ระบบ</button>
-    </div>
-  </nav>
+<nav class="nav">
+  <div class="logo"><span>📖</span><span>Lumina<br>Books</span></div>
+  <div class="search">
+    <input id="search" placeholder="ค้นหาชื่อหนังสือ ผู้แต่ง หรือหมวดหมู่">
+    <button onclick="renderBooks()">🔍</button>
+  </div>
+  <div class="nav-actions">
+    <button class="btn success" onclick="openModal('uploadModal')">＋ เพิ่มหนังสือ</button>
+    <button id="adminBtn" class="btn primary admin-btn hidden" onclick="openAdmin()">⚙️ ระบบหลังบ้าน</button>
+    <button class="user" onclick="openAccount()">👤</button>
+    <button id="loginBtn" class="btn secondary" onclick="openModal('loginModal')">เข้าสู่ระบบ</button>
+  </div>
+</nav>
 </header>
 
 <main>
-<section id="homePage">
+<section id="homePage" class="page active">
   <div class="hero">
     <h1>ยินดีต้อนรับสู่ Lumina Books</h1>
-    <p>คลังหนังสือออนไลน์สำหรับอ่านและจัดการหนังสือ พร้อมระบบสมาชิก ผู้แต่ง และการแบ่งหนังสือเป็นตอน</p>
-    <div class="hero-actions">
-      <button class="btn btn-primary" onclick="document.getElementById('booksSection').scrollIntoView({behavior:'smooth'})">📚 ดูหนังสือทั้งหมด</button>
-      <button class="btn btn-secondary" onclick="openModal('registerModal')">✨ สร้างบัญชีใหม่</button>
+    <p>อ่านหนังสือออนไลน์ จัดการหนังสือ แบ่งเนื้อหาเป็นตอน และสร้างบัญชีผู้ใช้ได้ในระบบเดียว</p>
+    <div class="hero-buttons">
+      <button class="btn primary" onclick="document.getElementById('library').scrollIntoView({behavior:'smooth'})">📚 ดูหนังสือทั้งหมด</button>
+      <button class="btn secondary" onclick="openModal('registerModal')">✨ สร้างบัญชีใหม่</button>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-head"><h2>หมวดหมู่หนังสือ</h2></div>
-    <div class="category-row" id="categories"></div>
+    <div class="section-head"><h2>📂 หมวดหมู่</h2></div>
+    <div id="categories" class="chips"></div>
   </div>
 
-  <div class="section" id="booksSection">
-    <div class="section-head">
-      <h2>📚 ห้องสมุดหนังสือทั้งหมด</h2>
-      <span id="bookCount" style="color:var(--muted)"></span>
-    </div>
+  <div class="section" id="library">
+    <div class="section-head"><h2>📚 ห้องสมุดหนังสือทั้งหมด</h2><span id="count" style="color:#64748b"></span></div>
     <div id="books" class="books"></div>
   </div>
 </section>
 
-<section id="readerPage" class="reader">
+<section id="readerPage" class="page">
   <div class="reader-top">
-    <button class="btn btn-secondary" onclick="closeReader()">← กลับคลังหนังสือ</button>
-    <span id="readerBookTitle"></span>
+    <button class="btn secondary" onclick="goHome()">← กลับหน้าหลัก</button>
+    <strong id="readerBook"></strong>
   </div>
   <div class="reader-card">
-    <h1 id="readerTitle"></h1>
-    <div class="chapter-list" id="chapterList"></div>
+    <h1 id="readerChapterTitle"></h1>
+    <div id="chapters" class="chapter-list"></div>
     <hr>
-    <article id="readerContent"></article>
+    <div id="readerContent" class="reader-content"></div>
   </div>
 </section>
 
-<section id="adminPage" class="admin">
+<section id="adminPage" class="page">
   <div class="section-head">
-    <div><h2>⚙️ ระบบหลังบ้าน</h2><p style="color:var(--muted)">จัดการสมาชิกและข้อมูลจากระบบ</p></div>
-    <button class="btn btn-secondary" onclick="showHome()">← กลับหน้าหลัก</button>
+    <div><h2>⚙️ ระบบหลังบ้าน</h2><p style="color:#64748b">จัดการสมาชิกของระบบ</p></div>
+    <button class="btn secondary" onclick="goHome()">← กลับหน้าหลัก</button>
   </div>
-  <div class="notice">หน้านี้จะแสดงข้อมูลสมาชิกที่บันทึกไว้ในระบบนี้ หากเชื่อม Backend/D1 แล้ว ให้เปลี่ยนฟังก์ชันโหลดสมาชิกไปเรียก <code>GET /api/admin/users</code></div>
+  <div class="notice">ข้อมูลสมาชิกในหน้าเว็บนี้ถูกเก็บใน LocalStorage ของเบราว์เซอร์เพื่อให้ทดลองระบบได้ทันทีบน GitHub Pages หากมี Backend/D1 จริง สามารถเปลี่ยนฟังก์ชันโหลดสมาชิกเป็น API ได้ภายหลัง</div>
   <div class="stats">
-    <div class="stat">สมาชิกทั้งหมด<b id="statUsers">0</b></div>
-    <div class="stat">สมาชิกทั่วไป<b id="statMembers">0</b></div>
-    <div class="stat">ผู้ดูแล<b id="statAdmins">0</b></div>
-    <div class="stat">หนังสือ<b id="statBooks">0</b></div>
+    <div class="stat">สมาชิกทั้งหมด<b id="sUsers">0</b></div>
+    <div class="stat">สมาชิกทั่วไป<b id="sMembers">0</b></div>
+    <div class="stat">ผู้ดูแลระบบ<b id="sAdmins">0</b></div>
+    <div class="stat">หนังสือ<b id="sBooks">0</b></div>
   </div>
-  <div class="section-head">
-    <h2>👥 สมาชิก</h2>
-    <div><input id="memberSearch" oninput="renderMembers()" placeholder="ค้นหา Username / Email" style="padding:10px;border:1px solid #cbd5e1;border-radius:10px"></div>
-  </div>
-  <div class="table-wrap">
-    <table><thead><tr><th>Username</th><th>Email</th><th>สิทธิ์</th><th>สถานะ</th><th>วันที่สมัคร</th></tr></thead><tbody id="memberTable"></tbody></table>
+  <div class="admin-card">
+    <div class="section-head">
+      <h2>👥 สมาชิก</h2>
+      <input id="memberSearch" oninput="renderMembers()" placeholder="ค้นหา Username / Email" style="padding:10px;border:1px solid #cbd5e1;border-radius:9px">
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Username</th><th>Email</th><th>สิทธิ์</th><th>สถานะ</th><th>วันที่สมัคร</th></tr></thead>
+        <tbody id="memberTable"></tbody>
+      </table>
+    </div>
   </div>
 </section>
 </main>
 
-<footer class="footer">© 2026 Lumina Books — E-Book Portal</footer>
+<footer>© 2026 Lumina Books — E-Book Portal</footer>
 
-<!-- LOGIN -->
-<div class="modal" id="loginModal">
-<div class="modal-card">
+<!-- Login -->
+<div id="loginModal" class="modal">
+<div class="modal-box">
 <div class="modal-head"><h2>🔐 เข้าสู่ระบบ</h2><button class="close" onclick="closeModal('loginModal')">✕</button></div>
-<div class="form-group"><label>Username หรือ Email</label><input id="loginUser"></div>
-<div class="form-group"><label>รหัสผ่าน</label><input id="loginPass" type="password"></div>
-<div class="form-actions"><button class="btn btn-secondary" onclick="closeModal('loginModal')">ยกเลิก</button><button class="btn btn-primary" onclick="login()">เข้าสู่ระบบ</button></div>
-<p style="color:var(--muted)">ยังไม่มีบัญชี? <a href="#" onclick="closeModal('loginModal');openModal('registerModal')">สร้างบัญชีใหม่</a></p>
+<div class="form-row"><label>Username หรือ Email</label><input id="loginUser"></div>
+<div class="form-row"><label>รหัสผ่าน</label><input id="loginPass" type="password"></div>
+<div class="actions"><button class="btn secondary" onclick="closeModal('loginModal')">ยกเลิก</button><button class="btn primary" onclick="login()">เข้าสู่ระบบ</button></div>
+<p>ยังไม่มีบัญชี? <a href="#" onclick="switchModal('loginModal','registerModal')">สร้างบัญชีใหม่</a></p>
 </div></div>
 
-<!-- REGISTER -->
-<div class="modal" id="registerModal">
-<div class="modal-card">
+<!-- Register -->
+<div id="registerModal" class="modal">
+<div class="modal-box">
 <div class="modal-head"><h2>✨ สร้างบัญชีใหม่</h2><button class="close" onclick="closeModal('registerModal')">✕</button></div>
-<div class="form-group"><label>Username</label><input id="regUser"></div>
-<div class="form-group"><label>Email</label><input id="regEmail" type="email"></div>
-<div class="form-group"><label>รหัสผ่าน</label><input id="regPass" type="password"></div>
-<div class="form-actions"><button class="btn btn-secondary" onclick="closeModal('registerModal')">ยกเลิก</button><button class="btn btn-success" onclick="register()">สร้างบัญชี</button></div>
+<div class="form-row"><label>Username</label><input id="regUser"></div>
+<div class="form-row"><label>Email</label><input id="regEmail" type="email"></div>
+<div class="form-row"><label>รหัสผ่าน</label><input id="regPass" type="password"></div>
+<div class="actions"><button class="btn secondary" onclick="closeModal('registerModal')">ยกเลิก</button><button class="btn success" onclick="register()">สร้างบัญชี</button></div>
 </div></div>
 
-<!-- UPLOAD -->
-<div class="modal" id="uploadModal">
-<div class="modal-card">
+<!-- Upload -->
+<div id="uploadModal" class="modal">
+<div class="modal-box">
 <div class="modal-head"><h2>📤 เพิ่มหนังสือ</h2><button class="close" onclick="closeModal('uploadModal')">✕</button></div>
-<div class="notice">รองรับไฟล์ Word <b>.docx</b> สำหรับนำข้อมูลไปใช้เป็นเนื้อหาหนังสือ/ตอน ในหน้าเว็บแบบ Static ไฟล์จะถูกอ่านในเครื่องของคุณก่อน และข้อมูลตัวอย่างจะถูกบันทึกในเบราว์เซอร์</div>
-<div class="form-group"><label>ชื่อหนังสือ</label><input id="bookName"></div>
-<div class="form-group"><label>ผู้แต่ง</label><input id="bookAuthor"></div>
-<div class="form-group"><label>หมวดหมู่</label><select id="bookCategory"></select></div>
-<div class="form-group"><label>รายละเอียด</label><textarea id="bookDescription"></textarea></div>
-<div class="form-group"><label>ไฟล์ Word (.docx) — ตอนแรก (ไม่บังคับ)</label><input id="wordFile" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"></div>
-<div class="form-actions"><button class="btn btn-secondary" onclick="closeModal('uploadModal')">ยกเลิก</button><button class="btn btn-success" onclick="addBook()">บันทึกหนังสือ</button></div>
+<div class="notice">เพิ่มหนังสือได้ทันที ระบบจะแยกตอนเป็นข้อมูลคนละรายการ เมื่ออ่านหนังสือสามารถกดเลือกแต่ละตอนได้</div>
+<div class="form-row"><label>ชื่อหนังสือ</label><input id="bookTitle"></div>
+<div class="form-row"><label>ผู้แต่ง</label><input id="bookAuthor"></div>
+<div class="form-row"><label>หมวดหมู่</label><select id="bookCategory"></select></div>
+<div class="form-row"><label>รายละเอียด</label><textarea id="bookDescription"></textarea></div>
+<div class="form-row"><label>เพิ่มตอนแรก</label><input id="chapterTitle" placeholder="เช่น ตอนที่ 1 : จุดเริ่มต้น"></div>
+<div class="form-row"><label>เนื้อหาตอนแรก</label><textarea id="chapterContent" placeholder="พิมพ์เนื้อหาของตอนที่ 1"></textarea></div>
+<div class="actions"><button class="btn secondary" onclick="closeModal('uploadModal')">ยกเลิก</button><button class="btn success" onclick="addBook()">บันทึกหนังสือ</button></div>
 </div></div>
 
-<!-- ACCOUNT -->
-<div class="modal" id="accountModal">
-<div class="modal-card">
+<!-- Account -->
+<div id="accountModal" class="modal">
+<div class="modal-box">
 <div class="modal-head"><h2>👤 บัญชีของฉัน</h2><button class="close" onclick="closeModal('accountModal')">✕</button></div>
 <div id="accountInfo"></div>
-<div class="form-actions"><button class="btn btn-danger" onclick="logout()">ออกจากระบบ</button></div>
+<div class="actions"><button class="btn danger" onclick="logout()">ออกจากระบบ</button></div>
 </div></div>
 
 <script>
-const defaultCategories=["ทั้งหมด","วรรณกรรม","ประวัติศาสตร์","ปรัชญา","นวนิยาย","โรแมนซ์","การ์ตูน"];
-let categories=JSON.parse(localStorage.getItem("lumina_categories")||"null")||defaultCategories;
-let books=JSON.parse(localStorage.getItem("lumina_books")||"null")||[
- {id:"book-1",title:"ประตูที่ไม่ควรเปิด",author:"Lumina Author",category:"นวนิยาย",description:"หนังสือตัวอย่างสำหรับทดสอบระบบอ่านหนังสือ",chapters:[
-  {id:"c1",number:1,title:"ตอนที่ 1 : ประตูที่ไม่ควรเปิด",content:"<p>ยินดีต้อนรับสู่ตอนแรกของหนังสือ ตัวอย่างนี้แสดงการอ่านหนังสือและการแยกข้อมูลแต่ละตอนออกจากกัน</p><p>คุณสามารถเพิ่มตอนใหม่และกำหนดเนื้อหาแยกจากตอนอื่นได้เมื่อเชื่อม Backend จริง</p>"},
-  {id:"c2",number:2,title:"ตอนที่ 2 : เสียงจากอีกด้าน",content:"<p>นี่คือตอนที่ 2 ซึ่งเป็นข้อมูลคนละชุดกับตอนที่ 1</p>"}
- ]},
- {id:"book-2",title:"เส้นทางแห่งความรู้",author:"Lumina Author",category:"ปรัชญา",description:"หนังสือทดลองอีกหนึ่งรายการ",chapters:[
-  {id:"c1",number:1,title:"ตอนที่ 1 : จุดเริ่มต้น",content:"<p>ทุกการเดินทางเริ่มต้นจากก้าวแรก</p>"}
- ]}
-];
-let users=JSON.parse(localStorage.getItem("lumina_users")||"null")||[
- {id:"admin-1",username:"admin",email:"admin@luminabooks.local",password:"admin123",role:"ADMIN",status:"ACTIVE",createdDate:"2026-08-01"},
- {id:"member-1",username:"member01",email:"member01@example.com",password:"member123",role:"MEMBER",status:"ACTIVE",createdDate:"2026-08-28"}
-];
-let currentUser=JSON.parse(localStorage.getItem("lumina_current")||"null");
-let activeCategory="ทั้งหมด";
+const categories=["ทั้งหมด","วรรณกรรม","ประวัติศาสตร์","ปรัชญา","นวนิยาย","โรแมนซ์","การ์ตูน"];
 
-function save(){localStorage.setItem("lumina_books",JSON.stringify(books));localStorage.setItem("lumina_users",JSON.stringify(users));}
+let books=JSON.parse(localStorage.getItem("lumina_books")||"null") || [
+{id:"b1",title:"ประตูที่ไม่ควรเปิด",author:"Lumina Author",category:"นวนิยาย",description:"หนังสือตัวอย่างสำหรับทดสอบระบบอ่านหนังสือ",chapters:[
+{id:"c1",number:1,title:"ตอนที่ 1 : ประตูที่ไม่ควรเปิด",content:"<p>ยินดีต้อนรับสู่ Lumina Books</p><p>นี่คือตัวอย่างเนื้อหาของตอนที่ 1 ข้อมูลของตอนนี้แยกออกจากตอนอื่นอย่างชัดเจน</p>"},
+{id:"c2",number:2,title:"ตอนที่ 2 : เสียงจากอีกด้าน",content:"<p>นี่คือเนื้อหาของตอนที่ 2 ซึ่งเป็นข้อมูลอีกชุดหนึ่ง</p><p>สามารถเลือกอ่านแต่ละตอนได้จากปุ่มด้านบน</p>"}]},
+{id:"b2",title:"เส้นทางแห่งความรู้",author:"Lumina Author",category:"ปรัชญา",description:"หนังสือทดลอง",chapters:[
+{id:"c1",number:1,title:"ตอนที่ 1 : จุดเริ่มต้น",content:"<p>ทุกการเดินทางเริ่มต้นจากก้าวแรก</p>"}]}
+];
+
+let users=JSON.parse(localStorage.getItem("lumina_users")||"null") || [
+{id:"admin1",username:"admin",email:"admin@lumina.local",password:"admin123",role:"ADMIN",status:"ACTIVE",createdDate:"2026-08-01"},
+{id:"member1",username:"member01",email:"member01@example.com",password:"member123",role:"MEMBER",status:"ACTIVE",createdDate:"2026-08-28"}
+];
+
+let currentUser=JSON.parse(localStorage.getItem("lumina_current")||"null");
+let category="ทั้งหมด";
+
+function save(){
+ localStorage.setItem("lumina_books",JSON.stringify(books));
+ localStorage.setItem("lumina_users",JSON.stringify(users));
+}
+function esc(s){return String(s??"").replace(/[&<>"']/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[x]))}
 function openModal(id){document.getElementById(id).classList.add("show")}
 function closeModal(id){document.getElementById(id).classList.remove("show")}
-function showHome(){document.getElementById("homePage").style.display="block";document.getElementById("readerPage").classList.remove("show");document.getElementById("adminPage").classList.remove("show");window.scrollTo(0,0)}
-function showAdmin(){
- if(!currentUser||currentUser.role!=="ADMIN"){alert("เฉพาะผู้ดูแลระบบเท่านั้น");return}
- document.getElementById("homePage").style.display="none";document.getElementById("readerPage").classList.remove("show");document.getElementById("adminPage").classList.add("show");renderMembers();window.scrollTo(0,0)
+function switchModal(a,b){closeModal(a);openModal(b)}
+function showPage(id){
+ document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ window.scrollTo({top:0,behavior:"smooth"});
 }
+function goHome(){showPage("homePage")}
+function openAdmin(){
+ if(!currentUser || currentUser.role!=="ADMIN"){alert("ต้องเข้าสู่ระบบด้วยบัญชีผู้ดูแลระบบก่อน");return}
+ showPage("adminPage");renderMembers()
+}
+
 function renderCategories(){
- document.getElementById("categories").innerHTML=categories.map(c=>`<button class="chip ${c===activeCategory?"active":""}" onclick="selectCategory('${esc(c)}')">${esc(c)}</button>`).join("");
+ document.getElementById("categories").innerHTML=categories.map(c=>
+ `<button class="chip ${c===category?"active":""}" onclick="setCategory('${esc(c)}')">${esc(c)}</button>`).join("");
  document.getElementById("bookCategory").innerHTML=categories.filter(c=>c!=="ทั้งหมด").map(c=>`<option>${esc(c)}</option>`).join("");
 }
-function selectCategory(c){activeCategory=c;renderCategories();renderBooks()}
+function setCategory(c){category=c;renderCategories();renderBooks()}
+
 function renderBooks(){
- const q=document.getElementById("searchInput").value.trim().toLowerCase();
- let list=books.filter(b=>(activeCategory==="ทั้งหมด"||b.category===activeCategory)&&(!q||(b.title+" "+b.author+" "+b.category).toLowerCase().includes(q)));
- document.getElementById("bookCount").textContent=`${list.length} รายการ`;
- document.getElementById("books").innerHTML=list.length?list.map(b=>`<article class="book">
- <div class="cover">📚</div><div class="book-body"><h3>${esc(b.title)}</h3><p>✍️ ${esc(b.author)}</p><p>🏷️ ${esc(b.category)}</p><p>${b.chapters.length} ตอน</p><button class="btn btn-primary" onclick="openReader('${b.id}')">📖 อ่านหนังสือ</button></div>
- </article>`).join(""):`<div class="empty" style="grid-column:1/-1">ไม่พบหนังสือที่ค้นหา</div>`;
+ const q=document.getElementById("search").value.toLowerCase().trim();
+ const list=books.filter(b=>
+ (category==="ทั้งหมด"||b.category===category) &&
+ (!q||(b.title+" "+b.author+" "+b.category).toLowerCase().includes(q))
+ );
+ document.getElementById("count").textContent=list.length+" รายการ";
+ document.getElementById("books").innerHTML=list.length?list.map(b=>`
+ <article class="book">
+  <div class="cover">📚</div>
+  <div class="book-body">
+   <h3>${esc(b.title)}</h3>
+   <p>✍️ ${esc(b.author)}</p>
+   <p>🏷️ ${esc(b.category)}</p>
+   <p>📑 ${b.chapters.length} ตอน</p>
+   <button class="btn primary" onclick="readBook('${b.id}')">📖 อ่านหนังสือ</button>
+  </div>
+ </article>`).join(""):`<div class="empty">ไม่พบหนังสือที่ค้นหา</div>`;
 }
-function openReader(id){
+
+function readBook(id){
  const b=books.find(x=>x.id===id);if(!b)return;
- document.getElementById("homePage").style.display="none";document.getElementById("adminPage").classList.remove("show");document.getElementById("readerPage").classList.add("show");
- document.getElementById("readerBookTitle").textContent=b.title;document.getElementById("readerTitle").textContent=b.chapters[0]?.title||b.title;
- document.getElementById("chapterList").innerHTML=b.chapters.map((c,i)=>`<button class="chapter-btn ${i===0?"active":""}" onclick="openChapter('${b.id}','${c.id}',this)">ตอนที่ ${c.number}</button>`).join("");
- document.getElementById("readerContent").innerHTML=b.chapters[0]?.content||"<p>ยังไม่มีเนื้อหา</p>";
- window.scrollTo(0,0);
+ showPage("readerPage");
+ document.getElementById("readerBook").textContent=b.title+" — "+b.author;
+ document.getElementById("chapters").innerHTML=b.chapters.map((c,i)=>
+ `<button class="chapter ${i===0?"active":""}" onclick="readChapter('${b.id}','${c.id}',this)">ตอนที่ ${c.number}</button>`).join("");
+ if(b.chapters[0])showChapter(b.chapters[0]);
 }
-function openChapter(bookId,chapterId,btn){
- const b=books.find(x=>x.id===bookId),c=b?.chapters.find(x=>x.id===chapterId);if(!c)return;
- document.getElementById("readerTitle").textContent=c.title;document.getElementById("readerContent").innerHTML=c.content;
- document.querySelectorAll(".chapter-btn").forEach(x=>x.classList.remove("active"));btn.classList.add("active");
+function readChapter(bookId,chapterId,button){
+ const b=books.find(x=>x.id===bookId),c=b?.chapters.find(x=>x.id===chapterId);
+ if(!c)return;
+ showChapter(c);
+ document.querySelectorAll(".chapter").forEach(x=>x.classList.remove("active"));
+ button.classList.add("active");
 }
-function closeReader(){document.getElementById("readerPage").classList.remove("show");showHome()}
+function showChapter(c){
+ document.getElementById("readerChapterTitle").textContent=c.title;
+ document.getElementById("readerContent").innerHTML=c.content||"<p>ตอนนี้ยังไม่มีเนื้อหา</p>";
+}
+
 function register(){
- const u=document.getElementById("regUser").value.trim(),e=document.getElementById("regEmail").value.trim(),p=document.getElementById("regPass").value;
- if(!u||!e||!p){alert("กรุณากรอกข้อมูลให้ครบ");return}
- if(users.some(x=>x.username.toLowerCase()===u.toLowerCase())){alert("Username นี้มีอยู่แล้ว");return}
- if(users.some(x=>x.email.toLowerCase()===e.toLowerCase())){alert("Email นี้มีอยู่แล้ว");return}
- const user={id:"user-"+Date.now(),username:u,email:e,password:p,role:"MEMBER",status:"ACTIVE",createdDate:new Date().toISOString().slice(0,10)};
- users.push(user);save();currentUser={...user,password:undefined};localStorage.setItem("lumina_current",JSON.stringify(currentUser));
- closeModal("registerModal");updateUserUI();alert("สร้างบัญชีสำเร็จ และเข้าสู่ระบบแล้ว");
+ const username=document.getElementById("regUser").value.trim();
+ const email=document.getElementById("regEmail").value.trim();
+ const password=document.getElementById("regPass").value;
+ if(!username||!email||!password){alert("กรุณากรอกข้อมูลให้ครบ");return}
+ if(users.some(u=>u.username.toLowerCase()===username.toLowerCase())){alert("Username นี้มีอยู่แล้ว");return}
+ if(users.some(u=>u.email.toLowerCase()===email.toLowerCase())){alert("Email นี้มีอยู่แล้ว");return}
+ const u={id:"u"+Date.now(),username,email,password,role:"MEMBER",status:"ACTIVE",createdDate:new Date().toISOString().slice(0,10)};
+ users.push(u);save();
+ currentUser={id:u.id,username:u.username,email:u.email,role:u.role,status:u.status,createdDate:u.createdDate};
+ localStorage.setItem("lumina_current",JSON.stringify(currentUser));
+ closeModal("registerModal");updateUI();
+ alert("สร้างบัญชีสำเร็จ และเข้าสู่ระบบแล้ว");
 }
+
 function login(){
- const u=document.getElementById("loginUser").value.trim().toLowerCase(),p=document.getElementById("loginPass").value;
- const user=users.find(x=>(x.username.toLowerCase()===u||x.email.toLowerCase()===u)&&x.password===p);
- if(!user){alert("Username/Email หรือรหัสผ่านไม่ถูกต้อง");return}
- if(user.status==="BANNED"){alert("บัญชีนี้ถูกระงับ");return}
- currentUser={...user,password:undefined};localStorage.setItem("lumina_current",JSON.stringify(currentUser));closeModal("loginModal");updateUserUI();alert("เข้าสู่ระบบสำเร็จ");
+ const value=document.getElementById("loginUser").value.trim().toLowerCase();
+ const password=document.getElementById("loginPass").value;
+ const u=users.find(x=>(x.username.toLowerCase()===value||x.email.toLowerCase()===value)&&x.password===password);
+ if(!u){alert("Username/Email หรือรหัสผ่านไม่ถูกต้อง");return}
+ if(u.status==="BANNED"){alert("บัญชีนี้ถูกระงับ");return}
+ currentUser={id:u.id,username:u.username,email:u.email,role:u.role,status:u.status,createdDate:u.createdDate};
+ localStorage.setItem("lumina_current",JSON.stringify(currentUser));
+ closeModal("loginModal");updateUI();
+ alert("เข้าสู่ระบบสำเร็จ");
 }
-function logout(){currentUser=null;localStorage.removeItem("lumina_current");closeModal("accountModal");updateUserUI();showHome();alert("ออกจากระบบแล้ว")}
+function logout(){
+ currentUser=null;localStorage.removeItem("lumina_current");
+ closeModal("accountModal");updateUI();goHome();alert("ออกจากระบบแล้ว");
+}
 function openAccount(){
  if(!currentUser){openModal("loginModal");return}
- document.getElementById("accountInfo").innerHTML=`<p><b>Username:</b> ${esc(currentUser.username)}</p><p><b>Email:</b> ${esc(currentUser.email)}</p><p><b>สิทธิ์:</b> ${esc(currentUser.role)}</p><p><b>สถานะ:</b> ${esc(currentUser.status)}</p>`;
- openModal("accountModal")
+ document.getElementById("accountInfo").innerHTML=
+ `<p><b>Username:</b> ${esc(currentUser.username)}</p>
+  <p><b>Email:</b> ${esc(currentUser.email)}</p>
+  <p><b>สิทธิ์:</b> ${esc(currentUser.role)}</p>
+  <p><b>สถานะ:</b> ${esc(currentUser.status)}</p>`;
+ openModal("accountModal");
 }
-function updateUserUI(){
- const nav=document.getElementById("adminNav"),login=document.getElementById("loginNav");
- if(currentUser){login.textContent="บัญชีของฉัน";login.onclick=openAccount}else{login.textContent="เข้าสู่ระบบ";login.onclick=()=>openModal("loginModal")}
- nav.classList.toggle("hidden",!(currentUser&&currentUser.role==="ADMIN"));
+function updateUI(){
+ const admin=document.getElementById("adminBtn");
+ const login=document.getElementById("loginBtn");
+ admin.classList.toggle("hidden",!(currentUser&&currentUser.role==="ADMIN"));
+ login.textContent=currentUser?"บัญชีของฉัน":"เข้าสู่ระบบ";
+ login.onclick=currentUser?openAccount:()=>openModal("loginModal");
 }
+
 function renderMembers(){
- const q=(document.getElementById("memberSearch")?.value||"").toLowerCase();
+ if(!currentUser||currentUser.role!=="ADMIN")return;
+ const q=(document.getElementById("memberSearch").value||"").toLowerCase();
  const list=users.filter(u=>(u.username+" "+u.email).toLowerCase().includes(q));
- document.getElementById("statUsers").textContent=users.length;document.getElementById("statMembers").textContent=users.filter(x=>x.role==="MEMBER").length;document.getElementById("statAdmins").textContent=users.filter(x=>x.role==="ADMIN").length;document.getElementById("statBooks").textContent=books.length;
- document.getElementById("memberTable").innerHTML=list.length?list.map(u=>`<tr><td>${esc(u.username)}</td><td>${esc(u.email)}</td><td>${u.role==="ADMIN"?"🛡️ ADMIN":"👤 MEMBER"}</td><td><span class="badge ${u.status==="ACTIVE"?"badge-active":"badge-banned"}">${esc(u.status)}</span></td><td>${esc(u.createdDate)}</td></tr>`).join(""):`<tr><td colspan="5" style="text-align:center">ยังไม่มีข้อมูล</td></tr>`;
+ document.getElementById("sUsers").textContent=users.length;
+ document.getElementById("sMembers").textContent=users.filter(u=>u.role==="MEMBER").length;
+ document.getElementById("sAdmins").textContent=users.filter(u=>u.role==="ADMIN").length;
+ document.getElementById("sBooks").textContent=books.length;
+ document.getElementById("memberTable").innerHTML=list.map(u=>`
+ <tr>
+  <td>${esc(u.username)}</td>
+  <td>${esc(u.email)}</td>
+  <td>${u.role==="ADMIN"?"🛡️ ADMIN":"👤 MEMBER"}</td>
+  <td><span class="badge ${u.status==="ACTIVE"?"active-badge":"banned-badge"}">${esc(u.status)}</span></td>
+  <td>${esc(u.createdDate)}</td>
+ </tr>`).join("");
 }
+
 function addBook(){
- const title=document.getElementById("bookName").value.trim(),author=document.getElementById("bookAuthor").value.trim(),category=document.getElementById("bookCategory").value,desc=document.getElementById("bookDescription").value.trim(),file=document.getElementById("wordFile").files[0];
+ const title=document.getElementById("bookTitle").value.trim();
+ const author=document.getElementById("bookAuthor").value.trim();
+ const cat=document.getElementById("bookCategory").value;
+ const description=document.getElementById("bookDescription").value.trim();
+ const chapterTitle=document.getElementById("chapterTitle").value.trim()||"ตอนที่ 1 : "+title;
+ const content=document.getElementById("chapterContent").value.trim()||"ยังไม่มีเนื้อหา";
  if(!title||!author){alert("กรุณากรอกชื่อหนังสือและผู้แต่ง");return}
- if(file&&!file.name.toLowerCase().endsWith(".docx")){alert("กรุณาเลือกไฟล์ Word .docx");return}
- const id="book-"+Date.now();
- books.unshift({id,title,author,category,description:desc,chapters:[{id:"c-"+Date.now(),number:1,title:"ตอนที่ 1 : "+title,content:`<p>${esc(desc||"เริ่มต้นอ่านหนังสือเรื่อง "+title)}</p><p>ผู้แต่ง: ${esc(author)}</p>${file?`<p>ไฟล์ต้นฉบับ: ${esc(file.name)}</p>`:""}`}]});
- save();closeModal("uploadModal");document.getElementById("bookName").value="";document.getElementById("bookAuthor").value="";document.getElementById("bookDescription").value="";document.getElementById("wordFile").value="";renderBooks();alert("เพิ่มหนังสือสำเร็จ");
+ books.unshift({id:"b"+Date.now(),title,author,category:cat,description,chapters:[
+  {id:"c"+Date.now(),number:1,title:chapterTitle,content:"<p>"+esc(content).replace(/\n/g,"</p><p>")+"</p>"}
+ ]});
+ save();renderBooks();closeModal("uploadModal");
+ ["bookTitle","bookAuthor","bookDescription","chapterTitle","chapterContent"].forEach(id=>document.getElementById(id).value="");
+ alert("เพิ่มหนังสือสำเร็จ");
 }
-function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")renderBooks()});
-renderCategories();renderBooks();updateUserUI();
+
+document.getElementById("search").addEventListener("keydown",e=>{if(e.key==="Enter")renderBooks()});
+renderCategories();renderBooks();updateUI();
 </script>
 </body>
 </html>
 '''
 
-path = Path("/mnt/data/index.html")
+path = Path("/mnt/data/Lumina_Books_index.html")
 path.write_text(html, encoding="utf-8")
-print(f"สร้างไฟล์สำเร็จ: {path}")
-print(f"ขนาดไฟล์: {path.stat().st_size:,} bytes")
+print("สร้างไฟล์สำเร็จ")
+print(path)
+print(f"ขนาดไฟล์ {path.stat().st_size:,} bytes")
