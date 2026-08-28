@@ -3,22 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lumina Books | คลังหนังสือออนไลน์</title>
+
+<title>Lumina Books</title>
 
 <style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
 *{
     box-sizing:border-box;
-    margin:0;
-    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-    font-family:"Segoe UI","Noto Sans Thai",Tahoma,sans-serif;
-    background:#f5f7fb;
-    color:#182033;
+    margin:0;
+    font-family:
+        Arial,
+        "Noto Sans Thai",
+        "Tahoma",
+        sans-serif;
+    background:#f3f6fb;
+    color:#172033;
+    transition:.25s;
 }
 
-button,input,select,textarea{
+button,
+input,
+select,
+textarea{
     font-family:inherit;
 }
 
@@ -26,270 +43,324 @@ button{
     cursor:pointer;
 }
 
-/* ================= HEADER ================= */
-
-header{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    background:#fff;
-    border-bottom:1px solid #e2e7f0;
+.hidden{
+    display:none !important;
 }
 
-.navbar{
-    max-width:1400px;
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.topbar{
+    height:64px;
+    background:#fff;
+    border-bottom:1px solid #dce3ef;
+    position:sticky;
+    top:0;
+    z-index:50;
+}
+
+.topbar-inner{
+    width:min(1100px,94%);
+    height:100%;
     margin:auto;
-    min-height:76px;
-    padding:12px 24px;
     display:flex;
     align-items:center;
-    gap:15px;
+    gap:12px;
 }
 
 .logo{
     display:flex;
     align-items:center;
-    gap:8px;
-    min-width:190px;
-    color:#27339b;
-    font-size:22px;
+    gap:7px;
     font-weight:800;
+    font-size:18px;
+    white-space:nowrap;
+    cursor:pointer;
 }
 
-.logo span:first-child{
-    font-size:32px;
+.logo-icon{
+    font-size:22px;
 }
 
-.search{
+.search-box{
     flex:1;
-    height:44px;
+    position:relative;
+}
+
+.search-box input{
+    width:100%;
+    height:39px;
+    border:1px solid #cbd5e1;
+    border-radius:20px;
+    padding:0 15px;
+    outline:none;
+    background:#fff;
+}
+
+.search-box input:focus{
+    border-color:#3346bd;
+    box-shadow:0 0 0 3px rgba(51,70,189,.10);
+}
+
+.top-actions{
     display:flex;
     align-items:center;
-    gap:8px;
-    padding:0 15px;
-    background:#f0f4ff;
-    border:1px solid #d8e0f0;
-    border-radius:25px;
-}
-
-.search input{
-    width:100%;
-    border:none;
-    outline:none;
-    background:transparent;
+    gap:7px;
 }
 
 .btn{
-    border:none;
-    border-radius:10px;
-    padding:11px 18px;
+    border:0;
+    border-radius:8px;
+    padding:9px 13px;
     font-weight:700;
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
 }
 
 .btn-primary{
+    background:#2939ad;
     color:white;
-    background:#27339b;
-}
-
-.btn-primary:hover{
-    background:#1b246f;
 }
 
 .btn-secondary{
-    background:#eef1f8;
-    color:#27339b;
+    background:#edf0ff;
+    color:#2939ad;
+}
+
+.btn-success{
+    background:#15803d;
+    color:white;
 }
 
 .btn-danger{
-    background:#ffebee;
-    color:#c62828;
+    background:#dc2626;
+    color:white;
 }
 
-.user-box{
-    display:flex;
-    align-items:center;
-    gap:8px;
+.btn-dark{
+    background:#1e293b;
+    color:white;
 }
 
-.user-icon{
-    width:43px;
-    height:43px;
-    border-radius:50%;
-    border:1px solid #d5dbe8;
-    background:#eef2f9;
-    font-size:19px;
+.btn-white{
+    background:#fff;
+    border:1px solid #d5dce8;
+    color:#334155;
 }
 
-.user-name{
-    max-width:130px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    font-weight:700;
-    font-size:13px;
-}
 
-/* ================= MAIN ================= */
+/* =========================================================
+   MAIN
+========================================================= */
 
-.container{
-    max-width:1400px;
+.page{
+    width:min(1100px,94%);
     margin:auto;
-    padding:35px 24px 80px;
 }
 
-.hero h1{
-    font-size:38px;
-    margin-bottom:7px;
+.welcome{
+    padding:22px 0 10px;
 }
 
-.hero p{
-    color:#687386;
+.welcome h1{
+    margin:0 0 5px;
+    font-size:24px;
 }
 
-/* ================= BANNER ================= */
+.welcome p{
+    margin:0;
+    color:#64748b;
+}
 
-.banner{
-    margin-top:25px;
-    padding:20px;
-    border-radius:15px;
-    background:#fff8df;
-    border:1px solid #efd37b;
+
+/* =========================================================
+   ACCOUNT BANNER
+========================================================= */
+
+.account-banner{
+    background:#fff8dc;
+    border:1px solid #f0c75e;
+    border-radius:10px;
+    padding:13px 15px;
+    margin:8px 0 20px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:20px;
+    gap:15px;
 }
 
-.banner p{
-    color:#776523;
-    margin-top:4px;
+.account-banner strong{
     font-size:13px;
 }
 
-/* ================= CATEGORY ================= */
-
-.section{
-    margin-top:35px;
+.account-banner small{
+    color:#64748b;
 }
 
-.section h2{
-    margin-bottom:17px;
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+.section-title{
+    margin:20px 0 10px;
+    font-size:17px;
+    font-weight:800;
 }
 
 .categories{
     display:flex;
-    gap:8px;
-    overflow:auto;
-    padding-bottom:5px;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-bottom:22px;
 }
 
-.category{
-    border:1px solid #d9dfeb;
-    background:white;
-    border-radius:20px;
-    padding:9px 17px;
-    white-space:nowrap;
+.category-btn{
+    background:#fff;
+    border:1px solid #d4dbea;
+    color:#334155;
+    border-radius:18px;
+    padding:7px 13px;
+    font-size:12px;
 }
 
-.category.active{
-    background:#27339b;
-    color:white;
-    border-color:#27339b;
+.category-btn.active{
+    background:#2939ad;
+    color:#fff;
+    border-color:#2939ad;
 }
 
-/* ================= BOOK GRID ================= */
+
+/* =========================================================
+   LIBRARY
+========================================================= */
+
+.library-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
 
 .book-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
-    gap:20px;
+    grid-template-columns:repeat(5,1fr);
+    gap:13px;
+    padding-bottom:45px;
 }
 
-.book{
-    background:white;
-    border:1px solid #e0e5ee;
-    border-radius:15px;
+.book-card{
+    background:#fff;
+    border:1px solid #e0e6f0;
+    border-radius:10px;
     overflow:hidden;
-    box-shadow:0 8px 25px rgba(30,45,80,.07);
+    box-shadow:0 2px 7px rgba(0,0,0,.05);
     transition:.2s;
 }
 
-.book:hover{
-    transform:translateY(-4px);
-    box-shadow:0 13px 30px rgba(30,45,80,.12);
+.book-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 7px 20px rgba(0,0,0,.10);
 }
 
-.cover{
+.book-cover{
     width:100%;
-    height:275px;
+    height:155px;
     object-fit:cover;
     display:block;
-    background:#edf1f7;
+    background:#e2e8f0;
 }
 
 .book-info{
-    padding:15px;
-}
-
-.book-title{
-    font-weight:800;
-    font-size:16px;
-    margin:5px 0;
-}
-
-.book-author{
-    color:#697386;
-    font-size:12px;
+    padding:9px;
 }
 
 .book-category{
     display:inline-block;
-    background:#edf0ff;
-    color:#27339b;
-    padding:4px 9px;
-    border-radius:12px;
+    background:#eef2ff;
+    color:#3347b9;
+    padding:3px 7px;
+    border-radius:8px;
     font-size:10px;
+}
+
+.book-title{
+    font-size:13px;
+    font-weight:800;
+    margin:7px 0 4px;
+    height:34px;
+    overflow:hidden;
+}
+
+.book-author{
+    font-size:10px;
+    color:#64748b;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.book-status{
+    font-size:9px;
+    color:#15803d;
+    margin-top:4px;
 }
 
 .book-buttons{
     display:flex;
-    gap:7px;
-    margin-top:12px;
-}
-
-.book-buttons button{
-    flex:1;
-    padding:8px;
-    border:none;
-    border-radius:8px;
-    font-weight:700;
+    gap:5px;
+    margin-top:8px;
 }
 
 .read-btn{
-    background:#27339b;
+    flex:1;
+    border:0;
+    background:#2939ad;
     color:white;
+    border-radius:5px;
+    padding:7px;
+    font-size:11px;
+    font-weight:700;
 }
 
 .favorite-btn{
-    background:#f1f3f7;
+    width:36px;
+    border:0;
+    background:#f1f5f9;
+    border-radius:5px;
 }
 
-.delete-btn{
-    background:#ffebee;
-    color:#c62828;
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty{
+    grid-column:1/-1;
+    text-align:center;
+    padding:50px 20px;
+    color:#64748b;
 }
 
-/* ================= MODAL ================= */
+
+/* =========================================================
+   MODAL
+========================================================= */
 
 .modal{
     position:fixed;
     inset:0;
-    z-index:2000;
-    background:rgba(15,23,42,.65);
+    background:rgba(15,23,42,.55);
     display:none;
     align-items:center;
     justify-content:center;
     padding:20px;
+    z-index:100;
 }
 
 .modal.show{
@@ -297,1119 +368,1523 @@ header{
 }
 
 .modal-box{
-    width:min(600px,96%);
-    max-height:92vh;
+    width:min(480px,100%);
+    max-height:90vh;
     overflow:auto;
-    background:white;
-    border-radius:18px;
-    padding:25px;
+    background:#fff;
+    border-radius:14px;
+    padding:23px;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
 }
 
-.modal-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
+.modal-box.large{
+    width:min(720px,100%);
 }
 
-.close{
-    width:38px;
-    height:38px;
-    border:none;
-    border-radius:50%;
-    background:#f0f2f6;
-    font-size:20px;
+.modal-title{
+    margin:0 0 17px;
+    font-size:21px;
 }
 
-/* ================= AUTH ================= */
-
-.tabs{
-    display:flex;
-    background:#edf0f5;
-    padding:4px;
-    border-radius:10px;
-    margin-bottom:20px;
-}
-
-.tab{
-    flex:1;
-    border:none;
-    padding:11px;
-    border-radius:8px;
+.close-btn{
+    float:right;
+    border:0;
     background:transparent;
-    font-weight:700;
+    font-size:25px;
+    color:#64748b;
 }
 
-.tab.active{
-    background:white;
-    color:#27339b;
-    box-shadow:0 2px 7px rgba(0,0,0,.08);
-}
-
-.form-group{
-    margin-bottom:15px;
-}
-
-.form-group label{
+.form-label{
     display:block;
     font-size:13px;
     font-weight:700;
-    margin-bottom:6px;
+    margin-bottom:4px;
 }
 
-.input,
-textarea,
-select{
+.form-input,
+.form-select,
+.form-textarea{
     width:100%;
-    padding:12px 13px;
-    border:1px solid #d5dce8;
-    border-radius:9px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    padding:10px 11px;
+    margin-bottom:13px;
     outline:none;
+    background:#fff;
 }
 
-textarea{
+.form-textarea{
     min-height:180px;
     resize:vertical;
 }
 
-.input:focus,
-textarea:focus,
-select:focus{
-    border-color:#3949ab;
-    box-shadow:0 0 0 3px rgba(57,73,171,.1);
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus{
+    border-color:#3346bd;
+    box-shadow:0 0 0 3px rgba(51,70,189,.08);
 }
 
-.message{
-    display:none;
-    padding:10px;
-    margin-bottom:15px;
-    border-radius:8px;
-    font-size:13px;
+.help{
+    font-size:11px;
+    color:#64748b;
+    margin-top:-7px;
+    margin-bottom:13px;
 }
 
-.message.error{
-    display:block;
-    background:#ffebee;
-    color:#c62828;
+.divider{
+    border:0;
+    border-top:1px solid #e2e8f0;
+    margin:20px 0;
 }
 
-.message.success{
-    display:block;
-    background:#e8f5e9;
-    color:#2e7d32;
-}
 
-/* ================= AUTHOR ================= */
-
-.author-card{
-    background:#f3f5ff;
-    border:1px solid #dce1ff;
-    padding:15px;
-    border-radius:12px;
-    margin-bottom:18px;
-}
-
-.author-card strong{
-    color:#27339b;
-}
-
-/* ================= PROFILE ================= */
-
-.profile{
-    text-align:center;
-}
-
-.avatar{
-    width:90px;
-    height:90px;
-    margin:auto;
-    border-radius:50%;
-    background:#edf0ff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:40px;
-}
-
-.profile h3{
-    margin-top:12px;
-}
-
-.profile p{
-    color:#687386;
-    margin-top:4px;
-}
-
-/* ================= READER ================= */
+/* =========================================================
+   READER
+========================================================= */
 
 .reader{
     position:fixed;
     inset:0;
-    z-index:5000;
+    background:#f4f6fa;
     display:none;
     flex-direction:column;
-    background:#f6f1e7;
+    z-index:200;
 }
 
 .reader.show{
     display:flex;
 }
 
-.reader-header{
-    min-height:68px;
-    background:white;
-    border-bottom:1px solid #ddd;
+.reader-top{
+    height:64px;
+    background:#fff;
+    border-bottom:1px solid #dce3ef;
     display:flex;
     align-items:center;
-    gap:12px;
-    padding:10px 18px;
+    justify-content:space-between;
+    padding:0 20px;
+    gap:10px;
 }
 
-.reader-title{
-    flex:1;
+.reader-book-name{
     font-weight:800;
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow:ellipsis;
-}
-
-.reader-actions{
-    display:flex;
-    gap:6px;
-}
-
-.reader-button{
-    min-width:42px;
-    height:40px;
-    border:1px solid #d5d9e0;
-    border-radius:8px;
-    background:white;
-    font-weight:700;
 }
 
 .reader-body{
     flex:1;
-    overflow-y:auto;
-    padding:40px 15px 80px;
+    overflow:auto;
+    padding:28px 15px 45px;
 }
 
-.reader-content{
-    width:min(850px,100%);
+.reader-paper{
+    width:min(780px,100%);
+    min-height:700px;
+    background:#fff;
     margin:auto;
-    background:white;
-    padding:55px 70px;
-    border-radius:8px;
-    box-shadow:0 5px 25px rgba(0,0,0,.07);
+    padding:50px;
+    box-shadow:0 3px 18px rgba(0,0,0,.07);
 }
 
-.reader-content h1{
-    text-align:center;
-    font-size:30px;
+.reader-paper h1{
+    font-size:28px;
+    margin-top:0;
 }
 
 .reader-author{
-    text-align:center;
-    color:#777;
-    margin-top:7px;
-    margin-bottom:40px;
+    color:#64748b;
 }
 
-.reader-content h2{
-    text-align:center;
-    font-size:25px;
-    margin-bottom:25px;
+.reader-chapter{
+    color:#2939ad;
+    margin-top:35px;
 }
 
 .reader-text{
     font-size:19px;
     line-height:2;
-    color:#333;
-    text-align:justify;
 }
 
 .reader-text p{
-    margin-bottom:20px;
+    margin:0 0 18px;
 }
 
 .reader-footer{
-    min-height:70px;
-    background:white;
-    border-top:1px solid #ddd;
+    min-height:65px;
+    background:#fff;
+    border-top:1px solid #dce3ef;
     display:flex;
     align-items:center;
-    justify-content:center;
     gap:12px;
-    padding:10px;
+    padding:10px 20px;
 }
 
 .progress{
-    width:300px;
-    height:7px;
-    background:#e5e7eb;
-    border-radius:10px;
+    flex:1;
+    height:8px;
+    background:#e2e8f0;
+    border-radius:20px;
     overflow:hidden;
 }
 
 .progress-bar{
-    height:100%;
     width:0;
-    background:#27339b;
-    transition:.3s;
+    height:100%;
+    background:#2939ad;
 }
 
-.progress-text{
-    font-size:12px;
-    color:#687386;
+
+/* =========================================================
+   ADMIN
+========================================================= */
+
+.admin-view{
+    display:none;
 }
 
-/* NIGHT */
-
-.reader.dark{
-    background:#181a1e;
+.admin-view.active{
+    display:block;
 }
 
-.reader.dark .reader-header,
-.reader.dark .reader-footer{
-    background:#22252a;
-    color:white;
-    border-color:#333;
+.member-view.hidden-view{
+    display:none;
 }
 
-.reader.dark .reader-content{
-    background:#292c31;
+.admin-header{
+    margin:24px 0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
 }
 
-.reader.dark .reader-content h1,
-.reader.dark .reader-content h2{
-    color:white;
+.admin-header h1{
+    margin:0;
 }
 
-.reader.dark .reader-text{
-    color:#eee;
+.admin-subtitle{
+    color:#64748b;
+    margin:4px 0 0;
 }
 
-.reader.dark .reader-button{
-    background:#30343a;
-    color:white;
-    border-color:#444;
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:20px;
 }
 
-/* ================= UPLOAD ================= */
-
-.file-box{
-    border:2px dashed #cbd4e5;
+.stat{
+    background:#fff;
     border-radius:12px;
-    padding:25px;
-    text-align:center;
-    background:#f8faff;
+    padding:20px;
+    border:1px solid #e1e7f0;
 }
 
-.file-box input{
-    margin-top:12px;
+.stat-label{
+    color:#64748b;
+    font-size:13px;
 }
 
-/* ================= TOAST ================= */
+.stat-number{
+    font-size:30px;
+    font-weight:800;
+    margin-top:7px;
+}
+
+.admin-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.panel{
+    background:#fff;
+    border:1px solid #e1e7f0;
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:18px;
+}
+
+.panel.full{
+    grid-column:1/-1;
+}
+
+.panel h2{
+    margin:0 0 15px;
+    font-size:17px;
+}
+
+.table-wrap{
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:600px;
+}
+
+th,
+td{
+    padding:10px;
+    border-bottom:1px solid #e2e8f0;
+    text-align:left;
+    font-size:12px;
+}
+
+th{
+    background:#f8fafc;
+}
+
+.badge{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:10px;
+    font-size:10px;
+}
+
+.badge-success{
+    color:#166534;
+    background:#dcfce7;
+}
+
+.badge-blue{
+    color:#1e40af;
+    background:#dbeafe;
+}
+
+.activity-list{
+    max-height:450px;
+    overflow:auto;
+}
+
+.activity{
+    border-bottom:1px solid #e2e8f0;
+    padding:11px 5px;
+}
+
+.activity:last-child{
+    border-bottom:0;
+}
+
+.activity-action{
+    color:#2939ad;
+    font-weight:800;
+}
+
+.activity-detail{
+    margin-top:3px;
+    font-size:12px;
+}
+
+.activity-time{
+    color:#94a3b8;
+    font-size:10px;
+    margin-top:3px;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
 
 .toast-container{
     position:fixed;
-    right:20px;
-    bottom:20px;
-    z-index:8000;
+    right:18px;
+    bottom:18px;
+    z-index:500;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
 }
 
 .toast{
-    color:white;
-    background:#182033;
-    padding:14px 18px;
+    background:#172033;
+    color:#fff;
+    padding:12px 15px;
     border-radius:9px;
-    margin-top:8px;
-    box-shadow:0 10px 25px rgba(0,0,0,.2);
+    box-shadow:0 8px 25px rgba(0,0,0,.20);
+    min-width:250px;
+    font-size:13px;
+    animation:toastIn .2s ease;
 }
 
 .toast.success{
-    border-left:4px solid #4caf50;
+    background:#166534;
 }
 
 .toast.error{
-    border-left:4px solid #f44336;
+    background:#b91c1c;
 }
 
-/* ================= EMPTY ================= */
-
-.empty{
-    grid-column:1/-1;
-    text-align:center;
-    padding:60px 20px;
-    background:white;
-    border-radius:15px;
-    color:#697386;
+@keyframes toastIn{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
-/* ================= MOBILE ================= */
 
-@media(max-width:800px){
+/* =========================================================
+   DARK MODE
+========================================================= */
 
-    .navbar{
-        flex-wrap:wrap;
+body.dark{
+    background:#0f172a;
+    color:#e5e7eb;
+}
+
+body.dark .topbar,
+body.dark .reader-top,
+body.dark .reader-footer,
+body.dark .modal-box,
+body.dark .reader-paper,
+body.dark .book-card,
+body.dark .stat,
+body.dark .panel{
+    background:#172033;
+    border-color:#334155;
+}
+
+body.dark .search-box input,
+body.dark .form-input,
+body.dark .form-select,
+body.dark .form-textarea{
+    background:#0f172a;
+    color:#fff;
+    border-color:#475569;
+}
+
+body.dark .category-btn,
+body.dark .btn-white{
+    background:#172033;
+    color:#e5e7eb;
+    border-color:#475569;
+}
+
+body.dark .reader,
+body.dark .reader-body{
+    background:#0f172a;
+}
+
+body.dark th{
+    background:#1e293b;
+}
+
+body.dark th,
+body.dark td{
+    border-color:#334155;
+}
+
+body.dark .activity,
+body.dark .divider{
+    border-color:#334155;
+}
+
+body.dark .book-author,
+body.dark .reader-author,
+body.dark .admin-subtitle,
+body.dark .stat-label{
+    color:#94a3b8;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:950px){
+
+    .book-grid{
+        grid-template-columns:repeat(4,1fr);
     }
 
-    .logo{
-        min-width:auto;
-    }
-
-    .search{
-        order:5;
-        flex-basis:100%;
-    }
-
-    .user-name{
-        display:none;
-    }
-
-    .reader-content{
-        padding:35px 25px;
+    .stats{
+        grid-template-columns:repeat(2,1fr);
     }
 
 }
 
-@media(max-width:600px){
+@media(max-width:700px){
 
-    .container{
-        padding:25px 15px 60px;
+    .book-grid{
+        grid-template-columns:repeat(3,1fr);
     }
 
-    .hero h1{
-        font-size:28px;
+    .admin-grid{
+        grid-template-columns:1fr;
     }
 
-    .banner{
+    .panel.full{
+        grid-column:auto;
+    }
+
+    .account-banner{
         flex-direction:column;
         align-items:flex-start;
     }
 
-    .banner button{
-        width:100%;
+}
+
+@media(max-width:540px){
+
+    .topbar{
+        height:auto;
+    }
+
+    .topbar-inner{
+        padding:9px 0;
+        flex-wrap:wrap;
+    }
+
+    .search-box{
+        order:3;
+        flex-basis:100%;
+    }
+
+    .top-actions{
+        margin-left:auto;
+    }
+
+    .top-actions .btn{
+        padding:7px 9px;
+        font-size:11px;
     }
 
     .book-grid{
         grid-template-columns:repeat(2,1fr);
-        gap:12px;
+        gap:9px;
     }
 
-    .cover{
-        height:210px;
+    .book-cover{
+        height:135px;
     }
 
-    .book-title{
-        font-size:14px;
-    }
-
-    .reader-content{
-        padding:30px 20px;
+    .reader-paper{
+        padding:25px;
     }
 
     .reader-text{
         font-size:17px;
     }
 
-    .reader-title{
-        max-width:130px;
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:9px;
     }
 
-    .progress{
-        width:100px;
+    .stat{
+        padding:14px;
+    }
+
+    .stat-number{
+        font-size:24px;
     }
 
 }
+
 </style>
 </head>
 
+
 <body>
 
-<!-- ======================================================
+
+<!-- ========================================================
      HEADER
-====================================================== -->
+========================================================= -->
 
-<header>
+<header class="topbar">
 
-<nav class="navbar">
+<div class="topbar-inner">
 
-    <div class="logo">
-        <span>📖</span>
-        <span>Lumina Books</span>
-    </div>
+<div
+class="logo"
+onclick="showMemberView()">
 
-    <div class="search">
-        🔎
-        <input
-            id="searchInput"
-            placeholder="ค้นหาหนังสือ ผู้แต่ง หรือหมวดหมู่..."
-        >
-    </div>
+<span class="logo-icon">📖</span>
 
-    <button
-        class="btn btn-primary"
-        onclick="openCreateBook()"
-    >
-        ✍️ เขียนหนังสือ
-    </button>
+<span>Lumina Books</span>
 
-    <div class="user-box">
+</div>
 
-        <button
-            class="user-icon"
-            onclick="userAction()"
-        >
-            👤
-        </button>
 
-        <div
-            class="user-name"
-            id="userName"
-        >
-            เข้าสู่ระบบ
-        </div>
+<div class="search-box">
 
-    </div>
+<input
+id="searchInput"
+type="search"
+placeholder="🔎 ค้นหาหนังสือ ผู้แต่ง หรือหมวดหมู่..."
+oninput="renderBooks()">
 
-</nav>
+</div>
+
+
+<div class="top-actions">
+
+<button
+class="btn btn-secondary"
+onclick="toggleDarkMode()"
+title="เปลี่ยนธีม">
+
+🌙
+
+</button>
+
+
+<button
+id="createBookTopBtn"
+class="btn btn-primary"
+onclick="openCreateBook()">
+
+➕ หนังสือ
+
+</button>
+
+
+<button
+id="accountBtn"
+class="btn btn-primary"
+onclick="openMemberAuth()">
+
+🔑 เข้าสู่ระบบ
+
+</button>
+
+
+<button
+class="btn btn-secondary"
+onclick="openAdminLogin()">
+
+🛡️ แอดมิน
+
+</button>
+
+</div>
+
+</div>
 
 </header>
 
 
-<!-- ======================================================
-     MAIN
-====================================================== -->
 
-<main class="container">
+<!-- ========================================================
+     MEMBER VIEW
+========================================================= -->
 
-<section class="hero">
+<div
+id="memberView"
+class="member-view">
 
-    <h1 id="welcomeTitle">
-        ยินดีต้อนรับสู่ Lumina Books
-    </h1>
+<main class="page">
 
-    <p id="welcomeText">
-        ห้องสมุดออนไลน์สำหรับนักอ่านและนักเขียน
-    </p>
+
+<section class="welcome">
+
+<h1 id="welcomeTitle">
+ยินดีต้อนรับสู่ Lumina Books
+</h1>
+
+<p id="welcomeSubtitle">
+ห้องสมุดออนไลน์สำหรับนักอ่านและนักเขียน
+</p>
 
 </section>
 
 
+<!-- ACCOUNT BANNER -->
+
 <div
-    class="banner"
-    id="loginBanner"
+id="accountBanner"
+class="account-banner">
 
+<div>
 
-    <div>
+<strong>
+🔐 สร้างบัญชีเพื่อเริ่มใช้งาน
+</strong>
 
-        <strong>
-            🔐 สร้างบัญชีเพื่อเริ่มใช้งาน
-        </strong>
+<br>
 
-        <p>
-            สมัครสมาชิกฟรี แล้วสร้างหนังสือของคุณเองได้
-        </p>
-
-    </div>
-
-    <button
-        class="btn btn-primary"
-        onclick="openAuth('register')"
-    >
-        สมัครสมาชิก / เข้าสู่ระบบ
-    </button>
+<small>
+สมัครสมาชิกเพื่ออ่านและเผยแพร่หนังสือของคุณ
+</small>
 
 </div>
 
 
-<section class="section">
+<button
+class="btn btn-primary"
+onclick="openMemberAuth()">
 
-    <h2>📂 หมวดหมู่</h2>
+สมัครสมาชิก / เข้าสู่ระบบ
 
-    <div
-        class="categories"
-        id="categories"
-    ></div>
+</button>
 
-</section>
+</div>
 
 
-<section class="section">
+<!-- CATEGORY -->
 
-    <h2>📚 ห้องสมุดหนังสือ</h2>
+<div class="section-title">
 
-    <div
-        class="book-grid"
-        id="bookGrid"
-    ></div>
+📁 หมวดหมู่
 
-</section>
+</div>
+
+
+<div
+id="categories"
+class="categories">
+</div>
+
+
+<!-- LIBRARY -->
+
+<div class="library-header">
+
+<div class="section-title">
+
+📚 ห้องสมุดหนังสือ
+
+</div>
+
+
+<div
+id="bookCount"
+style="
+font-size:12px;
+color:#64748b;
+">
+0 เล่ม
+</div>
+
+</div>
+
+
+<div
+id="bookGrid"
+class="book-grid">
+</div>
+
 
 </main>
 
+</div>
 
-<!-- ======================================================
-     AUTH MODAL
-====================================================== -->
+
+
+<!-- ========================================================
+     ADMIN VIEW
+========================================================= -->
 
 <div
-    class="modal"
-    id="authModal"
+id="adminView"
+class="admin-view">
 
+<main class="page">
+
+
+<div class="admin-header">
+
+<div>
+
+<h1>
+🛡️ Admin Dashboard
+</h1>
+
+<p class="admin-subtitle">
+ระบบผู้ดูแล Lumina Books
+</p>
+
+</div>
+
+
+<div>
+
+<button
+class="btn btn-secondary"
+onclick="showMemberView()">
+
+🏠 หน้าสมาชิก
+
+</button>
+
+
+<button
+class="btn btn-danger"
+onclick="adminLogout()">
+
+ออกจากระบบ
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+
+<div class="stat">
+
+<div class="stat-label">
+📚 หนังสือทั้งหมด
+</div>
+
+<div
+id="statBooks"
+class="stat-number">
+0
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-label">
+👥 สมาชิก
+</div>
+
+<div
+id="statUsers"
+class="stat-number">
+0
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-label">
+📖 การเปิดอ่าน
+</div>
+
+<div
+id="statReads"
+class="stat-number">
+0
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-label">
+⚡ กิจกรรม
+</div>
+
+<div
+id="statActivities"
+class="stat-number">
+0
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="admin-grid">
+
+
+<!-- BOOK TABLE -->
+
+<section class="panel full">
+
+<h2>
+📚 หนังสือในระบบ
+</h2>
+
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>หนังสือ</th>
+<th>ผู้แต่ง</th>
+<th>หมวดหมู่</th>
+<th>สถานะ</th>
+<th>วันที่เผยแพร่</th>
+
+</tr>
+
+</thead>
+
+
+<tbody
+id="adminBookTable">
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+
+<!-- USERS -->
+
+<section class="panel">
+
+<h2>
+👥 สมาชิก
+</h2>
+
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ชื่อ</th>
+<th>Username</th>
+<th>วันที่สมัคร</th>
+
+</tr>
+
+</thead>
+
+
+<tbody
+id="adminUserTable">
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+
+<!-- ACTIVITY -->
+
+<section class="panel">
+
+<h2>
+⚡ Activity Log
+</h2>
+
+
+<div
+id="activityList"
+class="activity-list">
+</div>
+
+</section>
+
+
+<!-- RECENT BOOKS -->
+
+<section class="panel full">
+
+<h2>
+🚀 หนังสือที่เผยแพร่ล่าสุด
+</h2>
+
+<div
+id="recentBooks">
+</div>
+
+</section>
+
+
+</div>
+
+</main>
+
+</div>
+
+
+
+<!-- ========================================================
+     MEMBER LOGIN MODAL
+========================================================= -->
+
+<div
+id="memberAuthModal"
+class="modal">
 
 <div class="modal-box">
 
-    <div class="modal-header">
+<button
+class="close-btn"
+onclick="closeModal('memberAuthModal')">
 
-        <h2>👤 บัญชี Lumina Books</h2>
+×
 
-        <button
-            class="close"
-            onclick="closeModal('authModal')"
-        >
-            ×
-        </button>
-
-    </div>
+</button>
 
 
-    <div class="tabs">
-
-        <button
-            id="loginTab"
-            class="tab active"
-            onclick="showLogin()"
-        >
-            🔐 เข้าสู่ระบบ
-        </button>
-
-        <button
-            id="registerTab"
-            class="tab"
-            onclick="showRegister()"
-        >
-            📝 สร้างบัญชี
-        </button>
-
-    </div>
+<h2 class="modal-title">
+🔐 เข้าสู่ระบบสมาชิก
+</h2>
 
 
-    <div
-        id="authMessage"
-        class="message"
-    ></div>
+<label class="form-label">
+ชื่อผู้ใช้
+</label>
+
+<input
+id="loginUsername"
+class="form-input"
+autocomplete="username"
+placeholder="Username">
 
 
-    <!-- LOGIN -->
+<label class="form-label">
+รหัสผ่าน
+</label>
 
-    <form
-        id="loginForm"
-        onsubmit="login(event)"
-    >
-
-        <div class="form-group">
-
-            <label>ชื่อผู้ใช้</label>
-
-            <input
-                class="input"
-                id="loginUsername"
-                required
-                autocomplete="username"
-                placeholder="ชื่อผู้ใช้"
-            >
-
-        </div>
+<input
+id="loginPassword"
+class="form-input"
+type="password"
+autocomplete="current-password"
+placeholder="Password">
 
 
-        <div class="form-group">
+<button
+class="btn btn-primary"
+style="width:100%"
+onclick="memberLogin()">
 
-            <label>รหัสผ่าน</label>
+เข้าสู่ระบบ
 
-            <input
-                class="input"
-                id="loginPassword"
-                type="password"
-                required
-                autocomplete="current-password"
-                placeholder="รหัสผ่าน"
-            >
-
-        </div>
+</button>
 
 
-        <button
-            class="btn btn-primary"
-            style="width:100%"
-        >
-            เข้าสู่ระบบ
-        </button>
-
-    </form>
+<hr class="divider">
 
 
-    <!-- REGISTER -->
-
-    <form
-        id="registerForm"
-        style="display:none"
-        onsubmit="register(event)"
-    >
-
-        <div class="form-group">
-
-            <label>ชื่อ-นามสกุล</label>
-
-            <input
-                class="input"
-                id="registerName"
-                required
-                placeholder="ชื่อของคุณ"
-            >
-
-        </div>
+<h3>
+📝 สมัครสมาชิก
+</h3>
 
 
-        <div class="form-group">
+<label class="form-label">
+ชื่อที่แสดง
+</label>
 
-            <label>อีเมล</label>
-
-            <input
-                class="input"
-                id="registerEmail"
-                type="email"
-                required
-                placeholder="example@email.com"
-            >
-
-        </div>
+<input
+id="registerName"
+class="form-input"
+placeholder="ชื่อของคุณ">
 
 
-        <div class="form-group">
+<label class="form-label">
+ชื่อผู้ใช้
+</label>
 
-            <label>ชื่อผู้ใช้</label>
-
-            <input
-                class="input"
-                id="registerUsername"
-                required
-                minlength="3"
-                placeholder="อย่างน้อย 3 ตัวอักษร"
-            >
-
-        </div>
+<input
+id="registerUsername"
+class="form-input"
+placeholder="Username">
 
 
-        <div class="form-group">
+<label class="form-label">
+รหัสผ่าน
+</label>
 
-            <label>รหัสผ่าน</label>
-
-            <input
-                class="input"
-                id="registerPassword"
-                type="password"
-                required
-                minlength="6"
-                placeholder="อย่างน้อย 6 ตัวอักษร"
-            >
-
-        </div>
+<input
+id="registerPassword"
+class="form-input"
+type="password"
+placeholder="Password">
 
 
-        <div class="form-group">
+<button
+class="btn btn-secondary"
+style="width:100%"
+onclick="registerMember()">
 
-            <label>ยืนยันรหัสผ่าน</label>
+สร้างบัญชี
 
-            <input
-                class="input"
-                id="registerConfirm"
-                type="password"
-                required
-                minlength="6"
-            >
-
-        </div>
-
-
-        <button
-            class="btn btn-primary"
-            style="width:100%"
-        >
-            📝 สร้างบัญชี
-        </button>
-
-    </form>
+</button>
 
 </div>
 
 </div>
 
 
-<!-- ======================================================
-     PROFILE MODAL
-====================================================== -->
 
-<div
-    class="modal"
-    id="profileModal"
-
-
-<div class="modal-box">
-
-    <div class="modal-header">
-
-        <h2>👤 โปรไฟล์ของฉัน</h2>
-
-        <button
-            class="close"
-            onclick="closeModal('profileModal')"
-        >
-            ×
-        </button>
-
-    </div>
-
-
-    <div class="profile">
-
-        <div class="avatar">
-            ✍️
-        </div>
-
-        <h3 id="profileName">-</h3>
-
-        <p id="profileUsername">-</p>
-
-        <p id="profileEmail">-</p>
-
-        <br>
-
-        <button
-            class="btn btn-primary"
-            style="width:100%;margin-bottom:8px"
-            onclick="openCreateBook()"
-        >
-            ✍️ สร้างหนังสือของฉัน
-        </button>
-
-        <button
-            class="btn btn-danger"
-            style="width:100%"
-            onclick="logout()"
-        >
-            🚪 ออกจากระบบ
-        </button>
-
-    </div>
-
-</div>
-
-</div>
-
-
-<!-- ======================================================
+<!-- ========================================================
      CREATE BOOK MODAL
-====================================================== -->
+========================================================= -->
 
 <div
-    class="modal"
-    id="createBookModal"
+id="createBookModal"
+class="modal">
 
+<div class="modal-box large">
+
+<button
+class="close-btn"
+onclick="closeModal('createBookModal')">
+
+×
+
+</button>
+
+
+<h2 class="modal-title">
+📚 สร้างและเผยแพร่หนังสือ
+</h2>
+
+
+<div
+id="authorPreview"
+style="
+background:#f1f5f9;
+padding:10px;
+border-radius:8px;
+font-size:12px;
+margin-bottom:15px;
+">
+</div>
+
+
+<label class="form-label">
+ชื่อหนังสือ *
+</label>
+
+<input
+id="newBookTitle"
+class="form-input"
+placeholder="เช่น ประวัติศาสตร์ไทย">
+
+
+<label class="form-label">
+หมวดหมู่ *
+</label>
+
+<select
+id="newBookCategory"
+class="form-select">
+
+<option>วรรณกรรม</option>
+<option>นิยาย</option>
+<option>ประวัติศาสตร์</option>
+<option>ปรัชญา</option>
+<option>วิทยาศาสตร์</option>
+<option>การศึกษา</option>
+<option>ทั่วไป</option>
+
+</select>
+
+
+<label class="form-label">
+รูปปกหนังสือ
+</label>
+
+<input
+id="newBookCover"
+class="form-input"
+placeholder="URL รูปปก เช่น https://...">
+
+
+<label class="form-label">
+อัปโหลดไฟล์หนังสือ
+</label>
+
+<input
+id="bookFile"
+class="form-input"
+type="file"
+accept=".txt,.html,.htm,.md,text/plain,text/html">
+
+
+<div class="help">
+
+รองรับ TXT, HTML และ MD
+ระบบจะอ่านเนื้อหาและแปลงเป็นบทให้อัตโนมัติ
+
+</div>
+
+
+<label class="form-label">
+หรือเขียนเนื้อหาเอง
+</label>
+
+<textarea
+id="bookContent"
+class="form-textarea"
+placeholder="บทที่ 1
+เนื้อหาบทที่ 1
+
+บทที่ 2
+เนื้อหาบทที่ 2"></textarea>
+
+
+<div class="help">
+
+ถ้าเขียนคำว่า
+<b>บทที่ 1</b>,
+<b>บทที่ 2</b>
+ระบบจะแยกบทให้อัตโนมัติ
+
+</div>
+
+
+<button
+class="btn btn-primary"
+style="width:100%"
+onclick="publishBook()">
+
+🚀 เผยแพร่หนังสือทันที
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- ========================================================
+     ADMIN LOGIN MODAL
+========================================================= -->
+
+<div
+id="adminLoginModal"
+class="modal">
 
 <div class="modal-box">
 
-    <div class="modal-header">
+<button
+class="close-btn"
+onclick="closeModal('adminLoginModal')">
 
-        <h2>✍️ สร้างหนังสือของฉัน</h2>
+×
 
-        <button
-            class="close"
-            onclick="closeModal('createBookModal')"
-        >
-            ×
-        </button>
-
-    </div>
+</button>
 
 
-    <div class="author-card">
-
-        <strong>ผู้แต่ง</strong>
-
-        <div id="authorNamePreview">
-            -
-        </div>
-
-    </div>
+<h2 class="modal-title">
+🛡️ เข้าสู่ระบบผู้ดูแล
+</h2>
 
 
-    <form onsubmit="createBook(event)">
+<label class="form-label">
+ชื่อผู้ใช้แอดมิน
+</label>
 
-        <div class="form-group">
-
-            <label>
-                ชื่อหนังสือ
-            </label>
-
-            <input
-                class="input"
-                id="newBookTitle"
-                required
-                placeholder="ชื่อหนังสือ"
-            >
-
-        </div>
+<input
+id="adminUsername"
+class="form-input"
+placeholder="Admin Username">
 
 
-        <div class="form-group">
+<label class="form-label">
+รหัสผ่านแอดมิน
+</label>
 
-            <label>
-                หมวดหมู่
-            </label>
-
-            <select
-                id="newBookCategory"
-                class="input"
-            >
-
-                <option>วรรณกรรม</option>
-                <option>นิยาย</option>
-                <option>ประวัติศาสตร์</option>
-                <option>ปรัชญา</option>
-                <option>วิทยาศาสตร์</option>
-                <option>การศึกษา</option>
-                <option>ทั่วไป</option>
-
-            </select>
-
-        </div>
+<input
+id="adminPassword"
+class="form-input"
+type="password"
+placeholder="Admin Password">
 
 
-        <div class="form-group">
+<button
+class="btn btn-primary"
+style="width:100%"
+onclick="adminLogin()">
 
-            <label>
-                URL รูปปกหนังสือ
-            </label>
+เข้าสู่ Dashboard
 
-            <input
-                class="input"
-                id="newBookCover"
-                placeholder="https://..."
-            >
-
-        </div>
+</button>
 
 
-        <div class="form-group">
+<div
+style="
+margin-top:15px;
+background:#fff8dc;
+border:1px solid #f0c75e;
+padding:10px;
+border-radius:8px;
+font-size:11px;
+">
 
-            <label>
-                ไฟล์หนังสือ
-            </label>
+<strong>บัญชีสำหรับทดสอบ</strong>
 
-            <div class="file-box">
+<br>
 
-                <div>
-                    📚 เลือกไฟล์หนังสือ
-                </div>
+Username:
+<b>admin</b>
 
-                <small>
-                    รองรับ .txt และ .html
-                </small>
+<br>
 
-                <input
-                    id="bookFile"
-                    type="file"
-                    accept=".txt,.html,.htm,text/plain,text/html"
-                >
+Password:
+<b>Admin@2026</b>
 
-            </div>
+</div>
 
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                หรือเขียนเนื้อหาหนังสือเอง
-            </label>
-
-            <textarea
-                id="bookContent"
-                placeholder="พิมพ์เนื้อหาหนังสือของคุณที่นี่..."
-            ></textarea>
-
-        </div>
-
-
-        <button
-            class="btn btn-primary"
-            style="width:100%"
-        >
-            📚 เผยแพร่หนังสือ
-        </button>
-
-    </form>
 
 </div>
 
 </div>
 
 
-<!-- ======================================================
+
+<!-- ========================================================
      READER
-====================================================== -->
+========================================================= -->
 
 <div
-    class="reader"
-    id="reader"
+id="reader"
+class="reader">
 
 
-<div class="reader-header">
+<div class="reader-top">
 
-    <button
-        class="reader-button"
-        onclick="closeReader()"
-    >
-        ←
-    </button>
+<div
+id="readerBookName"
+class="reader-book-name">
+หนังสือ
+</div>
 
-    <div
-        class="reader-title"
-        id="readerTitle"
-    >
-        -
-    </div>
 
-    <div class="reader-actions">
+<div>
 
-        <button
-            class="reader-button"
-            onclick="changeFont(-1)"
-        >
-            A−
-        </button>
+<button
+class="btn btn-secondary"
+onclick="changeReaderFont(-1)">
 
-        <button
-            class="reader-button"
-            onclick="changeFont(1)"
-        >
-            A+
-        </button>
+A−
 
-        <button
-            class="reader-button"
-            onclick="toggleDark()"
-        >
-            🌙
-        </button>
+</button>
 
-    </div>
+<button
+class="btn btn-secondary"
+onclick="changeReaderFont(1)">
+
+A+
+
+</button>
+
+<button
+class="btn btn-danger"
+onclick="closeReader()">
+
+✕ ปิด
+
+</button>
+
+</div>
 
 </div>
 
 
+
+<div class="reader-body">
+
+<article class="reader-paper">
+
+<h1
+id="readerTitle">
+-
+</h1>
+
+
 <div
-    class="reader-body"
-    id="readerBody"
+id="readerAuthor"
+class="reader-author">
+-
+</div>
 
 
-<article class="reader-content">
+<h2
+id="readerChapterTitle"
+class="reader-chapter">
+-
+</h2>
 
-    <h1 id="readerBookTitle">
-        -
-    </h1>
 
-    <div
-        class="reader-author"
-        id="readerAuthor"
-    >
-        -
-    </div>
-
-    <h2 id="readerChapterTitle">
-        -
-    </h2>
-
-    <div
-        class="reader-text"
-        id="readerText"
-    ></div>
+<div
+id="readerText"
+class="reader-text">
+</div>
 
 </article>
 
 </div>
 
 
+
 <div class="reader-footer">
 
-    <button
-        class="btn btn-secondary"
-        id="prevBtn"
-        onclick="previousChapter()"
-    >
-        ← ก่อนหน้า
-    </button>
+<button
+id="prevChapterBtn"
+class="btn btn-secondary"
+onclick="previousChapter()">
 
-    <div class="progress">
+← ก่อนหน้า
 
-        <div
-            class="progress-bar"
-            id="progressBar"
-        ></div>
-
-    </div>
-
-    <span
-        class="progress-text"
-        id="progressText"
-    >
-        0%
-    </span>
-
-    <button
-        class="btn btn-primary"
-        id="nextBtn"
-        onclick="nextChapter()"
-    >
-        ถัดไป →
-    </button>
-
-</div>
-
-</div>
+</button>
 
 
-<!-- ======================================================
-     TOAST
-====================================================== -->
+<div class="progress">
 
 <div
-    class="toast-container"
-    id="toastContainer"
+id="progressBar"
+class="progress-bar">
+</div>
+
+</div>
+
+
+<span
+id="progressText"
+style="font-size:12px">
+0%
+</span>
+
+
+<button
+id="nextChapterBtn"
+class="btn btn-primary"
+onclick="nextChapter()">
+
+ถัดไป →
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- TOAST -->
+
+<div
+id="toastContainer"
+class="toast-container">
 </div>
 
 
 
 <script>
 
-/* ==========================================================
+/* =========================================================
+   LUMINA BOOKS
+   SINGLE FILE VERSION
+========================================================= */
+
+
+/* =========================================================
+   STORAGE KEYS
+========================================================= */
+
+const BOOKS_KEY =
+"lumina_books_v2";
+
+const USERS_KEY =
+"lumina_users_v2";
+
+const CURRENT_USER_KEY =
+"lumina_current_v2";
+
+const ACTIVITIES_KEY =
+"lumina_activities_v1";
+
+const THEME_KEY =
+"lumina_theme_v1";
+
+const ADMIN_SESSION_KEY =
+"lumina_admin_session_v1";
+
+
+/* =========================================================
+   ADMIN DEMO ACCOUNT
+========================================================= */
+
+const ADMIN_USERNAME =
+"admin";
+
+const ADMIN_PASSWORD =
+"Admin@2026";
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let books = [];
+
+let users = [];
+
+let activities = [];
+
+let currentUser = null;
+
+let selectedCategory =
+"ทั้งหมด";
+
+let currentBook = null;
+
+let currentChapter = 0;
+
+let readerFontSize = 19;
+
+
+/* =========================================================
+   DEFAULT COVER
+========================================================= */
+
+const DEFAULT_COVER =
+"https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=700&q=80";
+
+
+/* =========================================================
    DEFAULT BOOKS
-========================================================== */
+========================================================= */
 
 const defaultBooks = [
 
 {
     id:"default-1",
+
     title:"วรรณกรรมคลาสสิก",
+
     author:"Lumina Books",
+
+    authorUsername:"lumina",
+
     category:"วรรณกรรม",
 
     cover:
     "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=700&q=80",
 
     owner:null,
+
     favorite:false,
+
+    published:true,
+
+    createdAt:"2026-01-01T00:00:00.000Z",
 
     chapters:[
 
@@ -1418,133 +1893,44 @@ const defaultBooks = [
 
             content:[
                 "ยินดีต้อนรับเข้าสู่ Lumina Books ห้องสมุดออนไลน์สำหรับผู้ที่รักการอ่าน",
-
-                "ในโลกแห่งหนังสือ ทุกเรื่องราวสามารถพาเราเดินทางไปยังสถานที่และช่วงเวลาที่แตกต่างออกไปได้",
-
-                "การอ่านไม่ได้เป็นเพียงการรับข้อมูล แต่ยังเป็นการเปิดโอกาสให้เราได้เรียนรู้แนวคิด มุมมอง และประสบการณ์จากเรื่องราวต่าง ๆ",
-
-                "เนื้อหาส่วนนี้เป็นตัวอย่างสำหรับระบบอ่านหนังสือออนไลน์"
+                "ในโลกแห่งหนังสือ ทุกเรื่องราวสามารถพาเราเดินทางไปยังสถานที่และช่วงเวลาที่แตกต่างออกไปได้"
             ]
         },
 
         {
-            title:"บทที่ 2 : โลกแห่งเรื่องราว",
+            title:"บทที่ 2 : เรื่องราว",
 
             content:[
-                "หนังสือแต่ละเล่มมีเรื่องราวแตกต่างกันออกไป บางเล่มให้ความรู้ บางเล่มสร้างจินตนาการ และบางเล่มช่วยให้เราเข้าใจโลกมากขึ้น",
-
-                "เมื่อเราเปิดหนังสือ เราไม่ได้เพียงเปิดหน้ากระดาษ แต่กำลังเปิดประตูไปสู่ความคิดของผู้เขียน",
-
-                "การอ่านอย่างสม่ำเสมอช่วยพัฒนาความเข้าใจภาษาและการคิดวิเคราะห์"
-            ]
-        },
-
-        {
-            title:"บทที่ 3 : ความรู้จากการอ่าน",
-
-            content:[
-                "การอ่านเป็นหนึ่งในวิธีสำคัญในการเรียนรู้ตลอดชีวิต",
-
-                "เราสามารถเลือกอ่านเรื่องที่สนใจและค่อย ๆ สะสมความรู้จากหนังสือแต่ละเล่ม",
-
-                "Lumina Books ออกแบบให้ผู้ใช้สามารถค้นหา เปิดอ่าน และบันทึกความคืบหน้าได้ง่าย"
+                "หนังสือแต่ละเล่มมีเรื่องราวและมุมมองที่แตกต่างกัน",
+                "การอ่านช่วยให้เราได้เรียนรู้สิ่งใหม่ ๆ และเปิดมุมมองของเราให้กว้างขึ้น"
             ]
         }
 
     ]
 },
+
 
 {
     id:"default-2",
-    title:"เรื่องเล่าคลาสสิก",
-    author:"Lumina Books",
-    category:"นิยาย",
 
-    cover:
-    "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=700&q=80",
-
-    owner:null,
-    favorite:false,
-
-    chapters:[
-
-        {
-            title:"บทที่ 1 : การเดินทาง",
-
-            content:[
-                "เรื่องราวเริ่มต้นขึ้นในเช้าวันหนึ่ง เมื่อเด็กคนหนึ่งตัดสินใจออกเดินทางเพื่อค้นหาคำตอบของคำถามที่อยู่ในใจ",
-
-                "ระหว่างการเดินทาง เขาได้พบกับผู้คนมากมาย แต่ละคนมีเรื่องราวและบทเรียนที่แตกต่างกัน",
-
-                "การเดินทางครั้งนี้จึงกลายเป็นมากกว่าการเดินทางไปยังสถานที่แห่งหนึ่ง แต่เป็นการเดินทางเพื่อเรียนรู้จักตนเอง"
-            ]
-        },
-
-        {
-            title:"บทที่ 2 : มิตรภาพ",
-
-            content:[
-                "ระหว่างทาง เขาได้พบเพื่อนใหม่คนหนึ่ง ทั้งสองช่วยเหลือกันในช่วงเวลาที่ลำบาก",
-
-                "มิตรภาพทำให้การเดินทางที่ยาวไกลกลายเป็นเรื่องที่น่าจดจำ",
-
-                "บางครั้งสิ่งที่มีค่าที่สุดจากการเดินทางอาจไม่ใช่สิ่งของ แต่เป็นผู้คนที่เราได้พบ"
-            ]
-        }
-
-    ]
-},
-
-{
-    id:"default-3",
-    title:"ประวัติศาสตร์โลก",
-    author:"Lumina Books",
-    category:"ประวัติศาสตร์",
-
-    cover:
-    "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=700&q=80",
-
-    owner:null,
-    favorite:false,
-
-    chapters:[
-
-        {
-            title:"บทที่ 1 : การเรียนรู้จากอดีต",
-
-            content:[
-                "ประวัติศาสตร์ช่วยให้มนุษย์เข้าใจเหตุการณ์ที่เกิดขึ้นในอดีตและเห็นความเปลี่ยนแปลงของสังคม",
-
-                "การศึกษาประวัติศาสตร์ทำให้เราเห็นความสัมพันธ์ระหว่างผู้คน วัฒนธรรม เทคโนโลยี และเหตุการณ์สำคัญต่าง ๆ",
-
-                "ความรู้จากอดีตสามารถช่วยให้เราตั้งคำถามและวิเคราะห์โลกในปัจจุบันได้"
-            ]
-        },
-
-        {
-            title:"บทที่ 2 : อารยธรรม",
-
-            content:[
-                "อารยธรรมต่าง ๆ เกิดขึ้นและพัฒนาขึ้นในหลายพื้นที่ของโลก",
-
-                "ผู้คนได้สร้างภาษา ศิลปะ ระบบการปกครอง ความรู้ และเทคโนโลยีที่ส่งต่อมาถึงคนรุ่นหลัง"
-            ]
-        }
-
-    ]
-},
-
-{
-    id:"default-4",
     title:"บทนำสู่ปรัชญา",
+
     author:"Lumina Books",
+
+    authorUsername:"lumina",
+
     category:"ปรัชญา",
 
     cover:
     "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=700&q=80",
 
     owner:null,
+
     favorite:false,
+
+    published:true,
+
+    createdAt:"2026-01-02T00:00:00.000Z",
 
     chapters:[
 
@@ -1553,10 +1939,7 @@ const defaultBooks = [
 
             content:[
                 "ปรัชญาเริ่มต้นจากการตั้งคำถามเกี่ยวกับสิ่งต่าง ๆ รอบตัว",
-
-                "คำถามทางปรัชญาอาจเกี่ยวข้องกับความจริง ความรู้ คุณค่า และความหมายของชีวิต",
-
-                "การตั้งคำถามอย่างมีเหตุผลช่วยให้เรามองปัญหาได้จากหลายมุมมอง"
+                "การตั้งคำถามที่ดีช่วยให้เราเข้าใจปัญหาและมองเห็นมุมมองใหม่"
             ]
         },
 
@@ -1565,8 +1948,44 @@ const defaultBooks = [
 
             content:[
                 "การคิดอย่างมีเหตุผลเป็นทักษะที่สามารถฝึกฝนได้",
+                "เราสามารถใช้เหตุผลเพื่อวิเคราะห์ข้อมูลและตัดสินใจได้อย่างรอบคอบ"
+            ]
+        }
 
-                "เราสามารถเริ่มต้นจากการตรวจสอบข้อมูล แยกข้อเท็จจริงออกจากความคิดเห็น และพิจารณาเหตุผลของแต่ละฝ่าย"
+    ]
+},
+
+
+{
+    id:"default-3",
+
+    title:"ประวัติศาสตร์โลก",
+
+    author:"Lumina Books",
+
+    authorUsername:"lumina",
+
+    category:"ประวัติศาสตร์",
+
+    cover:
+    "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=700&q=80",
+
+    owner:null,
+
+    favorite:false,
+
+    published:true,
+
+    createdAt:"2026-01-03T00:00:00.000Z",
+
+    chapters:[
+
+        {
+            title:"บทที่ 1 : อารยธรรม",
+
+            content:[
+                "อารยธรรมต่าง ๆ เกิดขึ้นในหลายภูมิภาคของโลก",
+                "การศึกษาประวัติศาสตร์ช่วยให้เราเข้าใจพัฒนาการของสังคมมนุษย์"
             ]
         }
 
@@ -1576,1957 +1995,2559 @@ const defaultBooks = [
 ];
 
 
-/* ==========================================================
-   LOAD DATA
-========================================================== */
+/* =========================================================
+   INITIALIZE
+========================================================= */
 
-let books =
-    JSON.parse(
-        localStorage.getItem("lumina_books_v2")
-    );
+document.addEventListener(
+"DOMContentLoaded",
+init
+);
 
-if(!books){
 
-    books = defaultBooks;
+function init(){
 
-    localStorage.setItem(
-        "lumina_books_v2",
-        JSON.stringify(books)
-    );
+loadData();
+
+loadTheme();
+
+renderCategories();
+
+renderBooks();
+
+renderUser();
+
+setupFileUpload();
 
 }
 
 
-let users =
-    JSON.parse(
-        localStorage.getItem("lumina_users_v2")
-    ) || [];
+/* =========================================================
+   LOAD DATA
+========================================================= */
+
+function loadData(){
+
+try{
+
+books =
+JSON.parse(
+localStorage.getItem(BOOKS_KEY)
+) || [];
+
+}catch{
+
+books=[];
+
+}
 
 
-let currentUser =
-    JSON.parse(
-        localStorage.getItem("lumina_current_v2")
-    ) || null;
+try{
+
+users =
+JSON.parse(
+localStorage.getItem(USERS_KEY)
+) || [];
+
+}catch{
+
+users=[];
+
+}
 
 
-let currentCategory = "ทั้งหมด";
+try{
 
-let searchText = "";
+activities =
+JSON.parse(
+localStorage.getItem(ACTIVITIES_KEY)
+) || [];
 
-let currentBook = null;
+}catch{
 
-let currentChapter = 0;
+activities=[];
 
-let fontSize = 19;
+}
 
 
-/* ==========================================================
-   INIT
-========================================================== */
+try{
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function(){
+currentUser =
+JSON.parse(
+localStorage.getItem(CURRENT_USER_KEY)
+) || null;
 
-        renderUser();
+}catch{
 
-        renderCategories();
+currentUser=null;
 
-        renderBooks();
+}
 
-        document
-            .getElementById("searchInput")
-            .addEventListener(
-                "input",
-                function(){
 
-                    searchText =
-                        this.value
-                        .trim()
-                        .toLowerCase();
+/* ถ้ายังไม่มีหนังสือ */
 
-                    renderBooks();
+if(!books.length){
 
-                }
-            );
-
-    }
+books =
+JSON.parse(
+JSON.stringify(defaultBooks)
 );
 
+saveBooks();
 
-/* ==========================================================
-   SAVE
-========================================================== */
+}
+
+}
+
+
+/* =========================================================
+   SAVE DATA
+========================================================= */
 
 function saveBooks(){
 
-    localStorage.setItem(
-        "lumina_books_v2",
-        JSON.stringify(books)
-    );
+localStorage.setItem(
+BOOKS_KEY,
+JSON.stringify(books)
+);
 
 }
+
 
 function saveUsers(){
 
-    localStorage.setItem(
-        "lumina_users_v2",
-        JSON.stringify(users)
-    );
-
-}
-
-function saveCurrentUser(){
-
-    if(currentUser){
-
-        localStorage.setItem(
-            "lumina_current_v2",
-            JSON.stringify(currentUser)
-        );
-
-    }else{
-
-        localStorage.removeItem(
-            "lumina_current_v2"
-        );
-
-    }
+localStorage.setItem(
+USERS_KEY,
+JSON.stringify(users)
+);
 
 }
 
 
-/* ==========================================================
-   USER
-========================================================== */
+function saveActivities(){
+
+localStorage.setItem(
+ACTIVITIES_KEY,
+JSON.stringify(activities)
+);
+
+}
+
+
+/* =========================================================
+   ACTIVITY LOG
+========================================================= */
+
+function logActivity(
+action,
+detail=""
+){
+
+const activity={
+
+    id:
+    Date.now() +
+    "_" +
+    Math.random()
+    .toString(36)
+    .slice(2),
+
+    action:action,
+
+    detail:detail,
+
+    user:
+    currentUser
+    ? currentUser.username
+    : "ผู้เยี่ยมชม",
+
+    time:
+    new Date().toISOString()
+
+};
+
+
+activities.unshift(activity);
+
+
+/* เก็บสูงสุด 500 รายการ */
+
+activities =
+activities.slice(0,500);
+
+saveActivities();
+
+}
+
+
+/* =========================================================
+   MEMBER USER UI
+========================================================= */
 
 function renderUser(){
 
-    const name =
-        document.getElementById("userName");
+const accountBtn =
+document.getElementById(
+"accountBtn"
+);
 
-    const banner =
-        document.getElementById("loginBanner");
+const banner =
+document.getElementById(
+"accountBanner"
+);
 
-    const title =
-        document.getElementById("welcomeTitle");
+const createBtn =
+document.getElementById(
+"createBookTopBtn"
+);
 
-    const text =
-        document.getElementById("welcomeText");
+const title =
+document.getElementById(
+"welcomeTitle"
+);
+
+const subtitle =
+document.getElementById(
+"welcomeSubtitle"
+);
 
 
-    if(currentUser){
+if(currentUser){
 
-        name.textContent =
-            currentUser.name;
+accountBtn.textContent =
+"👤 " +
+currentUser.name;
 
-        banner.style.display =
-            "none";
+banner.classList.add("hidden");
 
-        title.textContent =
-            "ยินดีต้อนรับ " +
-            currentUser.name;
+createBtn.classList.remove("hidden");
 
-        text.textContent =
-            "คุณสามารถอ่านหนังสือและสร้างผลงานของคุณเองได้";
+title.textContent =
+"ยินดีต้อนรับ " +
+currentUser.name;
 
-    }else{
+subtitle.textContent =
+"คุณสามารถอ่านและเผยแพร่หนังสือของคุณได้";
 
-        name.textContent =
-            "เข้าสู่ระบบ";
 
-        banner.style.display =
-            "flex";
+}else{
 
-        title.textContent =
-            "ยินดีต้อนรับสู่ Lumina Books";
+accountBtn.textContent =
+"🔑 เข้าสู่ระบบ";
 
-        text.textContent =
-            "ห้องสมุดออนไลน์สำหรับนักอ่านและนักเขียน";
+banner.classList.remove("hidden");
 
-    }
+createBtn.classList.remove("hidden");
+
+title.textContent =
+"ยินดีต้อนรับสู่ Lumina Books";
+
+subtitle.textContent =
+"ห้องสมุดออนไลน์สำหรับนักอ่านและนักเขียน";
+
+}
 
 }
 
 
-/* ==========================================================
-   AUTH
-========================================================== */
+/* =========================================================
+   AUTH MODAL
+========================================================= */
 
-function openAuth(type){
+function openMemberAuth(){
 
-    document
-        .getElementById("authModal")
-        .classList.add("show");
-
-    if(type === "register"){
-
-        showRegister();
-
-    }else{
-
-        showLogin();
-
-    }
+document
+.getElementById("memberAuthModal")
+.classList.add("show");
 
 }
 
-function showLogin(){
-
-    document
-        .getElementById("loginForm")
-        .style.display="block";
-
-    document
-        .getElementById("registerForm")
-        .style.display="none";
-
-    document
-        .getElementById("loginTab")
-        .classList.add("active");
-
-    document
-        .getElementById("registerTab")
-        .classList.remove("active");
-
-    clearMessage();
-
-}
-
-function showRegister(){
-
-    document
-        .getElementById("loginForm")
-        .style.display="none";
-
-    document
-        .getElementById("registerForm")
-        .style.display="block";
-
-    document
-        .getElementById("loginTab")
-        .classList.remove("active");
-
-    document
-        .getElementById("registerTab")
-        .classList.add("active");
-
-    clearMessage();
-
-}
-
-
-/* ==========================================================
-   REGISTER
-========================================================== */
-
-function register(event){
-
-    event.preventDefault();
-
-
-    const name =
-        document
-        .getElementById("registerName")
-        .value.trim();
-
-
-    const email =
-        document
-        .getElementById("registerEmail")
-        .value.trim();
-
-
-    const username =
-        document
-        .getElementById("registerUsername")
-        .value.trim();
-
-
-    const password =
-        document
-        .getElementById("registerPassword")
-        .value;
-
-
-    const confirm =
-        document
-        .getElementById("registerConfirm")
-        .value;
-
-
-    if(password !== confirm){
-
-        showMessage(
-            "รหัสผ่านไม่ตรงกัน",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    const exists =
-        users.some(
-            u =>
-                u.username.toLowerCase()
-                ===
-                username.toLowerCase()
-        );
-
-
-    if(exists){
-
-        showMessage(
-            "ชื่อผู้ใช้นี้ถูกใช้งานแล้ว",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    const user = {
-
-        id:
-            "user_" +
-            Date.now(),
-
-        name:name,
-
-        email:email,
-
-        username:username,
-
-        password:password
-
-    };
-
-
-    users.push(user);
-
-    saveUsers();
-
-
-    currentUser = {
-
-        id:user.id,
-
-        name:user.name,
-
-        email:user.email,
-
-        username:user.username
-
-    };
-
-
-    saveCurrentUser();
-
-
-    document
-        .getElementById("registerForm")
-        .reset();
-
-
-    closeModal("authModal");
-
-    renderUser();
-
-
-    showToast(
-        "สร้างบัญชีสำเร็จ 🎉",
-        "success"
-    );
-
-}
-
-
-/* ==========================================================
-   LOGIN
-========================================================== */
-
-function login(event){
-
-    event.preventDefault();
-
-
-    const username =
-        document
-        .getElementById("loginUsername")
-        .value.trim();
-
-
-    const password =
-        document
-        .getElementById("loginPassword")
-        .value;
-
-
-    const user =
-        users.find(
-            u =>
-                u.username.toLowerCase()
-                ===
-                username.toLowerCase()
-                &&
-                u.password === password
-        );
-
-
-    if(!user){
-
-        showMessage(
-            "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    currentUser = {
-
-        id:user.id,
-
-        name:user.name,
-
-        email:user.email,
-
-        username:user.username
-
-    };
-
-
-    saveCurrentUser();
-
-
-    closeModal("authModal");
-
-    renderUser();
-
-
-    showToast(
-        "เข้าสู่ระบบสำเร็จ 👋",
-        "success"
-    );
-
-}
-
-
-/* ==========================================================
-   PROFILE
-========================================================== */
-
-function userAction(){
-
-    if(!currentUser){
-
-        openAuth("login");
-
-        return;
-
-    }
-
-
-    document
-        .getElementById("profileName")
-        .textContent =
-            currentUser.name;
-
-
-    document
-        .getElementById("profileUsername")
-        .textContent =
-            "@" + currentUser.username;
-
-
-    document
-        .getElementById("profileEmail")
-        .textContent =
-            currentUser.email;
-
-
-    document
-        .getElementById("profileModal")
-        .classList
-        .add("show");
-
-}
-
-
-function logout(){
-
-    currentUser = null;
-
-    saveCurrentUser();
-
-    closeModal("profileModal");
-
-    renderUser();
-
-    showToast(
-        "ออกจากระบบแล้ว",
-        "success"
-    );
-
-}
-
-
-/* ==========================================================
-   CATEGORY
-========================================================== */
-
-function renderCategories(){
-
-    const categories = [
-
-        "ทั้งหมด",
-        "วรรณกรรม",
-        "นิยาย",
-        "ประวัติศาสตร์",
-        "ปรัชญา",
-        "วิทยาศาสตร์",
-        "การศึกษา",
-        "ทั่วไป"
-
-    ];
-
-
-    const container =
-        document.getElementById("categories");
-
-
-    container.innerHTML="";
-
-
-    categories.forEach(
-        category => {
-
-            const button =
-                document.createElement("button");
-
-
-            button.className =
-                "category " +
-                (
-                    category === currentCategory
-                    ? "active"
-                    : ""
-                );
-
-
-            button.textContent =
-                category;
-
-
-            button.onclick =
-                function(){
-
-                    currentCategory =
-                        category;
-
-                    renderCategories();
-
-                    renderBooks();
-
-                };
-
-
-            container.appendChild(button);
-
-        }
-    );
-
-}
-
-
-/* ==========================================================
-   RENDER BOOKS
-========================================================== */
-
-function renderBooks(){
-
-    const grid =
-        document.getElementById("bookGrid");
-
-
-    let filtered =
-        books.filter(
-            book => {
-
-                const categoryOK =
-                    currentCategory === "ทั้งหมด"
-                    ||
-                    book.category === currentCategory;
-
-
-                const text =
-                    (
-                        book.title +
-                        " " +
-                        book.author +
-                        " " +
-                        book.category
-                    ).toLowerCase();
-
-
-                const searchOK =
-                    !searchText
-                    ||
-                    text.includes(searchText);
-
-
-                return categoryOK && searchOK;
-
-            }
-        );
-
-
-    grid.innerHTML="";
-
-
-    if(filtered.length === 0){
-
-        grid.innerHTML = `
-
-            <div class="empty">
-
-                <div style="font-size:45px">
-                    📚
-                </div>
-
-                <h3>
-                    ไม่พบหนังสือ
-                </h3>
-
-                <p>
-                    ลองเปลี่ยนคำค้นหาหรือสร้างหนังสือใหม่
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    filtered.forEach(
-        book => {
-
-            const card =
-                document.createElement("div");
-
-
-            card.className =
-                "book";
-
-
-            const canDelete =
-                currentUser
-                &&
-                book.owner
-                &&
-                book.owner === currentUser.id;
-
-
-            card.innerHTML = `
-
-                <img
-                    class="cover"
-                    src="${escapeHTML(book.cover || defaultBooks[0].cover)}"
-                    alt="${escapeHTML(book.title)}"
-                    onerror="
-                        this.src='${defaultBooks[0].cover}'
-                    "
-                >
-
-                <div class="book-info">
-
-                    <span class="book-category">
-                        ${escapeHTML(book.category)}
-                    </span>
-
-                    <div class="book-title">
-                        ${escapeHTML(book.title)}
-                    </div>
-
-                    <div class="book-author">
-                        ✍️ ${escapeHTML(book.author)}
-                    </div>
-
-                    <div class="book-buttons">
-
-                        <button
-                            class="read-btn"
-                            onclick="openBook('${book.id}')"
-                        >
-                            📖 อ่าน
-                        </button>
-
-                        <button
-                            class="favorite-btn"
-                            onclick="toggleFavorite(event,'${book.id}')"
-                        >
-                            ${book.favorite ? "❤️" : "♡"}
-                        </button>
-
-                        ${
-                            canDelete
-                            ?
-                            `
-                            <button
-                                class="delete-btn"
-                                onclick="deleteBook(event,'${book.id}')"
-                            >
-                                🗑️
-                            </button>
-                            `
-                            :
-                            ""
-                        }
-
-                    </div>
-
-                </div>
-
-            `;
-
-
-            card.onclick =
-                function(event){
-
-                    if(
-                        event.target.closest("button")
-                    ){
-
-                        return;
-
-                    }
-
-                    openBook(book.id);
-
-                };
-
-
-            grid.appendChild(card);
-
-        }
-    );
-
-}
-
-
-/* ==========================================================
-   CREATE BOOK
-========================================================== */
-
-function openCreateBook(){
-
-    if(!currentUser){
-
-        showToast(
-            "กรุณาสร้างบัญชีและเข้าสู่ระบบก่อน",
-            "error"
-        );
-
-        openAuth("register");
-
-        return;
-
-    }
-
-
-    closeModal("profileModal");
-
-
-    document
-        .getElementById("authorNamePreview")
-        .textContent =
-            currentUser.name +
-            " (@" +
-            currentUser.username +
-            ")";
-
-
-    document
-        .getElementById("createBookModal")
-        .classList
-        .add("show");
-
-}
-
-
-/* ==========================================================
-   CREATE BOOK
-========================================================== */
-
-function createBook(event){
-
-    event.preventDefault();
-
-
-    if(!currentUser){
-
-        return;
-
-    }
-
-
-    const title =
-        document
-        .getElementById("newBookTitle")
-        .value.trim();
-
-
-    const category =
-        document
-        .getElementById("newBookCategory")
-        .value;
-
-
-    const cover =
-        document
-        .getElementById("newBookCover")
-        .value.trim();
-
-
-    const fileInput =
-        document.getElementById("bookFile");
-
-
-    const manualContent =
-        document
-        .getElementById("bookContent")
-        .value.trim();
-
-
-    if(
-        !fileInput.files.length
-        &&
-        !manualContent
-    ){
-
-        showToast(
-            "กรุณาอัปโหลดไฟล์ หรือเขียนเนื้อหาหนังสือ",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    if(fileInput.files.length){
-
-        const file =
-            fileInput.files[0];
-
-
-        const allowed =
-            [
-                "text/plain",
-                "text/html"
-            ];
-
-
-        const extension =
-            file.name
-            .split(".")
-            .pop()
-            .toLowerCase();
-
-
-        if(
-            extension !== "txt"
-            &&
-            extension !== "html"
-            &&
-            extension !== "htm"
-        ){
-
-            showToast(
-                "รองรับเฉพาะไฟล์ TXT และ HTML",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        decodeBookFile(file)
-            .then(
-                function(content){
-
-                    finishCreateBook(
-                        title,
-                        category,
-                        cover,
-                        content,
-                        file.name
-                    );
-
-                }
-            )
-            .catch(
-                function(error){
-
-                    console.error("Book file decode error:", error);
-
-                    showToast(
-                        "ไม่สามารถอ่านไฟล์ได้ กรุณาตรวจสอบไฟล์อีกครั้ง",
-                        "error"
-                    );
-
-                }
-            );
-
-    }else{
-
-        finishCreateBook(
-            title,
-            category,
-            cover,
-            manualContent,
-            null
-        );
-
-    }
-
-}
-
-
-/* ==========================================================
-   BOOK FILE DECODER
-   รองรับ UTF-8, UTF-8 BOM, UTF-16 LE/BE,
-   Windows-874 / TIS-620 และ HTML ที่ประกาศ charset
-========================================================== */
-
-async function decodeBookFile(file){
-
-    const buffer =
-        await file.arrayBuffer();
-
-    const bytes =
-        new Uint8Array(buffer);
-
-
-    /* BOM: UTF-8 */
-    if(
-        bytes.length >= 3 &&
-        bytes[0] === 0xEF &&
-        bytes[1] === 0xBB &&
-        bytes[2] === 0xBF
-    ){
-
-        return new TextDecoder("utf-8").decode(bytes);
-
-    }
-
-
-    /* BOM: UTF-16 Little Endian */
-    if(
-        bytes.length >= 2 &&
-        bytes[0] === 0xFF &&
-        bytes[1] === 0xFE
-    ){
-
-        return new TextDecoder("utf-16le").decode(bytes);
-
-    }
-
-
-    /* BOM: UTF-16 Big Endian */
-    if(
-        bytes.length >= 2 &&
-        bytes[0] === 0xFE &&
-        bytes[1] === 0xFF
-    ){
-
-        return decodeUtf16BE(bytes);
-
-    }
-
-
-    /*
-       ตรวจ charset ที่ประกาศอยู่ใน HTML ก่อน
-       เช่น UTF-8, TIS-620, Windows-874
-    */
-    const preview =
-        new TextDecoder("windows-1252")
-        .decode(bytes.slice(0, 8192));
-
-    const charsetMatch =
-        preview.match(
-            /<meta[^>]+charset\s*=\s*[\"']?\s*([^\s\"'/>]+)/i
-        ) ||
-        preview.match(
-            /<meta[^>]+content\s*=\s*[\"'][^\"']*charset\s*=\s*([^\s;\"']+)/i
-        );
-
-    if(charsetMatch){
-
-        const charset =
-            charsetMatch[1]
-            .toLowerCase()
-            .replace("windows-874", "windows-874")
-            .replace("tis-620", "windows-874")
-            .replace("iso-8859-11", "windows-874");
-
-        try{
-            return new TextDecoder(charset).decode(bytes);
-        }catch(error){
-            console.warn("ไม่สามารถใช้ charset ที่ประกาศในไฟล์ได้:", charset);
-        }
-
-    }
-
-
-    /*
-       ถ้าไม่ระบุ charset ให้ลอง UTF-8 แบบ strict ก่อน
-       เพื่อป้องกันอักขระไทยกลายเป็น �
-    */
-    try{
-
-        return new TextDecoder("utf-8", {fatal:true})
-            .decode(bytes);
-
-    }catch(error){
-        // ไม่ใช่ UTF-8 -> ลอง Windows-874 / TIS-620
-    }
-
-
-    try{
-
-        return new TextDecoder("windows-874")
-            .decode(bytes);
-
-    }catch(error){
-
-        console.warn("Windows-874 decoder ใช้งานไม่ได้ จะใช้ UTF-8 แบบปกติแทน");
-
-        return new TextDecoder("utf-8")
-            .decode(bytes);
-
-    }
-
-}
-
-
-function decodeUtf16BE(bytes){
-
-    const evenLength =
-        bytes.length - (bytes.length % 2);
-
-    const swapped =
-        new Uint8Array(evenLength);
-
-    for(
-        let i = 0;
-        i < evenLength;
-        i += 2
-    ){
-
-        swapped[i] = bytes[i + 1];
-        swapped[i + 1] = bytes[i];
-
-    }
-
-    return new TextDecoder("utf-16le")
-        .decode(swapped);
-
-}
-
-
-/* ==========================================================
-   FINISH CREATE BOOK
-========================================================== */
-
-function finishCreateBook(
-    title,
-    category,
-    cover,
-    rawContent,
-    fileName
-){
-
-    let chapters =
-        convertContentToChapters(
-            rawContent
-        );
-
-
-    if(!chapters.length){
-
-        chapters = [
-
-            {
-                title:"บทที่ 1",
-                content:[
-                    "ยังไม่มีเนื้อหาในบทนี้"
-                ]
-            }
-
-        ];
-
-    }
-
-
-    const book = {
-
-        id:
-            "book_" +
-            Date.now(),
-
-        title:title,
-
-        author:
-            currentUser.name,
-
-        authorUsername:
-            currentUser.username,
-
-        category:category,
-
-        cover:
-            cover
-            ||
-            defaultBooks[0].cover,
-
-        owner:
-            currentUser.id,
-
-        favorite:false,
-
-        fileName:
-            fileName || "",
-
-        chapters:chapters,
-
-        createdAt:
-            new Date().toISOString()
-
-    };
-
-
-    books.unshift(book);
-
-    saveBooks();
-
-
-    document
-        .querySelector("#createBookModal form")
-        .reset();
-
-
-    closeModal("createBookModal");
-
-    renderBooks();
-
-
-    showToast(
-        "สร้างหนังสือ \"" +
-        title +
-        "\" สำเร็จ 📚",
-        "success"
-    );
-
-}
-
-
-/* ==========================================================
-   CONVERT TEXT TO CHAPTERS
-========================================================== */
-
-function convertContentToChapters(content){
-
-    if(!content){
-        return [];
-    }
-
-
-    /*
-       ถ้าเป็น HTML
-       ดึงข้อความออกมาโดยไม่ให้ script ทำงาน
-    */
-
-    if(
-        /<html|<body|<p|<div|<article/i
-        .test(content)
-    ){
-
-        const parser =
-            new DOMParser();
-
-
-        const doc =
-            parser.parseFromString(
-                content,
-                "text/html"
-            );
-
-
-        doc
-            .querySelectorAll(
-                "script,style,iframe,object,embed"
-            )
-            .forEach(
-                element =>
-                    element.remove()
-            );
-
-
-        const text =
-            doc.body
-            ? doc.body.innerText
-            : content;
-
-
-        content =
-            text;
-
-    }
-
-
-    /*
-       แบ่งบทจากข้อความที่ขึ้นต้นด้วย
-       บทที่ / Chapter
-    */
-
-    const lines =
-        content
-        .replace(/\r/g,"")
-        .split("\n");
-
-
-    const chapters = [];
-
-    let current = null;
-
-
-    lines.forEach(
-        line => {
-
-            const trimmed =
-                line.trim();
-
-
-            if(
-                /^บทที่\s*\d+/i.test(trimmed)
-                ||
-                /^chapter\s*\d+/i.test(trimmed)
-            ){
-
-                current = {
-
-                    title:
-                        trimmed,
-
-                    content:[]
-
-                };
-
-
-                chapters.push(current);
-
-                return;
-
-            }
-
-
-            if(!current){
-
-                current = {
-
-                    title:"บทที่ 1",
-
-                    content:[]
-
-                };
-
-
-                chapters.push(current);
-
-            }
-
-
-            if(trimmed){
-
-                current.content.push(
-                    trimmed
-                );
-
-            }
-
-        }
-    );
-
-
-    return chapters.filter(
-        chapter =>
-            chapter.content.length > 0
-    );
-
-}
-
-
-/* ==========================================================
-   OPEN BOOK
-========================================================== */
-
-function openBook(bookId){
-
-    if(!currentUser){
-
-        showToast(
-            "กรุณาเข้าสู่ระบบก่อนอ่านหนังสือ",
-            "error"
-        );
-
-        openAuth("login");
-
-        return;
-
-    }
-
-
-    const book =
-        books.find(
-            b => String(b.id) === String(bookId)
-        );
-
-
-    if(!book){
-        return;
-    }
-
-
-    currentBook =
-        book;
-
-
-    const progress =
-        JSON.parse(
-            localStorage.getItem(
-                "lumina_reading_progress"
-            )
-        ) || {};
-
-
-    currentChapter =
-        Number(
-            progress[book.id] || 0
-        );
-
-
-    if(
-        currentChapter >=
-        book.chapters.length
-    ){
-
-        currentChapter = 0;
-
-    }
-
-
-    fontSize = 19;
-
-
-    document
-        .getElementById("reader")
-        .classList
-        .remove("dark");
-
-
-    document
-        .getElementById("reader")
-        .classList
-        .add("show");
-
-
-    document.body.style.overflow =
-        "hidden";
-
-
-    renderReader();
-
-}
-
-
-/* ==========================================================
-   RENDER READER
-========================================================== */
-
-function renderReader(){
-
-    if(!currentBook){
-        return;
-    }
-
-
-    const chapter =
-        currentBook.chapters[
-            currentChapter
-        ];
-
-
-    document
-        .getElementById("readerTitle")
-        .textContent =
-            currentBook.title;
-
-
-    document
-        .getElementById("readerBookTitle")
-        .textContent =
-            currentBook.title;
-
-
-    document
-        .getElementById("readerAuthor")
-        .textContent =
-            "✍️ ผู้แต่ง: " +
-            currentBook.author;
-
-
-    document
-        .getElementById("readerChapterTitle")
-        .textContent =
-            chapter.title;
-
-
-    const text =
-        document.getElementById(
-            "readerText"
-        );
-
-
-    text.innerHTML = "";
-
-
-    chapter.content.forEach(
-        paragraph => {
-
-            const p =
-                document.createElement("p");
-
-
-            p.textContent =
-                paragraph;
-
-
-            text.appendChild(p);
-
-        }
-    );
-
-
-    text.style.fontSize =
-        fontSize + "px";
-
-
-    const total =
-        currentBook.chapters.length;
-
-
-    const percent =
-        ((currentChapter + 1) / total)
-        * 100;
-
-
-    document
-        .getElementById("progressBar")
-        .style.width =
-            percent + "%";
-
-
-    document
-        .getElementById("progressText")
-        .textContent =
-            Math.round(percent) +
-            "%";
-
-
-    document
-        .getElementById("prevBtn")
-        .disabled =
-            currentChapter === 0;
-
-
-    document
-        .getElementById("nextBtn")
-        .textContent =
-            currentChapter === total - 1
-            ? "✓ อ่านจบ"
-            : "ถัดไป →";
-
-
-    document
-        .getElementById("readerBody")
-        .scrollTop = 0;
-
-
-    saveProgress();
-
-}
-
-
-/* ==========================================================
-   READING PROGRESS
-========================================================== */
-
-function saveProgress(){
-
-    if(!currentBook){
-        return;
-    }
-
-
-    const progress =
-        JSON.parse(
-            localStorage.getItem(
-                "lumina_reading_progress"
-            )
-        ) || {};
-
-
-    progress[currentBook.id] =
-        currentChapter;
-
-
-    localStorage.setItem(
-        "lumina_reading_progress",
-        JSON.stringify(progress)
-    );
-
-}
-
-
-/* ==========================================================
-   NEXT
-========================================================== */
-
-function nextChapter(){
-
-    if(!currentBook){
-        return;
-    }
-
-
-    if(
-        currentChapter <
-        currentBook.chapters.length - 1
-    ){
-
-        currentChapter++;
-
-        renderReader();
-
-    }else{
-
-        saveProgress();
-
-        showToast(
-            "🎉 คุณอ่านหนังสือเล่มนี้จบแล้ว",
-            "success"
-        );
-
-    }
-
-}
-
-
-/* ==========================================================
-   PREVIOUS
-========================================================== */
-
-function previousChapter(){
-
-    if(
-        currentChapter > 0
-    ){
-
-        currentChapter--;
-
-        renderReader();
-
-    }
-
-}
-
-
-/* ==========================================================
-   FONT
-========================================================== */
-
-function changeFont(amount){
-
-    fontSize += amount;
-
-
-    if(fontSize < 14){
-        fontSize = 14;
-    }
-
-
-    if(fontSize > 32){
-        fontSize = 32;
-    }
-
-
-    document
-        .getElementById("readerText")
-        .style.fontSize =
-            fontSize + "px";
-
-}
-
-
-/* ==========================================================
-   DARK MODE
-========================================================== */
-
-function toggleDark(){
-
-    document
-        .getElementById("reader")
-        .classList
-        .toggle("dark");
-
-}
-
-
-/* ==========================================================
-   CLOSE READER
-========================================================== */
-
-function closeReader(){
-
-    saveProgress();
-
-
-    document
-        .getElementById("reader")
-        .classList
-        .remove("show");
-
-
-    document.body.style.overflow =
-        "";
-
-
-    currentBook = null;
-
-}
-
-
-/* ==========================================================
-   FAVORITE
-========================================================== */
-
-function toggleFavorite(
-    event,
-    bookId
-){
-
-    event.stopPropagation();
-
-
-    const book =
-        books.find(
-            b =>
-                String(b.id)
-                ===
-                String(bookId)
-        );
-
-
-    if(!book){
-        return;
-    }
-
-
-    book.favorite =
-        !book.favorite;
-
-
-    saveBooks();
-
-    renderBooks();
-
-}
-
-
-/* ==========================================================
-   DELETE BOOK
-========================================================== */
-
-function deleteBook(
-    event,
-    bookId
-){
-
-    event.stopPropagation();
-
-
-    if(!currentUser){
-        return;
-    }
-
-
-    const book =
-        books.find(
-            b =>
-                String(b.id)
-                ===
-                String(bookId)
-        );
-
-
-    if(!book){
-        return;
-    }
-
-
-    if(
-        book.owner !==
-        currentUser.id
-    ){
-
-        showToast(
-            "คุณสามารถลบเฉพาะหนังสือของคุณเอง",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    const confirmDelete =
-        confirm(
-            "ต้องการลบหนังสือ \"" +
-            book.title +
-            "\" หรือไม่?"
-        );
-
-
-    if(!confirmDelete){
-        return;
-    }
-
-
-    books =
-        books.filter(
-            b =>
-                String(b.id)
-                !==
-                String(bookId)
-        );
-
-
-    saveBooks();
-
-    renderBooks();
-
-
-    showToast(
-        "ลบหนังสือแล้ว",
-        "success"
-    );
-
-}
-
-
-/* ==========================================================
-   MODAL
-========================================================== */
 
 function closeModal(id){
 
-    document
-        .getElementById(id)
-        .classList
-        .remove("show");
+document
+.getElementById(id)
+.classList.remove("show");
 
 }
 
 
-/* ==========================================================
-   MESSAGE
-========================================================== */
+/* =========================================================
+   REGISTER
+========================================================= */
 
-function showMessage(
-    text,
-    type
+function registerMember(){
+
+const name =
+document
+.getElementById("registerName")
+.value
+.trim();
+
+const username =
+document
+.getElementById("registerUsername")
+.value
+.trim();
+
+const password =
+document
+.getElementById("registerPassword")
+.value;
+
+
+if(!name ||
+!username ||
+!password){
+
+showToast(
+"กรุณากรอกข้อมูลให้ครบ",
+"error"
+);
+
+return;
+
+}
+
+
+if(username.length < 3){
+
+showToast(
+"Username ต้องมีอย่างน้อย 3 ตัวอักษร",
+"error"
+);
+
+return;
+
+}
+
+
+if(password.length < 6){
+
+showToast(
+"รหัสผ่านควรมีอย่างน้อย 6 ตัวอักษร",
+"error"
+);
+
+return;
+
+}
+
+
+if(
+users.some(
+u =>
+u.username.toLowerCase()
+===
+username.toLowerCase()
+)
 ){
 
-    const box =
-        document.getElementById(
-            "authMessage"
-        );
+showToast(
+"Username นี้มีอยู่แล้ว",
+"error"
+);
 
-
-    box.textContent =
-        text;
-
-
-    box.className =
-        "message " +
-        type;
+return;
 
 }
 
 
-function clearMessage(){
+const user={
 
-    const box =
-        document.getElementById(
-            "authMessage"
-        );
+id:
+"user_" +
+Date.now(),
+
+name:name,
+
+username:username,
+
+password:password,
+
+createdAt:
+new Date().toISOString()
+
+};
 
 
-    box.textContent="";
+users.push(user);
 
-    box.className="message";
+saveUsers();
+
+
+currentUser={
+    id:user.id,
+    name:user.name,
+    username:user.username
+};
+
+
+localStorage.setItem(
+CURRENT_USER_KEY,
+JSON.stringify(currentUser)
+);
+
+
+logActivity(
+"สมัครสมาชิก",
+username
+);
+
+
+closeModal(
+"memberAuthModal"
+);
+
+renderUser();
+
+renderBooks();
+
+clearAuthForms();
+
+
+showToast(
+"สมัครสมาชิกสำเร็จ 🎉",
+"success"
+);
 
 }
 
 
-/* ==========================================================
+/* =========================================================
+   LOGIN
+========================================================= */
+
+function memberLogin(){
+
+const username =
+document
+.getElementById("loginUsername")
+.value
+.trim();
+
+const password =
+document
+.getElementById("loginPassword")
+.value;
+
+
+const user =
+users.find(
+u =>
+u.username === username &&
+u.password === password
+);
+
+
+if(!user){
+
+showToast(
+"Username หรือ Password ไม่ถูกต้อง",
+"error"
+);
+
+return;
+
+}
+
+
+currentUser={
+
+id:user.id,
+
+name:user.name,
+
+username:user.username
+
+};
+
+
+localStorage.setItem(
+CURRENT_USER_KEY,
+JSON.stringify(currentUser)
+);
+
+
+logActivity(
+"เข้าสู่ระบบสมาชิก",
+username
+);
+
+
+closeModal(
+"memberAuthModal"
+);
+
+renderUser();
+
+clearAuthForms();
+
+
+showToast(
+"เข้าสู่ระบบสำเร็จ 👋",
+"success"
+);
+
+}
+
+
+/* =========================================================
+   LOGOUT MEMBER
+========================================================= */
+
+function logoutMember(){
+
+if(!currentUser)return;
+
+logActivity(
+"ออกจากระบบ",
+currentUser.username
+);
+
+currentUser=null;
+
+localStorage.removeItem(
+CURRENT_USER_KEY
+);
+
+renderUser();
+
+showMemberView();
+
+showToast(
+"ออกจากระบบแล้ว",
+"success"
+);
+
+}
+
+
+/* =========================================================
+   CLEAR FORMS
+========================================================= */
+
+function clearAuthForms(){
+
+[
+"loginUsername",
+"loginPassword",
+"registerName",
+"registerUsername",
+"registerPassword"
+].forEach(id=>{
+
+const element =
+document.getElementById(id);
+
+if(element){
+    element.value="";
+}
+
+});
+
+}
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+function renderCategories(){
+
+const categories =
+[
+"ทั้งหมด",
+"วรรณกรรม",
+"นิยาย",
+"ประวัติศาสตร์",
+"ปรัชญา",
+"วิทยาศาสตร์",
+"การศึกษา",
+"ทั่วไป"
+];
+
+
+const container =
+document.getElementById(
+"categories"
+);
+
+container.innerHTML="";
+
+
+categories.forEach(category=>{
+
+const button =
+document.createElement(
+"button"
+);
+
+button.className =
+"category-btn" +
+(
+category === selectedCategory
+? " active"
+: ""
+);
+
+button.textContent =
+category;
+
+button.onclick=function(){
+
+selectedCategory =
+category;
+
+renderCategories();
+
+renderBooks();
+
+logActivity(
+"เลือกหมวดหมู่",
+category
+);
+
+};
+
+container.appendChild(button);
+
+});
+
+}
+
+
+/* =========================================================
+   RENDER BOOKS
+========================================================= */
+
+function renderBooks(){
+
+const grid =
+document.getElementById(
+"bookGrid"
+);
+
+const search =
+(
+document
+.getElementById("searchInput")
+.value ||
+""
+)
+.toLowerCase()
+.trim();
+
+
+const filtered =
+books.filter(book=>{
+
+if(book.published === false){
+    return false;
+}
+
+
+const matchSearch =
+(book.title || "")
+.toLowerCase()
+.includes(search)
+
+||
+
+(book.author || "")
+.toLowerCase()
+.includes(search)
+
+||
+
+(book.category || "")
+.toLowerCase()
+.includes(search);
+
+
+const matchCategory =
+selectedCategory === "ทั้งหมด"
+||
+book.category === selectedCategory;
+
+
+return matchSearch &&
+matchCategory;
+
+});
+
+
+grid.innerHTML="";
+
+
+document
+.getElementById("bookCount")
+.textContent =
+filtered.length +
+" เล่ม";
+
+
+if(!filtered.length){
+
+grid.innerHTML=`
+
+<div class="empty">
+
+<div style="font-size:40px">
+📚
+</div>
+
+<h3>ไม่พบหนังสือ</h3>
+
+<p>
+ลองเปลี่ยนคำค้นหาหรือหมวดหมู่
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+filtered.forEach(book=>{
+
+const card =
+document.createElement("article");
+
+card.className =
+"book-card";
+
+
+const cover =
+escapeHTML(
+book.cover ||
+DEFAULT_COVER
+);
+
+
+card.innerHTML=`
+
+<img
+class="book-cover"
+src="${cover}"
+alt="${escapeHTML(book.title)}"
+onerror="this.src='${DEFAULT_COVER}'">
+
+
+<div class="book-info">
+
+<span class="book-category">
+
+${escapeHTML(book.category)}
+
+</span>
+
+
+<div class="book-title">
+
+${escapeHTML(book.title)}
+
+</div>
+
+
+<div class="book-author">
+
+✍️ ${escapeHTML(book.author)}
+
+</div>
+
+
+<div class="book-status">
+
+● เผยแพร่แล้ว
+
+</div>
+
+
+<div class="book-buttons">
+
+<button
+class="read-btn"
+onclick="openBook('${book.id}')">
+
+📖 อ่าน
+
+</button>
+
+
+<button
+class="favorite-btn"
+onclick="toggleFavorite(event,'${book.id}')">
+
+${book.favorite ? "❤️" : "♡"}
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+
+grid.appendChild(card);
+
+});
+
+}
+
+
+/* =========================================================
+   OPEN CREATE BOOK
+========================================================= */
+
+function openCreateBook(){
+
+if(!currentUser){
+
+showToast(
+"กรุณาเข้าสู่ระบบก่อนสร้างหนังสือ",
+"error"
+);
+
+openMemberAuth();
+
+return;
+
+}
+
+
+document
+.getElementById("authorPreview")
+.textContent =
+"✍️ ผู้แต่ง: " +
+currentUser.name +
+" (@" +
+currentUser.username +
+")";
+
+
+document
+.getElementById("createBookModal")
+.classList.add("show");
+
+}
+
+
+/* =========================================================
+   FILE UPLOAD
+========================================================= */
+
+function setupFileUpload(){
+
+const input =
+document.getElementById(
+"bookFile"
+);
+
+input.addEventListener(
+"change",
+async function(){
+
+const file =
+this.files[0];
+
+if(!file)return;
+
+
+const allowed = [
+
+"text/plain",
+
+"text/html",
+
+""
+
+];
+
+
+const extension =
+file.name
+.split(".")
+.pop()
+.toLowerCase();
+
+
+if(
+!["txt","html","htm","md"]
+.includes(extension)
+){
+
+showToast(
+"ไฟล์นี้ยังไม่รองรับ กรุณาใช้ TXT, HTML หรือ MD",
+"error"
+);
+
+this.value="";
+
+return;
+
+}
+
+
+try{
+
+const text =
+await file.text();
+
+
+document
+.getElementById("bookContent")
+.value =
+text;
+
+
+showToast(
+"อ่านไฟล์สำเร็จแล้ว",
+"success"
+);
+
+}catch(error){
+
+showToast(
+"ไม่สามารถอ่านไฟล์ได้",
+"error"
+);
+
+}
+
+});
+
+}
+
+
+/* =========================================================
+   PUBLISH BOOK
+========================================================= */
+
+function publishBook(){
+
+if(!currentUser){
+
+showToast(
+"กรุณาเข้าสู่ระบบ",
+"error"
+);
+
+return;
+
+}
+
+
+const title =
+document
+.getElementById("newBookTitle")
+.value
+.trim();
+
+const category =
+document
+.getElementById("newBookCategory")
+.value;
+
+const cover =
+document
+.getElementById("newBookCover")
+.value
+.trim();
+
+const content =
+document
+.getElementById("bookContent")
+.value
+.trim();
+
+
+if(!title){
+
+showToast(
+"กรุณากรอกชื่อหนังสือ",
+"error"
+);
+
+return;
+
+}
+
+
+if(!content){
+
+showToast(
+"กรุณาอัปโหลดไฟล์หรือกรอกเนื้อหาหนังสือ",
+"error"
+);
+
+return;
+
+}
+
+
+/* แปลงเนื้อหาเป็นบท */
+
+const chapters =
+convertContentToChapters(
+content
+);
+
+
+const book={
+
+id:
+"book_" +
+Date.now(),
+
+title:title,
+
+author:
+currentUser.name,
+
+authorUsername:
+currentUser.username,
+
+category:category,
+
+cover:
+cover ||
+DEFAULT_COVER,
+
+owner:
+currentUser.id,
+
+favorite:false,
+
+published:true,
+
+createdAt:
+new Date().toISOString(),
+
+chapters:chapters
+
+};
+
+
+/* เพิ่มหนังสือทันที */
+
+books.unshift(book);
+
+saveBooks();
+
+
+/* บันทึกกิจกรรม */
+
+logActivity(
+"เผยแพร่หนังสือ",
+title
+);
+
+
+/* ล้างฟอร์ม */
+
+document
+.getElementById("newBookTitle")
+.value="";
+
+document
+.getElementById("newBookCover")
+.value="";
+
+document
+.getElementById("bookContent")
+.value="";
+
+document
+.getElementById("bookFile")
+.value="";
+
+
+closeModal(
+"createBookModal"
+);
+
+
+/* แสดงหนังสือในหน้าเว็บทันที */
+
+renderBooks();
+
+
+showToast(
+"📚 เผยแพร่หนังสือ \"" +
+title +
+"\" สำเร็จแล้ว",
+"success"
+);
+
+}
+
+
+/* =========================================================
+   CONVERT CONTENT TO CHAPTERS
+========================================================= */
+
+function convertContentToChapters(
+content
+){
+
+/* ถ้าเป็น HTML ให้ดึงข้อความออก */
+
+if(
+/<html|<body|<p|<div|<article/i
+.test(content)
+){
+
+const parser =
+new DOMParser();
+
+const doc =
+parser.parseFromString(
+content,
+"text/html"
+);
+
+
+/* ลบสิ่งที่ไม่ต้องการ */
+
+doc
+.querySelectorAll(
+"script,style,iframe,object,embed"
+)
+.forEach(
+element =>
+element.remove()
+);
+
+
+content =
+doc.body
+? doc.body.innerText
+: content;
+
+}
+
+
+/* แยกบรรทัด */
+
+const lines =
+content
+.replace(/\r/g,"")
+.split("\n");
+
+
+const chapters=[];
+
+let current=null;
+
+
+lines.forEach(line=>{
+
+const text =
+line.trim();
+
+
+/* ตรวจหัวบท */
+
+if(
+/^บทที่\s*\d+/i.test(text)
+||
+/^chapter\s*\d+/i.test(text)
+){
+
+current={
+
+title:text,
+
+content:[]
+
+};
+
+chapters.push(current);
+
+return;
+
+}
+
+
+/* ถ้ายังไม่มีบท */
+
+if(!current){
+
+current={
+
+title:"บทที่ 1",
+
+content:[]
+
+};
+
+chapters.push(current);
+
+}
+
+
+/* เพิ่มข้อความ */
+
+if(text){
+
+current.content.push(text);
+
+}
+
+});
+
+
+/* หากไม่มีเนื้อหา */
+
+if(!chapters.length){
+
+return [
+
+{
+
+title:"บทที่ 1",
+
+content:[
+"ยังไม่มีเนื้อหา"
+]
+
+}
+
+];
+
+}
+
+
+return chapters;
+
+}
+
+
+/* =========================================================
+   OPEN BOOK
+========================================================= */
+
+function openBook(id){
+
+if(!currentUser){
+
+showToast(
+"กรุณาเข้าสู่ระบบก่อนอ่านหนังสือ",
+"error"
+);
+
+openMemberAuth();
+
+return;
+
+}
+
+
+currentBook =
+books.find(
+book =>
+String(book.id) ===
+String(id)
+);
+
+
+if(!currentBook)return;
+
+
+currentChapter=0;
+
+readerFontSize=19;
+
+
+document
+.getElementById("reader")
+.classList
+.add("show");
+
+
+logActivity(
+"เปิดอ่านหนังสือ",
+currentBook.title
+);
+
+
+renderReader();
+
+}
+
+
+/* =========================================================
+   RENDER READER
+========================================================= */
+
+function renderReader(){
+
+if(!currentBook)return;
+
+
+const chapter =
+currentBook.chapters[
+currentChapter
+];
+
+
+document
+.getElementById("readerBookName")
+.textContent =
+currentBook.title;
+
+
+document
+.getElementById("readerTitle")
+.textContent =
+currentBook.title;
+
+
+document
+.getElementById("readerAuthor")
+.textContent =
+"✍️ ผู้แต่ง: " +
+currentBook.author;
+
+
+document
+.getElementById("readerChapterTitle")
+.textContent =
+chapter.title;
+
+
+const text =
+document
+.getElementById("readerText");
+
+
+text.innerHTML="";
+
+
+chapter.content
+.forEach(paragraph=>{
+
+const p =
+document.createElement("p");
+
+p.textContent =
+paragraph;
+
+text.appendChild(p);
+
+});
+
+
+text.style.fontSize =
+readerFontSize +
+"px";
+
+
+const total =
+currentBook.chapters.length;
+
+
+const percent =
+((currentChapter + 1) /
+total) *
+100;
+
+
+document
+.getElementById("progressBar")
+.style.width =
+percent +
+"%";
+
+
+document
+.getElementById("progressText")
+.textContent =
+Math.round(percent) +
+"%";
+
+
+document
+.getElementById("prevChapterBtn")
+.disabled =
+currentChapter === 0;
+
+
+document
+.getElementById("nextChapterBtn")
+.textContent =
+currentChapter === total-1
+? "จบหนังสือ ✓"
+: "ถัดไป →";
+
+}
+
+
+/* =========================================================
+   NEXT CHAPTER
+========================================================= */
+
+function nextChapter(){
+
+if(!currentBook)return;
+
+
+if(
+currentChapter <
+currentBook.chapters.length - 1
+){
+
+currentChapter++;
+
+renderReader();
+
+}else{
+
+logActivity(
+"อ่านหนังสือจบ",
+currentBook.title
+);
+
+showToast(
+"🎉 อ่านหนังสือจบแล้ว",
+"success"
+);
+
+}
+
+}
+
+
+/* =========================================================
+   PREVIOUS CHAPTER
+========================================================= */
+
+function previousChapter(){
+
+if(currentChapter > 0){
+
+currentChapter--;
+
+renderReader();
+
+}
+
+}
+
+
+/* =========================================================
+   FONT
+========================================================= */
+
+function changeReaderFont(
+amount
+){
+
+readerFontSize += amount;
+
+
+if(readerFontSize < 14){
+
+readerFontSize=14;
+
+}
+
+
+if(readerFontSize > 30){
+
+readerFontSize=30;
+
+}
+
+
+document
+.getElementById("readerText")
+.style.fontSize =
+readerFontSize +
+"px";
+
+}
+
+
+/* =========================================================
+   CLOSE READER
+========================================================= */
+
+function closeReader(){
+
+document
+.getElementById("reader")
+.classList
+.remove("show");
+
+}
+
+
+/* =========================================================
+   FAVORITE
+========================================================= */
+
+function toggleFavorite(
+event,
+id
+){
+
+event.stopPropagation();
+
+
+if(!currentUser){
+
+showToast(
+"กรุณาเข้าสู่ระบบก่อน",
+"error"
+);
+
+openMemberAuth();
+
+return;
+
+}
+
+
+const book =
+books.find(
+b => b.id === id
+);
+
+
+if(!book)return;
+
+
+book.favorite =
+!book.favorite;
+
+
+saveBooks();
+
+
+logActivity(
+
+book.favorite
+? "เพิ่มรายการโปรด"
+: "ยกเลิกรายการโปรด",
+
+book.title
+
+);
+
+
+renderBooks();
+
+}
+
+
+/* =========================================================
+   ADMIN LOGIN
+========================================================= */
+
+function openAdminLogin(){
+
+if(
+sessionStorage.getItem(
+ADMIN_SESSION_KEY
+)==="true"
+){
+
+showAdminView();
+
+return;
+
+}
+
+
+document
+.getElementById("adminLoginModal")
+.classList
+.add("show");
+
+}
+
+
+function adminLogin(){
+
+const username =
+document
+.getElementById("adminUsername")
+.value
+.trim();
+
+const password =
+document
+.getElementById("adminPassword")
+.value;
+
+
+if(
+username === ADMIN_USERNAME &&
+password === ADMIN_PASSWORD
+){
+
+sessionStorage.setItem(
+ADMIN_SESSION_KEY,
+"true"
+);
+
+
+logActivity(
+"เข้าสู่ระบบผู้ดูแล",
+username
+);
+
+
+closeModal(
+"adminLoginModal"
+);
+
+showAdminView();
+
+
+showToast(
+"เข้าสู่ระบบผู้ดูแลสำเร็จ",
+"success"
+);
+
+
+}else{
+
+showToast(
+"ข้อมูลเข้าสู่ระบบแอดมินไม่ถูกต้อง",
+"error"
+);
+
+}
+
+}
+
+
+/* =========================================================
+   ADMIN VIEW
+========================================================= */
+
+function showAdminView(){
+
+if(
+sessionStorage.getItem(
+ADMIN_SESSION_KEY
+)!=="true"
+){
+
+openAdminLogin();
+
+return;
+
+}
+
+
+document
+.getElementById("memberView")
+.classList
+.add("hidden-view");
+
+
+document
+.getElementById("adminView")
+.classList
+.add("active");
+
+
+document
+.getElementById("searchInput")
+.parentElement
+.classList
+.add("hidden");
+
+
+document
+.getElementById("createBookTopBtn")
+.classList
+.add("hidden");
+
+
+document
+.getElementById("accountBtn")
+.classList
+.add("hidden");
+
+
+renderAdminDashboard();
+
+}
+
+
+/* =========================================================
+   MEMBER VIEW
+========================================================= */
+
+function showMemberView(){
+
+document
+.getElementById("memberView")
+.classList
+.remove("hidden-view");
+
+
+document
+.getElementById("adminView")
+.classList
+.remove("active");
+
+
+document
+.getElementById("searchInput")
+.parentElement
+.classList
+.remove("hidden");
+
+
+document
+.getElementById("createBookTopBtn")
+.classList
+.remove("hidden");
+
+
+document
+.getElementById("accountBtn")
+.classList
+.remove("hidden");
+
+
+renderUser();
+
+renderBooks();
+
+}
+
+
+/* =========================================================
+   ADMIN LOGOUT
+========================================================= */
+
+function adminLogout(){
+
+sessionStorage.removeItem(
+ADMIN_SESSION_KEY
+);
+
+
+logActivity(
+"ออกจากระบบผู้ดูแล"
+);
+
+
+showMemberView();
+
+
+showToast(
+"ออกจากระบบผู้ดูแลแล้ว",
+"success"
+);
+
+}
+
+
+/* =========================================================
+   ADMIN DASHBOARD
+========================================================= */
+
+function renderAdminDashboard(){
+
+/* สถิติ */
+
+document
+.getElementById("statBooks")
+.textContent =
+books.length;
+
+
+document
+.getElementById("statUsers")
+.textContent =
+users.length;
+
+
+const reads =
+activities.filter(
+a =>
+a.action ===
+"เปิดอ่านหนังสือ"
+).length;
+
+
+document
+.getElementById("statReads")
+.textContent =
+reads;
+
+
+document
+.getElementById("statActivities")
+.textContent =
+activities.length;
+
+
+/* ตารางหนังสือ */
+
+renderAdminBooks();
+
+
+/* ตารางสมาชิก */
+
+renderAdminUsers();
+
+
+/* Activity */
+
+renderActivities();
+
+
+/* หนังสือล่าสุด */
+
+renderRecentBooks();
+
+}
+
+
+/* =========================================================
+   ADMIN BOOK TABLE
+========================================================= */
+
+function renderAdminBooks(){
+
+const table =
+document
+.getElementById(
+"adminBookTable"
+);
+
+table.innerHTML="";
+
+
+if(!books.length){
+
+table.innerHTML=`
+
+<tr>
+
+<td colspan="5">
+
+ยังไม่มีหนังสือ
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+
+books.forEach(book=>{
+
+const row =
+document.createElement("tr");
+
+
+const status =
+book.published === false
+? `
+<span class="badge badge-blue">
+รอเผยแพร่
+</span>
+`
+:`
+<span class="badge badge-success">
+เผยแพร่แล้ว
+</span>
+`;
+
+
+row.innerHTML=`
+
+<td>
+<strong>
+${escapeHTML(book.title)}
+</strong>
+</td>
+
+<td>
+${escapeHTML(book.author)}
+</td>
+
+<td>
+${escapeHTML(book.category)}
+</td>
+
+<td>
+${status}
+</td>
+
+<td>
+${
+book.createdAt
+?
+new Date(
+book.createdAt
+).toLocaleString(
+"th-TH"
+)
+:
+"-"
+}
+</td>
+
+`;
+
+
+table.appendChild(row);
+
+});
+
+}
+
+
+/* =========================================================
+   ADMIN USERS
+========================================================= */
+
+function renderAdminUsers(){
+
+const table =
+document
+.getElementById(
+"adminUserTable"
+);
+
+table.innerHTML="";
+
+
+if(!users.length){
+
+table.innerHTML=`
+
+<tr>
+
+<td colspan="3">
+ยังไม่มีสมาชิก
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+
+users.forEach(user=>{
+
+const row =
+document.createElement("tr");
+
+
+row.innerHTML=`
+
+<td>
+${escapeHTML(user.name)}
+</td>
+
+<td>
+${escapeHTML(user.username)}
+</td>
+
+<td>
+${
+user.createdAt
+?
+new Date(
+user.createdAt
+).toLocaleString(
+"th-TH"
+)
+:
+"-"
+}
+</td>
+
+`;
+
+
+table.appendChild(row);
+
+});
+
+}
+
+
+/* =========================================================
+   ACTIVITY LIST
+========================================================= */
+
+function renderActivities(){
+
+const container =
+document
+.getElementById(
+"activityList"
+);
+
+container.innerHTML="";
+
+
+if(!activities.length){
+
+container.innerHTML=
+"<p>ยังไม่มีกิจกรรม</p>";
+
+return;
+
+}
+
+
+activities
+.slice(0,100)
+.forEach(activity=>{
+
+const item =
+document.createElement("div");
+
+item.className =
+"activity";
+
+
+let time="-";
+
+
+if(activity.time){
+
+time =
+new Date(
+activity.time
+).toLocaleString(
+"th-TH"
+);
+
+}
+
+
+item.innerHTML=`
+
+<div class="activity-action">
+
+⚡ ${escapeHTML(
+activity.action
+)}
+
+</div>
+
+
+<div class="activity-detail">
+
+ผู้ใช้:
+<b>
+${escapeHTML(
+activity.user
+)}
+</b>
+
+<br>
+
+${escapeHTML(
+activity.detail
+)}
+
+</div>
+
+
+<div class="activity-time">
+
+${time}
+
+</div>
+
+`;
+
+
+container.appendChild(item);
+
+});
+
+}
+
+
+/* =========================================================
+   RECENT BOOKS
+========================================================= */
+
+function renderRecentBooks(){
+
+const container =
+document
+.getElementById(
+"recentBooks"
+);
+
+container.innerHTML="";
+
+
+const recent =
+[...books]
+.sort(
+(a,b)=>
+new Date(b.createdAt || 0)
+-
+new Date(a.createdAt || 0)
+)
+.slice(0,8);
+
+
+if(!recent.length){
+
+container.innerHTML=
+"<p>ยังไม่มีหนังสือ</p>";
+
+return;
+
+}
+
+
+recent.forEach(book=>{
+
+const div =
+document.createElement("div");
+
+div.style.cssText=`
+
+display:flex;
+align-items:center;
+gap:12px;
+padding:10px 0;
+border-bottom:1px solid #e2e8f0;
+
+`;
+
+
+div.innerHTML=`
+
+<img
+src="${escapeHTML(
+book.cover ||
+DEFAULT_COVER
+)}"
+style="
+width:45px;
+height:55px;
+object-fit:cover;
+border-radius:5px;
+"
+onerror="this.src='${DEFAULT_COVER}'">
+
+
+<div style="flex:1">
+
+<strong>
+${escapeHTML(book.title)}
+</strong>
+
+<br>
+
+<small>
+${escapeHTML(book.author)}
+•
+${escapeHTML(book.category)}
+</small>
+
+</div>
+
+
+<span class="badge badge-success">
+เผยแพร่แล้ว
+</span>
+
+`;
+
+
+container.appendChild(div);
+
+});
+
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+function toggleDarkMode(){
+
+document
+.body
+.classList
+.toggle("dark");
+
+
+localStorage.setItem(
+THEME_KEY,
+document
+.body
+.classList
+.contains("dark")
+? "dark"
+: "light"
+);
+
+}
+
+
+function loadTheme(){
+
+const theme =
+localStorage.getItem(
+THEME_KEY
+);
+
+
+if(theme === "dark"){
+
+document
+.body
+.classList
+.add("dark");
+
+}
+
+}
+
+
+/* =========================================================
    TOAST
-========================================================== */
+========================================================= */
 
 function showToast(
-    text,
-    type="success"
+message,
+type=""
 ){
 
-    const container =
-        document.getElementById(
-            "toastContainer"
-        );
+const container =
+document
+.getElementById(
+"toastContainer"
+);
 
 
-    const toast =
-        document.createElement("div");
+const toast =
+document.createElement(
+"div"
+);
+
+toast.className =
+"toast " +
+type;
+
+toast.textContent =
+message;
 
 
-    toast.className =
-        "toast " + type;
+container.appendChild(toast);
 
 
-    toast.textContent =
-        text;
+setTimeout(
+()=>{
 
+toast.style.opacity="0";
 
-    container.appendChild(toast);
+toast.style.transform=
+"translateY(10px)";
 
+setTimeout(
+()=>toast.remove(),
+250
+);
 
-    setTimeout(
-        () => toast.remove(),
-        3500
-    );
+},
+3000
+);
 
 }
 
 
-/* ==========================================================
-   ESCAPE
-========================================================== */
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
 
-function escapeHTML(text){
+function escapeHTML(
+text
+){
 
-    const div =
-        document.createElement("div");
+const div =
+document.createElement(
+"div"
+);
+
+div.textContent =
+String(text ?? "");
 
 
-    div.textContent =
-        String(text || "");
-
-
-    return div.innerHTML;
+return div.innerHTML;
 
 }
 
 
-/* ==========================================================
-   CLOSE MODAL WHEN CLICK OUTSIDE
-========================================================== */
+/* =========================================================
+   STORAGE SYNC
+   หากเปิดหลายแท็บใน Browser เดียวกัน
+========================================================= */
 
-document.addEventListener(
-    "click",
-    function(event){
+window.addEventListener(
+"storage",
+function(event){
 
-        if(
-            event.target.classList
-            .contains("modal")
-        ){
+if(
+event.key === BOOKS_KEY
+){
 
-            event.target
-                .classList
-                .remove("show");
+try{
 
-        }
+books =
+JSON.parse(
+event.newValue
+) || [];
 
-    }
+}catch{
+
+books=[];
+
+}
+
+renderBooks();
+
+}
+
+
+if(
+event.key === USERS_KEY
+){
+
+try{
+
+users =
+JSON.parse(
+event.newValue
+) || [];
+
+}catch{
+
+users=[];
+
+}
+
+}
+
+
+if(
+event.key === ACTIVITIES_KEY
+){
+
+try{
+
+activities =
+JSON.parse(
+event.newValue
+) || [];
+
+}catch{
+
+activities=[];
+
+}
+
+}
+
+
+/* ถ้าอยู่หน้า Admin */
+
+if(
+document
+.getElementById(
+"adminView"
+)
+.classList
+.contains("active")
+){
+
+renderAdminDashboard();
+
+}
+
+});
+
+
+/* =========================================================
+   AUTO UPDATE ADMIN DASHBOARD
+========================================================= */
+
+setInterval(
+function(){
+
+if(
+sessionStorage.getItem(
+ADMIN_SESSION_KEY
+)==="true"
+){
+
+/* โหลดข้อมูลล่าสุด */
+
+try{
+
+books =
+JSON.parse(
+localStorage.getItem(
+BOOKS_KEY
+)
+)||[];
+
+users =
+JSON.parse(
+localStorage.getItem(
+USERS_KEY
+)
+)||[];
+
+activities =
+JSON.parse(
+localStorage.getItem(
+ACTIVITIES_KEY
+)
+)||[];
+
+}catch{
+
+return;
+
+}
+
+
+if(
+document
+.getElementById(
+"adminView"
+)
+.classList
+.contains("active")
+){
+
+renderAdminDashboard();
+
+}
+
+}
+
+},
+2000
 );
 
 
-/* ==========================================================
-   KEYBOARD
-========================================================== */
+/* =========================================================
+   KEYBOARD SHORTCUT
+========================================================= */
 
 document.addEventListener(
-    "keydown",
-    function(event){
+"keydown",
+function(event){
 
-        const reader =
-            document.getElementById(
-                "reader"
-            );
+/* ESC ปิด modal/reader */
 
+if(event.key === "Escape"){
 
-        if(
-            reader.classList.contains("show")
-        ){
+document
+.querySelectorAll(".modal.show")
+.forEach(modal=>{
 
-            if(
-                event.key === "ArrowRight"
-            ){
+modal.classList.remove("show");
 
-                nextChapter();
-
-            }
+});
 
 
-            if(
-                event.key === "ArrowLeft"
-            ){
+closeReader();
 
-                previousChapter();
-
-            }
+}
 
 
-            if(
-                event.key === "Escape"
-            ){
+/* Ctrl + K ไปช่องค้นหา */
 
-                closeReader();
+if(
+(event.ctrlKey || event.metaKey)
+&& event.key.toLowerCase()==="k"
+){
 
-            }
+event.preventDefault();
 
-        }
-
-    }
+const search =
+document.getElementById(
+"searchInput"
 );
+
+if(search){
+
+search.focus();
+
+}
+
+}
+
+});
+
+
+/* =========================================================
+   LOG LOGOUT MENU
+========================================================= */
+
+/*
+   กดชื่อสมาชิกด้านบน:
+   - ถ้า Login อยู่ → แสดงเมนู Logout
+   - ถ้ายังไม่ Login → เปิด Login
+*/
+
+document
+.getElementById("accountBtn")
+.addEventListener(
+"click",
+function(){
+
+if(currentUser){
+
+const confirmLogout =
+confirm(
+"ต้องการออกจากระบบสมาชิกหรือไม่?"
+);
+
+
+if(confirmLogout){
+
+logoutMember();
+
+}
+
+}else{
+
+openMemberAuth();
+
+}
+
+});
+
 
 </script>
 
