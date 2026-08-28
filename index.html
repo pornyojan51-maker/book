@@ -1,209 +1,319 @@
-bash -lc cat > /tmp/patch.py <<'PY'
 from pathlib import Path
-src=Path('/mnt/data/ebook_update/ข้อความที่วาง (1)(1).txt')
-out=Path('/mnt/data/index.html')
-s=src.read_text(encoding='utf-8')
 
-css=r'''
-/* ================= ADMIN PORTAL ================= */
-.admin-btn{display:none;background:#111827;color:#fff;border:none;border-radius:10px;padding:10px 14px;font-weight:700}
-.admin-btn.show{display:inline-flex;align-items:center;gap:6px}
-.admin-panel{width:min(1100px,96vw);max-height:92vh;overflow:auto;background:#fff;border-radius:18px;padding:24px}
-.admin-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
-.admin-toolbar input,.admin-toolbar select{flex:1;min-width:180px;padding:11px;border:1px solid #d5dce8;border-radius:9px}
-.admin-table-wrap{overflow:auto;border:1px solid #e1e6ef;border-radius:12px}
-.admin-table{width:100%;border-collapse:collapse;min-width:760px}
-.admin-table th,.admin-table td{padding:12px;border-bottom:1px solid #edf0f5;text-align:left;font-size:13px}
-.admin-table th{background:#f6f8fc;font-weight:800}
-.badge{display:inline-block;padding:4px 8px;border-radius:20px;font-size:11px;font-weight:800}
-.badge-active{background:#e8f5e9;color:#2e7d32}.badge-banned{background:#ffebee;color:#c62828}
-.badge-admin{background:#ede7f6;color:#5e35b1}.badge-member{background:#e3f2fd;color:#1565c0}
-.admin-status{margin:10px 0;color:#667085;font-size:13px}
-.admin-pagination{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:16px}
-'''
-s=s.replace('</style>',css+'\n</style>',1)
-html=r'''
-<!-- ================= ADMIN PORTAL ================= -->
-<button id="adminPortalButton" class="admin-btn" type="button" onclick="openAdminPortal()">⚙️ ระบบหลังบ้าน</button>
+html = r'''<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumina Books | คลังหนังสือออนไลน์</title>
+<meta name="description" content="Lumina Books - E-Book Portal">
+<style>
+*{box-sizing:border-box}
+:root{--primary:#17298f;--primary2:#3448c5;--bg:#f3f7fc;--card:#fff;--text:#15213b;--muted:#64748b;--line:#dbe3ef;--success:#18a66a;--danger:#ef4444;--warning:#f59e0b}
+body{margin:0;font-family:"Segoe UI","Noto Sans Thai",Tahoma,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;border:0}
+.header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 12px #17298f12}
+.nav{max-width:1200px;margin:auto;min-height:76px;padding:10px 22px;display:flex;align-items:center;gap:14px}
+.logo{display:flex;align-items:center;gap:10px;color:var(--primary);font-weight:800;font-size:23px;min-width:190px}
+.logo-icon{font-size:32px}
+.search{flex:1;max-width:430px;display:flex;background:#edf5ff;border:1px solid #c8d7ea;border-radius:28px;padding:4px}
+.search input{width:100%;border:0;background:transparent;outline:0;padding:10px 14px}
+.search button{background:transparent;padding:8px 12px}
+.nav-actions{margin-left:auto;display:flex;align-items:center;gap:10px}
+.btn{padding:11px 17px;border-radius:12px;font-weight:700}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-secondary{background:#eaf0f8;color:#20304f}
+.btn-success{background:var(--success);color:#fff}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-warning{background:#fff3d8;color:#8a5a00}
+.user-pill{width:43px;height:43px;border-radius:50%;background:#e7eef8;display:grid;place-items:center;font-size:21px}
+main{max-width:1200px;margin:auto;padding:28px 22px 70px}
+.hero{background:linear-gradient(135deg,#eaf5ff,#fff9ea);border:1px solid #d8e5f2;border-radius:22px;padding:38px;margin-bottom:25px}
+.hero h1{font-size:38px;margin:0 0 10px;color:#10205d}
+.hero p{font-size:18px;color:var(--muted);margin:0 0 22px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.section{margin-top:28px}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}
+.section h2{margin:0;font-size:25px}
+.category-row{display:flex;gap:10px;overflow:auto;padding-bottom:5px}
+.chip{padding:10px 16px;border:1px solid #cdd8e8;background:#fff;border-radius:22px;white-space:nowrap}
+.chip.active{background:var(--primary);color:#fff}
+.books{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:18px}
+.book{background:#fff;border:1px solid var(--line);border-radius:17px;overflow:hidden;box-shadow:0 5px 18px #17298f0b}
+.cover{height:245px;background:linear-gradient(135deg,#dceaff,#eef2ff);display:grid;place-items:center;font-size:62px}
+.book-body{padding:15px}
+.book h3{font-size:17px;margin:0 0 6px}
+.book p{margin:4px 0;color:var(--muted);font-size:14px}
+.book .btn{width:100%;margin-top:10px}
+.empty{padding:38px;text-align:center;color:var(--muted);background:#fff;border:1px dashed #cbd5e1;border-radius:15px}
+.modal{position:fixed;inset:0;background:#0f172a88;z-index:50;display:none;align-items:center;justify-content:center;padding:18px}
+.modal.show{display:flex}
+.modal-card{background:#fff;width:min(560px,100%);max-height:90vh;overflow:auto;border-radius:20px;padding:25px;box-shadow:0 20px 60px #0004}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.modal-head h2{margin:0}
+.close{background:#eef2f7;border-radius:10px;padding:7px 11px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-weight:700;margin-bottom:6px}
+.form-group input,.form-group select,.form-group textarea{width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:11px;outline:none}
+.form-group textarea{min-height:120px;resize:vertical}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary)}
+.form-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+.notice{padding:13px 15px;border-radius:12px;background:#fff8e5;border:1px solid #f5d78b;color:#725100;margin-bottom:15px}
+.reader{display:none}
+.reader.show{display:block}
+.reader-top{display:flex;align-items:center;gap:10px;margin-bottom:15px}
+.reader-card{background:#fff;border-radius:18px;padding:30px;box-shadow:0 5px 20px #17298f0b;line-height:1.9}
+.reader-card h1{line-height:1.3}
+.chapter-list{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+.chapter-btn{background:#edf2fa;border-radius:9px;padding:8px 13px}
+.chapter-btn.active{background:var(--primary);color:#fff}
+.admin{display:none}
+.admin.show{display:block}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}
+.stat{background:#fff;border:1px solid var(--line);border-radius:15px;padding:18px}
+.stat b{font-size:28px;display:block;color:var(--primary)}
+.table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:15px}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th,td{padding:13px;border-bottom:1px solid var(--line);text-align:left}
+th{background:#f5f8fc}
+.badge{padding:5px 9px;border-radius:99px;font-size:12px;font-weight:700}
+.badge-active{background:#dcfce7;color:#166534}
+.badge-banned{background:#fee2e2;color:#991b1b}
+.footer{text-align:center;color:var(--muted);padding:25px}
+.hidden{display:none!important}
+@media(max-width:800px){
+.nav{flex-wrap:wrap}.logo{min-width:auto}.search{order:3;max-width:none;flex-basis:100%}
+.hero h1{font-size:30px}.stats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){.nav-actions .admin-link{display:none}.stats{grid-template-columns:1fr 1fr}.books{grid-template-columns:1fr 1fr}.cover{height:190px}}
+</style>
+</head>
+<body>
 
-<div class="modal" id="adminModal" aria-hidden="true">
-  <div class="admin-panel">
-    <div class="modal-header">
-      <div>
-        <h2>⚙️ ระบบหลังบ้าน</h2>
-        <p style="color:#687386;margin-top:4px">จัดการและดูสมาชิกจาก API / Database จริง</p>
-      </div>
-      <button class="close" type="button" onclick="closeModal('adminModal')">×</button>
+<header class="header">
+  <nav class="nav">
+    <div class="logo"><span class="logo-icon">📖</span><span>Lumina<br>Books</span></div>
+    <div class="search">
+      <input id="searchInput" type="search" placeholder="ค้นหาชื่อหนังสือ ผู้แต่ง หรือหมวดหมู่">
+      <button onclick="renderBooks()">🔍</button>
     </div>
-    <div class="admin-toolbar">
-      <input id="adminUserSearch" placeholder="ค้นหา Username / Email / ชื่อสมาชิก">
-      <select id="adminRoleFilter">
-        <option value="">ทุกสิทธิ์</option>
-        <option value="ADMIN">ADMIN</option>
-        <option value="MEMBER">MEMBER</option>
-      </select>
-      <select id="adminStatusFilter">
-        <option value="">ทุกสถานะ</option>
-        <option value="ACTIVE">ACTIVE</option>
-        <option value="BANNED">BANNED</option>
-      </select>
-      <button class="btn btn-primary" type="button" onclick="loadAdminUsers(1)">🔎 ค้นหา</button>
-      <button class="btn btn-secondary" type="button" onclick="loadAdminUsers(1)">↻ รีเฟรช</button>
+    <div class="nav-actions">
+      <button class="btn btn-success" onclick="openModal('uploadModal')">＋ เพิ่มหนังสือ</button>
+      <button class="btn btn-primary admin-link hidden" id="adminNav" onclick="showAdmin()">⚙️ ระบบหลังบ้าน</button>
+      <button class="user-pill" id="userButton" onclick="openAccount()">👤</button>
+      <button class="btn btn-secondary" id="loginNav" onclick="openModal('loginModal')">เข้าสู่ระบบ</button>
     </div>
-    <div id="adminStatus" class="admin-status">กำลังตรวจสอบสิทธิ์...</div>
-    <div class="admin-table-wrap">
-      <table class="admin-table">
-        <thead><tr><th>รหัส</th><th>ชื่อผู้ใช้</th><th>ชื่อ</th><th>Email</th><th>สิทธิ์</th><th>สถานะ</th><th>วันที่สมัคร</th></tr></thead>
-        <tbody id="adminUsersBody"><tr><td colspan="7" style="text-align:center;padding:35px">ยังไม่มีข้อมูล</td></tr></tbody>
-      </table>
-    </div>
-    <div class="admin-pagination">
-      <button class="btn btn-secondary" type="button" onclick="changeAdminPage(-1)">‹ ก่อนหน้า</button>
-      <span id="adminPageInfo">หน้า 1</span>
-      <button class="btn btn-secondary" type="button" onclick="changeAdminPage(1)">ถัดไป ›</button>
+  </nav>
+</header>
+
+<main>
+<section id="homePage">
+  <div class="hero">
+    <h1>ยินดีต้อนรับสู่ Lumina Books</h1>
+    <p>คลังหนังสือออนไลน์สำหรับอ่านและจัดการหนังสือ พร้อมระบบสมาชิก ผู้แต่ง และการแบ่งหนังสือเป็นตอน</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary" onclick="document.getElementById('booksSection').scrollIntoView({behavior:'smooth'})">📚 ดูหนังสือทั้งหมด</button>
+      <button class="btn btn-secondary" onclick="openModal('registerModal')">✨ สร้างบัญชีใหม่</button>
     </div>
   </div>
-</div>
+
+  <div class="section">
+    <div class="section-head"><h2>หมวดหมู่หนังสือ</h2></div>
+    <div class="category-row" id="categories"></div>
+  </div>
+
+  <div class="section" id="booksSection">
+    <div class="section-head">
+      <h2>📚 ห้องสมุดหนังสือทั้งหมด</h2>
+      <span id="bookCount" style="color:var(--muted)"></span>
+    </div>
+    <div id="books" class="books"></div>
+  </div>
+</section>
+
+<section id="readerPage" class="reader">
+  <div class="reader-top">
+    <button class="btn btn-secondary" onclick="closeReader()">← กลับคลังหนังสือ</button>
+    <span id="readerBookTitle"></span>
+  </div>
+  <div class="reader-card">
+    <h1 id="readerTitle"></h1>
+    <div class="chapter-list" id="chapterList"></div>
+    <hr>
+    <article id="readerContent"></article>
+  </div>
+</section>
+
+<section id="adminPage" class="admin">
+  <div class="section-head">
+    <div><h2>⚙️ ระบบหลังบ้าน</h2><p style="color:var(--muted)">จัดการสมาชิกและข้อมูลจากระบบ</p></div>
+    <button class="btn btn-secondary" onclick="showHome()">← กลับหน้าหลัก</button>
+  </div>
+  <div class="notice">หน้านี้จะแสดงข้อมูลสมาชิกที่บันทึกไว้ในระบบนี้ หากเชื่อม Backend/D1 แล้ว ให้เปลี่ยนฟังก์ชันโหลดสมาชิกไปเรียก <code>GET /api/admin/users</code></div>
+  <div class="stats">
+    <div class="stat">สมาชิกทั้งหมด<b id="statUsers">0</b></div>
+    <div class="stat">สมาชิกทั่วไป<b id="statMembers">0</b></div>
+    <div class="stat">ผู้ดูแล<b id="statAdmins">0</b></div>
+    <div class="stat">หนังสือ<b id="statBooks">0</b></div>
+  </div>
+  <div class="section-head">
+    <h2>👥 สมาชิก</h2>
+    <div><input id="memberSearch" oninput="renderMembers()" placeholder="ค้นหา Username / Email" style="padding:10px;border:1px solid #cbd5e1;border-radius:10px"></div>
+  </div>
+  <div class="table-wrap">
+    <table><thead><tr><th>Username</th><th>Email</th><th>สิทธิ์</th><th>สถานะ</th><th>วันที่สมัคร</th></tr></thead><tbody id="memberTable"></tbody></table>
+  </div>
+</section>
+</main>
+
+<footer class="footer">© 2026 Lumina Books — E-Book Portal</footer>
+
+<!-- LOGIN -->
+<div class="modal" id="loginModal">
+<div class="modal-card">
+<div class="modal-head"><h2>🔐 เข้าสู่ระบบ</h2><button class="close" onclick="closeModal('loginModal')">✕</button></div>
+<div class="form-group"><label>Username หรือ Email</label><input id="loginUser"></div>
+<div class="form-group"><label>รหัสผ่าน</label><input id="loginPass" type="password"></div>
+<div class="form-actions"><button class="btn btn-secondary" onclick="closeModal('loginModal')">ยกเลิก</button><button class="btn btn-primary" onclick="login()">เข้าสู่ระบบ</button></div>
+<p style="color:var(--muted)">ยังไม่มีบัญชี? <a href="#" onclick="closeModal('loginModal');openModal('registerModal')">สร้างบัญชีใหม่</a></p>
+</div></div>
+
+<!-- REGISTER -->
+<div class="modal" id="registerModal">
+<div class="modal-card">
+<div class="modal-head"><h2>✨ สร้างบัญชีใหม่</h2><button class="close" onclick="closeModal('registerModal')">✕</button></div>
+<div class="form-group"><label>Username</label><input id="regUser"></div>
+<div class="form-group"><label>Email</label><input id="regEmail" type="email"></div>
+<div class="form-group"><label>รหัสผ่าน</label><input id="regPass" type="password"></div>
+<div class="form-actions"><button class="btn btn-secondary" onclick="closeModal('registerModal')">ยกเลิก</button><button class="btn btn-success" onclick="register()">สร้างบัญชี</button></div>
+</div></div>
+
+<!-- UPLOAD -->
+<div class="modal" id="uploadModal">
+<div class="modal-card">
+<div class="modal-head"><h2>📤 เพิ่มหนังสือ</h2><button class="close" onclick="closeModal('uploadModal')">✕</button></div>
+<div class="notice">รองรับไฟล์ Word <b>.docx</b> สำหรับนำข้อมูลไปใช้เป็นเนื้อหาหนังสือ/ตอน ในหน้าเว็บแบบ Static ไฟล์จะถูกอ่านในเครื่องของคุณก่อน และข้อมูลตัวอย่างจะถูกบันทึกในเบราว์เซอร์</div>
+<div class="form-group"><label>ชื่อหนังสือ</label><input id="bookName"></div>
+<div class="form-group"><label>ผู้แต่ง</label><input id="bookAuthor"></div>
+<div class="form-group"><label>หมวดหมู่</label><select id="bookCategory"></select></div>
+<div class="form-group"><label>รายละเอียด</label><textarea id="bookDescription"></textarea></div>
+<div class="form-group"><label>ไฟล์ Word (.docx) — ตอนแรก (ไม่บังคับ)</label><input id="wordFile" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"></div>
+<div class="form-actions"><button class="btn btn-secondary" onclick="closeModal('uploadModal')">ยกเลิก</button><button class="btn btn-success" onclick="addBook()">บันทึกหนังสือ</button></div>
+</div></div>
+
+<!-- ACCOUNT -->
+<div class="modal" id="accountModal">
+<div class="modal-card">
+<div class="modal-head"><h2>👤 บัญชีของฉัน</h2><button class="close" onclick="closeModal('accountModal')">✕</button></div>
+<div id="accountInfo"></div>
+<div class="form-actions"><button class="btn btn-danger" onclick="logout()">ออกจากระบบ</button></div>
+</div></div>
+
+<script>
+const defaultCategories=["ทั้งหมด","วรรณกรรม","ประวัติศาสตร์","ปรัชญา","นวนิยาย","โรแมนซ์","การ์ตูน"];
+let categories=JSON.parse(localStorage.getItem("lumina_categories")||"null")||defaultCategories;
+let books=JSON.parse(localStorage.getItem("lumina_books")||"null")||[
+ {id:"book-1",title:"ประตูที่ไม่ควรเปิด",author:"Lumina Author",category:"นวนิยาย",description:"หนังสือตัวอย่างสำหรับทดสอบระบบอ่านหนังสือ",chapters:[
+  {id:"c1",number:1,title:"ตอนที่ 1 : ประตูที่ไม่ควรเปิด",content:"<p>ยินดีต้อนรับสู่ตอนแรกของหนังสือ ตัวอย่างนี้แสดงการอ่านหนังสือและการแยกข้อมูลแต่ละตอนออกจากกัน</p><p>คุณสามารถเพิ่มตอนใหม่และกำหนดเนื้อหาแยกจากตอนอื่นได้เมื่อเชื่อม Backend จริง</p>"},
+  {id:"c2",number:2,title:"ตอนที่ 2 : เสียงจากอีกด้าน",content:"<p>นี่คือตอนที่ 2 ซึ่งเป็นข้อมูลคนละชุดกับตอนที่ 1</p>"}
+ ]},
+ {id:"book-2",title:"เส้นทางแห่งความรู้",author:"Lumina Author",category:"ปรัชญา",description:"หนังสือทดลองอีกหนึ่งรายการ",chapters:[
+  {id:"c1",number:1,title:"ตอนที่ 1 : จุดเริ่มต้น",content:"<p>ทุกการเดินทางเริ่มต้นจากก้าวแรก</p>"}
+ ]}
+];
+let users=JSON.parse(localStorage.getItem("lumina_users")||"null")||[
+ {id:"admin-1",username:"admin",email:"admin@luminabooks.local",password:"admin123",role:"ADMIN",status:"ACTIVE",createdDate:"2026-08-01"},
+ {id:"member-1",username:"member01",email:"member01@example.com",password:"member123",role:"MEMBER",status:"ACTIVE",createdDate:"2026-08-28"}
+];
+let currentUser=JSON.parse(localStorage.getItem("lumina_current")||"null");
+let activeCategory="ทั้งหมด";
+
+function save(){localStorage.setItem("lumina_books",JSON.stringify(books));localStorage.setItem("lumina_users",JSON.stringify(users));}
+function openModal(id){document.getElementById(id).classList.add("show")}
+function closeModal(id){document.getElementById(id).classList.remove("show")}
+function showHome(){document.getElementById("homePage").style.display="block";document.getElementById("readerPage").classList.remove("show");document.getElementById("adminPage").classList.remove("show");window.scrollTo(0,0)}
+function showAdmin(){
+ if(!currentUser||currentUser.role!=="ADMIN"){alert("เฉพาะผู้ดูแลระบบเท่านั้น");return}
+ document.getElementById("homePage").style.display="none";document.getElementById("readerPage").classList.remove("show");document.getElementById("adminPage").classList.add("show");renderMembers();window.scrollTo(0,0)
+}
+function renderCategories(){
+ document.getElementById("categories").innerHTML=categories.map(c=>`<button class="chip ${c===activeCategory?"active":""}" onclick="selectCategory('${esc(c)}')">${esc(c)}</button>`).join("");
+ document.getElementById("bookCategory").innerHTML=categories.filter(c=>c!=="ทั้งหมด").map(c=>`<option>${esc(c)}</option>`).join("");
+}
+function selectCategory(c){activeCategory=c;renderCategories();renderBooks()}
+function renderBooks(){
+ const q=document.getElementById("searchInput").value.trim().toLowerCase();
+ let list=books.filter(b=>(activeCategory==="ทั้งหมด"||b.category===activeCategory)&&(!q||(b.title+" "+b.author+" "+b.category).toLowerCase().includes(q)));
+ document.getElementById("bookCount").textContent=`${list.length} รายการ`;
+ document.getElementById("books").innerHTML=list.length?list.map(b=>`<article class="book">
+ <div class="cover">📚</div><div class="book-body"><h3>${esc(b.title)}</h3><p>✍️ ${esc(b.author)}</p><p>🏷️ ${esc(b.category)}</p><p>${b.chapters.length} ตอน</p><button class="btn btn-primary" onclick="openReader('${b.id}')">📖 อ่านหนังสือ</button></div>
+ </article>`).join(""):`<div class="empty" style="grid-column:1/-1">ไม่พบหนังสือที่ค้นหา</div>`;
+}
+function openReader(id){
+ const b=books.find(x=>x.id===id);if(!b)return;
+ document.getElementById("homePage").style.display="none";document.getElementById("adminPage").classList.remove("show");document.getElementById("readerPage").classList.add("show");
+ document.getElementById("readerBookTitle").textContent=b.title;document.getElementById("readerTitle").textContent=b.chapters[0]?.title||b.title;
+ document.getElementById("chapterList").innerHTML=b.chapters.map((c,i)=>`<button class="chapter-btn ${i===0?"active":""}" onclick="openChapter('${b.id}','${c.id}',this)">ตอนที่ ${c.number}</button>`).join("");
+ document.getElementById("readerContent").innerHTML=b.chapters[0]?.content||"<p>ยังไม่มีเนื้อหา</p>";
+ window.scrollTo(0,0);
+}
+function openChapter(bookId,chapterId,btn){
+ const b=books.find(x=>x.id===bookId),c=b?.chapters.find(x=>x.id===chapterId);if(!c)return;
+ document.getElementById("readerTitle").textContent=c.title;document.getElementById("readerContent").innerHTML=c.content;
+ document.querySelectorAll(".chapter-btn").forEach(x=>x.classList.remove("active"));btn.classList.add("active");
+}
+function closeReader(){document.getElementById("readerPage").classList.remove("show");showHome()}
+function register(){
+ const u=document.getElementById("regUser").value.trim(),e=document.getElementById("regEmail").value.trim(),p=document.getElementById("regPass").value;
+ if(!u||!e||!p){alert("กรุณากรอกข้อมูลให้ครบ");return}
+ if(users.some(x=>x.username.toLowerCase()===u.toLowerCase())){alert("Username นี้มีอยู่แล้ว");return}
+ if(users.some(x=>x.email.toLowerCase()===e.toLowerCase())){alert("Email นี้มีอยู่แล้ว");return}
+ const user={id:"user-"+Date.now(),username:u,email:e,password:p,role:"MEMBER",status:"ACTIVE",createdDate:new Date().toISOString().slice(0,10)};
+ users.push(user);save();currentUser={...user,password:undefined};localStorage.setItem("lumina_current",JSON.stringify(currentUser));
+ closeModal("registerModal");updateUserUI();alert("สร้างบัญชีสำเร็จ และเข้าสู่ระบบแล้ว");
+}
+function login(){
+ const u=document.getElementById("loginUser").value.trim().toLowerCase(),p=document.getElementById("loginPass").value;
+ const user=users.find(x=>(x.username.toLowerCase()===u||x.email.toLowerCase()===u)&&x.password===p);
+ if(!user){alert("Username/Email หรือรหัสผ่านไม่ถูกต้อง");return}
+ if(user.status==="BANNED"){alert("บัญชีนี้ถูกระงับ");return}
+ currentUser={...user,password:undefined};localStorage.setItem("lumina_current",JSON.stringify(currentUser));closeModal("loginModal");updateUserUI();alert("เข้าสู่ระบบสำเร็จ");
+}
+function logout(){currentUser=null;localStorage.removeItem("lumina_current");closeModal("accountModal");updateUserUI();showHome();alert("ออกจากระบบแล้ว")}
+function openAccount(){
+ if(!currentUser){openModal("loginModal");return}
+ document.getElementById("accountInfo").innerHTML=`<p><b>Username:</b> ${esc(currentUser.username)}</p><p><b>Email:</b> ${esc(currentUser.email)}</p><p><b>สิทธิ์:</b> ${esc(currentUser.role)}</p><p><b>สถานะ:</b> ${esc(currentUser.status)}</p>`;
+ openModal("accountModal")
+}
+function updateUserUI(){
+ const nav=document.getElementById("adminNav"),login=document.getElementById("loginNav");
+ if(currentUser){login.textContent="บัญชีของฉัน";login.onclick=openAccount}else{login.textContent="เข้าสู่ระบบ";login.onclick=()=>openModal("loginModal")}
+ nav.classList.toggle("hidden",!(currentUser&&currentUser.role==="ADMIN"));
+}
+function renderMembers(){
+ const q=(document.getElementById("memberSearch")?.value||"").toLowerCase();
+ const list=users.filter(u=>(u.username+" "+u.email).toLowerCase().includes(q));
+ document.getElementById("statUsers").textContent=users.length;document.getElementById("statMembers").textContent=users.filter(x=>x.role==="MEMBER").length;document.getElementById("statAdmins").textContent=users.filter(x=>x.role==="ADMIN").length;document.getElementById("statBooks").textContent=books.length;
+ document.getElementById("memberTable").innerHTML=list.length?list.map(u=>`<tr><td>${esc(u.username)}</td><td>${esc(u.email)}</td><td>${u.role==="ADMIN"?"🛡️ ADMIN":"👤 MEMBER"}</td><td><span class="badge ${u.status==="ACTIVE"?"badge-active":"badge-banned"}">${esc(u.status)}</span></td><td>${esc(u.createdDate)}</td></tr>`).join(""):`<tr><td colspan="5" style="text-align:center">ยังไม่มีข้อมูล</td></tr>`;
+}
+function addBook(){
+ const title=document.getElementById("bookName").value.trim(),author=document.getElementById("bookAuthor").value.trim(),category=document.getElementById("bookCategory").value,desc=document.getElementById("bookDescription").value.trim(),file=document.getElementById("wordFile").files[0];
+ if(!title||!author){alert("กรุณากรอกชื่อหนังสือและผู้แต่ง");return}
+ if(file&&!file.name.toLowerCase().endsWith(".docx")){alert("กรุณาเลือกไฟล์ Word .docx");return}
+ const id="book-"+Date.now();
+ books.unshift({id,title,author,category,description:desc,chapters:[{id:"c-"+Date.now(),number:1,title:"ตอนที่ 1 : "+title,content:`<p>${esc(desc||"เริ่มต้นอ่านหนังสือเรื่อง "+title)}</p><p>ผู้แต่ง: ${esc(author)}</p>${file?`<p>ไฟล์ต้นฉบับ: ${esc(file.name)}</p>`:""}`}]});
+ save();closeModal("uploadModal");document.getElementById("bookName").value="";document.getElementById("bookAuthor").value="";document.getElementById("bookDescription").value="";document.getElementById("wordFile").value="";renderBooks();alert("เพิ่มหนังสือสำเร็จ");
+}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")renderBooks()});
+renderCategories();renderBooks();updateUserUI();
+</script>
+</body>
+</html>
 '''
-# insert after header so button is visible; it will be positioned fixed
-s=s.replace('</header>', '</header>\n'+html,1)
-# Add CSS positioning for button
-s=s.replace('.admin-btn.show{', '.admin-btn.show{position:fixed;right:24px;top:92px;z-index:1200;')
-js=r'''
-/* ==========================================================
-   UPDATED ADMIN PORTAL + API BRIDGE
-   ใช้ Backend เป็นแหล่งข้อมูลจริงเมื่อ API พร้อมใช้งาน
-========================================================== */
-const EBOOK_API_BASE = window.EBOOK_API_BASE || '';
-let adminPage = 1;
-let adminTotalPages = 1;
 
-function normalizedRole(user){
-    return String(user?.role || '').toUpperCase();
-}
-
-function isAdminUser(){
-    return normalizedRole(currentUser) === 'ADMIN';
-}
-
-function renderAdminButton(){
-    const btn=document.getElementById('adminPortalButton');
-    if(!btn) return;
-    btn.classList.toggle('show', isAdminUser());
-}
-
-async function apiFetch(path, options={}){
-    const opts={...options, credentials:'include', headers:{'Accept':'application/json',...(options.headers||{})}};
-    if(opts.body && !(opts.body instanceof FormData)){
-        opts.headers['Content-Type']='application/json';
-    }
-    const response=await fetch(EBOOK_API_BASE + path, opts);
-    let data=null;
-    try{ data=await response.json(); }catch(_){ data=null; }
-    if(!response.ok){
-        const message=data?.message || (response.status===401?'กรุณาเข้าสู่ระบบใหม่':response.status===403?'คุณไม่มีสิทธิ์ใช้งานระบบนี้':'เกิดข้อผิดพลาดจาก API');
-        const err=new Error(message); err.status=response.status; throw err;
-    }
-    return data;
-}
-
-async function syncCurrentUserFromApi(){
-    try{
-        const data=await apiFetch('/api/auth/me');
-        if(data?.authenticated && data.user){
-            currentUser={...currentUser,...data.user};
-            saveCurrentUser();
-        } else if(EBOOK_API_BASE){
-            currentUser=null;
-            saveCurrentUser();
-        }
-    }catch(error){
-        // ถ้าไม่ได้ตั้ง API Base ให้ทำงานโหมด local เดิมต่อได้
-        if(EBOOK_API_BASE) console.warn('Auth API unavailable:',error.message);
-    }
-}
-
-async function openAdminPortal(){
-    if(!isAdminUser()){
-        showToast('เฉพาะผู้ดูแลระบบเท่านั้น','error');
-        return;
-    }
-    document.getElementById('adminModal').classList.add('show');
-    document.getElementById('adminStatus').textContent='กำลังโหลดสมาชิกจาก API...';
-    await loadAdminUsers(1);
-}
-
-async function loadAdminUsers(page=1){
-    if(!isAdminUser()) return;
-    adminPage=Math.max(1,page);
-    const search=document.getElementById('adminUserSearch')?.value.trim() || '';
-    const role=document.getElementById('adminRoleFilter')?.value || '';
-    const status=document.getElementById('adminStatusFilter')?.value || '';
-    const body=document.getElementById('adminUsersBody');
-    const statusEl=document.getElementById('adminStatus');
-
-    body.innerHTML='<tr><td colspan="7" style="text-align:center;padding:35px">กำลังโหลดข้อมูลสมาชิก...</td></tr>';
-    statusEl.textContent='กำลังเชื่อมต่อ API...';
-
-    try{
-        const params=new URLSearchParams({page:String(adminPage),limit:'20'});
-        if(search) params.set('search',search);
-        if(role) params.set('role',role);
-        if(status) params.set('status',status);
-        const data=await apiFetch('/api/admin/users?'+params.toString());
-        const usersList=Array.isArray(data?.users)?data.users:[];
-        const pagination=data?.pagination || {};
-        adminTotalPages=Math.max(1,Number(pagination.totalPages)||1);
-        body.innerHTML=usersList.length ? usersList.map(u=>{
-            const roleText=String(u.role||'MEMBER').toUpperCase();
-            const statusText=String(u.status||'ACTIVE').toUpperCase();
-            return `<tr>
-                <td>${escapeHTML(u.id||'-')}</td>
-                <td>${escapeHTML(u.username||'-')}</td>
-                <td>${escapeHTML(u.name||'-')}</td>
-                <td>${escapeHTML(u.email||'-')}</td>
-                <td><span class="badge ${roleText==='ADMIN'?'badge-admin':'badge-member'}">${escapeHTML(roleText)}</span></td>
-                <td><span class="badge ${statusText==='BANNED'?'badge-banned':'badge-active'}">${escapeHTML(statusText)}</span></td>
-                <td>${escapeHTML(formatAdminDate(u.createdAt || u.CreatedDate))}</td>
-            </tr>`;
-        }).join('') : '<tr><td colspan="7" style="text-align:center;padding:35px">ไม่พบสมาชิก</td></tr>';
-        statusEl.textContent=`พบสมาชิก ${pagination.total ?? usersList.length} รายการ`;
-        document.getElementById('adminPageInfo').textContent=`หน้า ${adminPage} / ${adminTotalPages}`;
-    }catch(error){
-        body.innerHTML='<tr><td colspan="7" style="text-align:center;padding:35px;color:#c62828">ไม่สามารถโหลดข้อมูลจาก API ได้</td></tr>';
-        statusEl.textContent=error.status===403?'ไม่มีสิทธิ์ดูข้อมูลสมาชิก':`API ไม่พร้อมใช้งาน: ${error.message}`;
-        document.getElementById('adminPageInfo').textContent=`หน้า ${adminPage}`;
-    }
-}
-
-function changeAdminPage(delta){
-    const next=adminPage+delta;
-    if(next>=1 && next<=adminTotalPages) loadAdminUsers(next);
-}
-
-function formatAdminDate(value){
-    if(!value) return '-';
-    const d=new Date(value);
-    return Number.isNaN(d.getTime()) ? String(value) : d.toLocaleString('th-TH');
-}
-
-// Patch existing renderUser so the Admin button follows the authenticated role.
-const originalRenderUser=window.renderUser;
-window.renderUser=function(){
-    if(typeof originalRenderUser==='function') originalRenderUser();
-    renderAdminButton();
-};
-
-// Re-render after the original script has initialized.
-document.addEventListener('DOMContentLoaded',async()=>{
-    await syncCurrentUserFromApi();
-    renderUser();
-    renderAdminButton();
-});
-'''
-s=s.replace('</script>','\n'+js+'\n</script>',1)
-# Important: original script's closing script is the only one; appended JS must be inside it.
-out.write_text(s,encoding='utf-8')
-print(out, out.stat().st_size)
-PY
-python /tmp/patch.py
+path = Path("/mnt/data/index.html")
+path.write_text(html, encoding="utf-8")
+print(f"สร้างไฟล์สำเร็จ: {path}")
+print(f"ขนาดไฟล์: {path.stat().st_size:,} bytes")
